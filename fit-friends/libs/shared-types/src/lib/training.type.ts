@@ -1,19 +1,19 @@
-import { UserLevelType } from "./user-level.enum";
-import { TrainingStyleType } from "./training-style.enum";
-import { TrainingTimeType } from "./user-training-time.enum";
-import { UserSexType } from "./user-sex.enum";
+import { UserLevel } from "./user-level.enum";
+import { TrainingStyle } from "./training-style.enum";
+import { TrainingTime } from "./user-training-time.enum";
+import { UserGenderType } from "./user-sex.enum";
 
 export type Training = {
   id?: number;
   title: string;
   backgroundImage: string;
-  level: UserLevelType;
-  trainingStyle: TrainingStyleType;
-  trainingTime: TrainingTimeType;
+  level: UserLevel;
+  trainingStyle: TrainingStyle;
+  trainingTime: TrainingTime;
   price: number;
   caloriesLoss: number;
   description: string;
-  sex: UserSexType;
+  sex: UserGenderType;
   video: string;
   rating: number;
   coachId: number;

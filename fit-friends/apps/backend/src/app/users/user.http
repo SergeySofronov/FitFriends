@@ -1,0 +1,41 @@
+# Создать (зарегистрировать) пользователя
+POST /fit-friends/users/register HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "name": "John Doe",
+  "password": "123456"
+}
+###
+
+# Проверить авторизацию пользователя
+GET  /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5Abm90aWZ5LmxvY2FsIiwibmFtZSI6ImFkbWluIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzY1NzQyNjIsImV4cCI6MTY3NjU3NDg2Mn0.L-IHdsZnsGQI22zL4vUzwRgCRRKMvFtY9VNdGxYtwiU
+###
+
+
+# Авторизоваться (пользователь)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Авторизоваться (admin)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "admin@notify.local",
+  "password": "admin"
+}
+###
+

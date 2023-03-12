@@ -17,7 +17,7 @@ async function bootstrap() {
     })
     .build();
 
-  const globalPrefix = 'guitar-shop';
+  const globalPrefix = 'fit-friends';
   app.setGlobalPrefix(globalPrefix);
 
   const document = SwaggerModule.createDocument(app, config, { ignoreGlobalPrefix: false });

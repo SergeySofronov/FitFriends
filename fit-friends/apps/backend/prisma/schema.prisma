@@ -52,40 +52,66 @@ enum GymFeature {
   Massage
 }
 
+enum OrderCategory {
+  SeasonPass
+  Training
+}
+
+enum Payment {
+  Visa
+  Mir
+  Umoney
+}
+
+enum RequestStatus {
+  Pending
+  Rejected
+  Accepted
+}
+
 model User {
-  id                 Int           @id @default(autoincrement())
-  email              String        @unique()
+  id                 Int            @id @default(autoincrement())
+  email              String         @unique()
   name               String
   password           String
-  role               UserRole      @default(User)
+  role               UserRole       @default(User)
   location           String
-  level              UserLevel     @default(Beginner)
-  trainingStyle      TrainingStyle @default(Aerobics)
-  trainingTime       TrainingTime  @default(Max30)
+  level              UserLevel      @default(Beginner)
+  trainingStyle      TrainingStyle  @default(Aerobics)
+  trainingTime       TrainingTime   @default(Max30)
   caloriesLoss       Int
   caloriesLossPerDay Int
-  isReadyForTraining Boolean       @default(true)
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @default(now())
+  isReadyForTraining Boolean        @default(true)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @default(now())
+  Comment            Comment[]
+  Order              Order[]
+  Requester          Request[]      @relation(name: "requester")
+  Requested          Request[]      @relation(name: "requested")
+  Notification       Notification[]
+  Token              Token[]
 
   @@map("users")
 }
 
 model Coach {
-  id              Int           @id @default(autoincrement())
-  email           String        @unique()
+  id              Int            @id @default(autoincrement())
+  email           String         @unique()
   name            String
   password        String
-  role            UserRole      @default(User)
+  role            UserRole       @default(User)
   location        String
-  level           UserLevel     @default(Beginner)
-  trainingStyle   TrainingStyle @default(Aerobics)
+  level           UserLevel      @default(Beginner)
+  trainingStyle   TrainingStyle  @default(Aerobics)
   certificates    String
   merits          String
   isPersonalCoach Boolean
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
-  training        Training[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now())
+  Training        Training[]
+  Requested       Request[]
+  Notification    Notification[]
+  Token           Token[]
 
   @@map("coaches")
 }
@@ -103,10 +129,11 @@ model Training {
   sex             UserSex
   video           String
   rating          Int           @default(0)
-  coach           Coach         @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  Coach           Coach         @relation(fields: [coachId], references: [id])
   coachId         Int
   isSpecial       Boolean
   Comment         Comment[]
+  Order           Order[]
 
   @@map("trainings")
 }
@@ -121,18 +148,72 @@ model Gym {
   description      String
   price            Int        @default(0)
   constructionDate DateTime
+  Order            Order[]
 
   @@map("gyms")
 }
 
 model Comment {
   id         Int      @id @default(autoincrement())
-  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  Training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   trainingId Int
-  userId     String
+  User       User     @relation(fields: [userId], references: [id])
+  userId     Int
   content    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
 
   @@map("comments")
+}
+
+model Order {
+  id            Int           @id @default(autoincrement())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  category      OrderCategory
+  Gym           Gym           @relation(map: "gym", fields: [serviceId], references: [id], onDelete: NoAction)
+  Training      Training      @relation(map: "training", fields: [serviceId], references: [id], onDelete: NoAction)
+  serviceId     Int
+  price         Int           @default(0)
+  quantity      Int
+  total         Int
+  paymentMethod Payment
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+
+  @@map("orders")
+}
+
+model Request {
+  id             Int           @id @default(autoincrement())
+  Requester      User          @relation(name: "requester", fields: [requesterId], references: [id], onDelete: Cascade)
+  requesterId    Int
+  RequestedUser  User          @relation(name: "requested", fields: [requestedId], references: [id], onDelete: NoAction)
+  RequestedCoach Coach         @relation(map: "requested", fields: [requestedId], references: [id], onDelete: NoAction)
+  requestedId    Int
+  status         RequestStatus
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+
+  @@map("requests")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  User      User     @relation(map: "user", fields: [userId], references: [id], onDelete: Cascade)
+  Coach     Coach    @relation(map: "coach", fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  text      String
+  createdAt DateTime @default(now())
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  User      User     @relation(map: "user", fields: [userId], references: [id], onDelete: Cascade)
+  Coach     Coach    @relation(map: "coach", fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  tokenId   String
+  expiresIn DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }

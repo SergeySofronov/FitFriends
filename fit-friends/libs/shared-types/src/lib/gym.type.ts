@@ -1,12 +1,12 @@
-import { GymFeatureType } from "./gym-feature.enum";
-import { LocationType } from "./user-location.enum";
+import { GymFeature } from "./gym-feature.enum";
+import { Location } from "./user-location.enum";
 
 export type Gym = {
   id?: number;
   title: string;
-  location: LocationType;
+  location: Location;
   isVerified: boolean;
-  gymType: GymFeatureType;
+  gymType: GymFeature;
   photo: string[];
   description: string;
   price: number;

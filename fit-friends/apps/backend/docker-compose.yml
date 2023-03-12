@@ -37,7 +37,7 @@ services:
 
   fakesmtp:
     image: gessnerfl/fake-smtp-server
-    container_name: guitar-shop-fakesmtp
+    container_name: fit-friends-fakesmtp
     hostname: fakesmtp
     ports:
       - "5025:5025"
