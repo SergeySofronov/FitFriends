@@ -1,4 +1,5 @@
 import { UserExistsException, UserNotFoundEmailException, UserPasswordWrongException } from '@fit-friends/core';
+import { User } from '@fit-friends/shared-types';
 import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -42,7 +43,7 @@ export class UserService {
     return existUser;
   }
 
-  public async loginUser(user: UserEntity) {
+  public async loginUser(user: Pick<User, 'id' | 'email' | 'name' | 'role'>) {
     const payload = {
       sub: user.id,
       email: user.email,

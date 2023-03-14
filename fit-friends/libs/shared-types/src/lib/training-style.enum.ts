@@ -3,7 +3,7 @@ export enum TrainingStyle {
   Running = 'Running',
   Boxing = 'Boxing',
   Stretching = 'Stretching',
-  CrossFit = 'CrossFit',
+  Crossfit = 'Crossfit',
   Aerobics = 'Aerobics',
   Pilates = 'Pilates',
 }

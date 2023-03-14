@@ -1,27 +1,28 @@
 import { Injectable } from '@nestjs/common'
 import { genSalt, hash, compare } from 'bcrypt';
 import { SALT_ROUNDS, UserValidity } from './user.constant';
-import { User, UserRole } from '@fit-friends/shared-types'
+import { User, UserRole, UserRoleType } from '@fit-friends/shared-types'
 import { Entity } from '@fit-friends/core';
-import { TrainingStyle } from 'libs/shared-types/src/lib/training-style.enum';
-import { UserLevel } from 'libs/shared-types/src/lib/user-level.enum';
-import { Location } from 'libs/shared-types/src/lib/user-location.enum';
-import { TrainingTime } from 'libs/shared-types/src/lib/user-training-time.enum';
-import { UserGender } from 'libs/shared-types/src/lib/user-sex.enum';
+import { TrainingStyle, TrainingStyleType } from 'libs/shared-types/src/lib/training-style.enum';
+import { UserLevel, UserLevelType } from 'libs/shared-types/src/lib/user-level.enum';
+import { LocationType } from 'libs/shared-types/src/lib/user-location.enum';
+import { TrainingTime, TrainingTimeType } from 'libs/shared-types/src/lib/user-training-time.enum';
+import { UserGender, UserGenderType } from 'libs/shared-types/src/lib/user-sex.enum';
 
 @Injectable()
 export class UserEntity implements Entity<UserEntity, User>, User {
   public id?: number;
   public name: string;
   public email: string;
+  public avatar: string;
   public password: string;
-  public sex: UserGender;
+  public gender: UserGenderType;
   public dateBirth: Date;
-  public role: UserRole;
-  public location: Location;
-  public level: UserLevel;
-  public trainingStyle: TrainingStyle;
-  public trainingTime: TrainingTime;
+  public role: UserRoleType;
+  public location: LocationType;
+  public level: UserLevelType;
+  public trainingStyle: TrainingStyleType;
+  public trainingTime: TrainingTimeType;
   public caloriesLoss: number;
   public caloriesLossPerDay: number;
   public isReadyForTraining: boolean;
@@ -49,10 +50,11 @@ export class UserEntity implements Entity<UserEntity, User>, User {
   public fillEntity(user: Partial<User>) {
     this.id = user.id;
     this.email = user.email;
+    this.avatar = user.avatar;
     this.name = user.name;
     this.role = UserRole.User;
     this.password = user.password;
-    this.sex = user.sex || UserGender.Indifferent;
+    this.gender = user.gender || UserGender.Indifferent;
     this.dateBirth = user.dateBirth;
     this.role = user.role || UserRole.User;
     this.location = user.location;

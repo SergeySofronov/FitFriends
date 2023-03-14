@@ -16,16 +16,24 @@ enum UserRole {
   Coach
 }
 
-enum UserSex {
+enum UserGender {
   Male
   Female
-  Unknown
+  Indifferent
 }
 
 enum UserLevel {
   Beginner
   Middle
   Professional
+}
+
+enum Location {
+  Pionerskaya
+  Petrogradskaya
+  Udelnaya
+  Zvyozdnaya
+  Sportivnaya
 }
 
 enum TrainingTime {
@@ -73,9 +81,12 @@ model User {
   id                 Int            @id @default(autoincrement())
   email              String         @unique()
   name               String
+  avatar             String
   password           String
+  gender             UserGender
+  dateBirth          DateTime
   role               UserRole       @default(User)
-  location           String
+  location           Location
   level              UserLevel      @default(Beginner)
   trainingStyle      TrainingStyle  @default(Aerobics)
   trainingTime       TrainingTime   @default(Max30)
@@ -98,9 +109,12 @@ model Coach {
   id              Int            @id @default(autoincrement())
   email           String         @unique()
   name            String
+  avatar          String
   password        String
+  gender          UserGender
+  dateBirth       DateTime
   role            UserRole       @default(User)
-  location        String
+  location        Location
   level           UserLevel      @default(Beginner)
   trainingStyle   TrainingStyle  @default(Aerobics)
   certificates    String
@@ -126,7 +140,7 @@ model Training {
   price           Int           @default(0)
   caloriesLoss    Int
   description     String
-  sex             UserSex
+  gender          UserGender
   video           String
   rating          Int           @default(0)
   Coach           Coach         @relation(fields: [coachId], references: [id])
@@ -205,6 +219,8 @@ model Notification {
   userId    Int
   text      String
   createdAt DateTime @default(now())
+
+  @@map("notification")
 }
 
 model Token {
@@ -216,4 +232,6 @@ model Token {
   expiresIn DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+
+  @@map("tokens")
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Res, Req, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { fillObject, JwtAuthGuard } from '@fit-friends/core';
@@ -7,7 +7,7 @@ import { UserAuthMessages } from './user.constant';
 import { UserRdo } from './rdo/user.rdo';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { LoginUserDto } from './dto/login-user.dto';
+import { RequestWithUser } from 'libs/core/src/lib/request-with-user.type';
 
 @ApiTags('users')
 @Controller('users')
@@ -28,10 +28,9 @@ export class UserController {
   @Post('login')
   @ApiResponse({ status: HttpStatus.OK, description: UserAuthMessages.LOGIN, type: LoggedUserRdo })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: `${UserAuthMessages.WRONG_PASSWORD} or ${UserAuthMessages.WRONG_LOGIN}` })
-  public async login(@Body() dto: LoginUserDto) {
-    const verifiedUser = await this.userService.verifyUser(dto);
-    console.log(verifiedUser)
-    return this.userService.loginUser(verifiedUser);
+  public async login(@Req() req: RequestWithUser) {
+    const { user } = req;
+    return this.userService.loginUser(user);
   }
 
   @UseGuards(JwtAuthGuard)

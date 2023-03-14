@@ -1,22 +1,23 @@
-import { UserLevel } from './user-level.enum';
-import { Location } from './user-location.enum';
-import { UserRole } from './user-role.enum';
-import { UserGender } from './user-sex.enum';
-import { TrainingStyle } from './training-style.enum';
-import { TrainingTime } from './user-training-time.enum';
+import { UserLevelType } from './user-level.enum';
+import { LocationType } from './user-location.enum';
+import { UserRoleType } from './user-role.enum';
+import { UserGenderType } from './user-sex.enum';
+import { TrainingStyleType } from './training-style.enum';
+import { TrainingTimeType } from './user-training-time.enum';
 
 export type User = {
   id?: number;
   name: string;
   email: string;
+  avatar?: string;
   password: string;
-  sex: UserGender;
+  gender: UserGenderType;
   dateBirth: Date;
-  role?: UserRole;
-  location: Location;
-  level: UserLevel;
-  trainingStyle: TrainingStyle;
-  trainingTime: TrainingTime;
+  role?: UserRoleType;
+  location: LocationType;
+  level: UserLevelType;
+  trainingStyle: TrainingStyleType;
+  trainingTime: TrainingTimeType;
   caloriesLoss: number;
   caloriesLossPerDay: number;
   isReadyForTraining: boolean;

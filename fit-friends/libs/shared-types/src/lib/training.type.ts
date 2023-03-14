@@ -13,7 +13,7 @@ export type Training = {
   price: number;
   caloriesLoss: number;
   description: string;
-  sex: UserGenderType;
+  gender: UserGenderType;
   video: string;
   rating: number;
   coachId: number;

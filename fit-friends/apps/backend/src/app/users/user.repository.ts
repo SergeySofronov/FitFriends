@@ -10,7 +10,6 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
 
   public async create(item: UserEntity): Promise<User> {
     const entityData = item.toObject();
-    delete entityData.origin;
     return this.prisma.user.create({
       data: {
         ...entityData,
