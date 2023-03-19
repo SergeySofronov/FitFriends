@@ -8,9 +8,9 @@ export const envJwtSchema = Joi.object({
     .string()
     .required(),
   JWT_AT_EXPIRES_IN: Joi
-    .number()
+    .string()
     .required(),
   JWT_RT_EXPIRES_IN: Joi
-    .number()
+    .string()
     .required()
 });

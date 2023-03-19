@@ -4,6 +4,7 @@ export enum ValidityMessage {
   IsArrayMessage = 'Field \u00AB$property\u00BB must be an array',
   IsEnumMessage = 'Field \u00AB$property\u00BB must be one of these values:',
   IsNotEmptyMessage = 'Field \u00AB$property\u00BB must not be empty',
+  isBoolean = 'Field \u00AB$property\u00BB must be "true/false" of "1/0"',
   MinValueMessage = 'Field \u00AB$property\u00BB value/length must be equal or greater than $constraint1',
   MaxValueMessage = 'Field \u00AB$property\u00BB value/length must be equal or less than $constraint1',
 }

@@ -1,13 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Res, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Patch, Post, Get, Res, Req, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, JwtAuthGuard } from '@fit-friends/core';
+import { fillObject, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard } from '@fit-friends/core';
+import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserAuthMessages } from './user.constant';
 import { UserRdo } from './rdo/user.rdo';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { RequestWithUser } from 'libs/core/src/lib/request-with-user.type';
 
 @ApiTags('users')
 @Controller('users')
@@ -25,6 +25,19 @@ export class UserController {
     return fillObject(UserRdo, newUser);
   }
 
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get a new access/refresh tokens'
+  })
+  async refresh(@Req() request: RequestWithTokenPayload<RefreshTokenPayload>) {
+    const { user: tokenPayload } = request;
+    return this.userService.loginUser(tokenPayload);
+  }
+
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   @ApiResponse({ status: HttpStatus.OK, description: UserAuthMessages.LOGIN, type: LoggedUserRdo })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: `${UserAuthMessages.WRONG_PASSWORD} or ${UserAuthMessages.WRONG_LOGIN}` })
@@ -32,6 +45,7 @@ export class UserController {
     const { user } = req;
     return this.userService.loginUser(user);
   }
+
 
   @UseGuards(JwtAuthGuard)
   @Get('login')
@@ -41,4 +55,17 @@ export class UserController {
   public async checkAuth(@Res() res: Response) {
     return res.status(HttpStatus.OK).send({ message: UserAuthMessages.OK });
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Patch('/')
+  // @ApiResponse({status: HttpStatus.OK, description: UserAuthMessages.UPDATE, type: UserRdo})
+  // @ApiResponse({
+  //   type: UserRdo,
+  //   status: HttpStatus.NOT_FOUND,
+  //   description: UserAuthMessages.NOT_FOUND,
+  // })
+  // public async update(@Req() req: Request, @Body() dto: UpdateUserDto) {
+  //   const updatedUser = await this.userService.updateUser(req.user['sub'], dto);
+  //   return fillObject(UserRdo, updatedUser);
+  // }
 }

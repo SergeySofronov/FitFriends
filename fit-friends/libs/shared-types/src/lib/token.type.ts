@@ -3,6 +3,5 @@ export type Token = {
   userId: number;
   tokenId: string;
   expiresIn: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
 }

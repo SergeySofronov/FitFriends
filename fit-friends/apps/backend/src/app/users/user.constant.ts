@@ -7,6 +7,7 @@ export const UserAuthMessages = {
   WRONG_LOGIN: 'User login is wrong.',
   CREATE: 'Creates a new user.',
   LOGIN: "User's login procedure",
+  UPDATE: "Updates the user's profile data",
   OK:'User authorized',
 } as const;
 
@@ -15,8 +16,12 @@ export enum UserValidity {
   NameMaxLength = 15,
   PasswordMinLength = 6,
   PasswordMaxLength = 12,
-  caloriesLossMinValue = 1000,
-  caloriesLossMaxValue = 5000,
-  caloriesLossPerDayMinValue = 1000,
-  caloriesLossPerDayMaxValue = 5000,
+  CertificateMinLength = 5,
+  CertificateMaxLength = 100,
+  CaloriesLossMinValue = 1000,
+  CaloriesLossMaxValue = 5000,
+  CaloriesLossPerDayMinValue = 1000,
+  CaloriesLossPerDayMaxValue = 5000,
+  MeritsMinLength = 10,
+  MeritsMaxLength = 140,
 }

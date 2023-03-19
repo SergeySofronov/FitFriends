@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CRUDRepositoryInterface } from '@fit-friends/core';
-import { User } from '@fit-friends/shared-types';
+import { User, UserRole } from '@fit-friends/shared-types';
 import { UserEntity } from './user.entity';
+import { CoachFeatures, UserFeatures } from 'libs/shared-types/src/lib/user-features.type';
 
 @Injectable()
 export class UserRepository implements CRUDRepositoryInterface<UserEntity, number, User> {
@@ -10,9 +11,36 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
 
   public async create(item: UserEntity): Promise<User> {
     const entityData = item.toObject();
+    const features = entityData.features;
+    delete entityData.features;
+
+    if (entityData.role === UserRole.User) {
+      return this.prisma.user.create({
+        data: {
+          ...entityData,
+          userFeatures: {
+            create: {
+              ...features as UserFeatures
+            }
+          }
+        },
+        include: {
+          userFeatures: true,
+        }
+      });
+    }
+
     return this.prisma.user.create({
       data: {
         ...entityData,
+        coachFeatures: {
+          create: {
+            ...features as CoachFeatures
+          }
+        }
+      },
+      include: {
+        coachFeatures: true,
       }
     });
   }

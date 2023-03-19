@@ -5,6 +5,7 @@ export const fileUploadOptions = registerAs('file', () => ({
   dest: process.env.FILE_UPLOAD_DEST,
   fileSize: parseInt(process.env.FILE_MAX_SIZE, 10),
   fileFilterExt: process.env.FILE_EXT_REGEXP,
+  defaultAvatar: process.env.DEFAULT_AVATAR,
 }));
 
 

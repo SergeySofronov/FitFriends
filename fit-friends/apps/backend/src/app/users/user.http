@@ -4,20 +4,55 @@ Host: localhost:3333
 Content-Type: application/json
 
 {
-  "email": "user@user.ru",
   "name": "John Doe",
-  "password": "123456"
+  "email": "user@user.ru",
+  "password": "123456",
+  "gender": "Male",
+  "dateBirth" : "2011-10-05T14:48:00.000Z",
+  "role" : "User",
+  "location" : "Pionerskaya",
+  "level" : "Beginner",
+  "trainingStyle" : "Yoga",
+  "features" : {
+    "trainingTime" : "Max30",
+    "caloriesLoss" : 1000,
+    "caloriesLossPerDay" : 1000,
+    "isReadyForTraining" : true
+  }
 }
+
+# {
+#   "name": "John Doe",
+#   "email": "user@coach.ru",
+#   "password": "123456",
+#   "gender": "Male",
+#   "dateBirth" : "2011-10-05T14:48:00.000Z",
+#   "role" : "Coach",
+#   "location" : "Pionerskaya",
+#   "level" : "Beginner",
+#   "trainingStyle" : "Yoga",
+#   "features" : {
+#     "certificate" : "certificate.pdf",
+#     "merits" : "Master of sports",
+#     "isPersonalCoach" : true
+#   }
+#  }
 ###
 
-# Проверить авторизацию пользователя
-GET  /fit-friends/users/login HTTP/1.1
+# Проверить авторизацию пользователя (ожидает access_token)
+GET /fit-friends/users/login HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5Abm90aWZ5LmxvY2FsIiwibmFtZSI6ImFkbWluIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzY1NzQyNjIsImV4cCI6MTY3NjU3NDg2Mn0.L-IHdsZnsGQI22zL4vUzwRgCRRKMvFtY9VNdGxYtwiU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzkyNDc5MTQsImV4cCI6MTY3OTg1MjcxNH0.x0LmF7oGEAeF20-dNdzwDX8oOB3Q6Z-HMfGhXfQqZKA
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzkyNDc5MzcsImV4cCI6MTY3OTg1MjczN30.xLkMnuDQWvxwDDS0VbMNyMEGMOAWWAzLNr46XwT14F4
 ###
 
 
-# Авторизоваться (пользователь)
+# Авторизоваться (user)
 POST /fit-friends/users/login HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
@@ -28,14 +63,26 @@ Content-Type: application/json
 }
 ###
 
-# Авторизоваться (admin)
+# Авторизоваться (coach)
 POST /fit-friends/users/login HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
 
 {
-  "email": "admin@notify.local",
-  "password": "admin"
+  "email": "user@coach.ru",
+  "password": "123456"
+}
+###
+
+# Редактировать пользователя (WIP)
+PATCH  /users/auth/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5MjQ3OTY1LCJleHAiOjE2NzkyNDg4NjV9.Zw6_ZlKIOEyIc96jwb2mdCnGoVmQ5bbghlAD23xLcbM
+Content-Type: application/json
+
+{
+  "firstName": "Filidor",
+  "lastName": "Zeleniy"
 }
 ###
 

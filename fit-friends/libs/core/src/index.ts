@@ -5,6 +5,7 @@ export * from './lib/strategies';
 export * from './lib/entity.interface';
 export * from './lib/crud-repository.interface';
 export * from './lib/helpers';
-export * from './lib/validate';
+export * from './lib/messages';
 export * from './lib/users-exceptions';
 export * from './lib/decorators';
+export * from './lib/token-exceptions';
