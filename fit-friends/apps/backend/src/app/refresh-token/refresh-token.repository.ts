@@ -1,7 +1,9 @@
 import { Token } from "@fit-friends/shared-types";
+import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { PrismaService } from "../prisma/prisma.service";
 import { RefreshTokenEntity } from "./refresh-token.entity";
 
+@Injectable()
 export class RefreshTokenRepository {
   constructor(private readonly prisma: PrismaService) { }
 
@@ -26,14 +28,6 @@ export class RefreshTokenRepository {
   }
 
   public async deleteExpiredTokens() {
-    console.log('deleting')
-    const tokens = await this.prisma.user.findFirst({
-        where: { email: 'user@coach.ru' }
-      });
-
-    //todo
-    console.log(tokens)
-
     return this.prisma.token.deleteMany({
       where: {
         expiresIn: { lt: new Date() }

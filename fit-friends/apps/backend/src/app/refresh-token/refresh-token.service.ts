@@ -14,8 +14,8 @@ export class RefreshTokenService {
   ) { }
 
   public async createRefreshSession(payload: RefreshTokenPayload) {
-    const count = +this.configService.get<string>('file.refreshTokenExpiresIn').slice(0, -1);
-    const unit = this.configService.get<string>('file.refreshTokenExpiresIn').at(-1);
+    const count = +this.configService.get<string>('jwt.refreshTokenExpiresIn').slice(0, -1);
+    const unit = this.configService.get<string>('jwt.refreshTokenExpiresIn').at(-1);
     const refreshToken = new RefreshTokenEntity({
       tokenId: payload.refreshTokenId,
       createdAt: new Date(),
@@ -27,8 +27,10 @@ export class RefreshTokenService {
   }
 
   public async deleteRefreshSession(tokenId: string) {
-    await this.deleteExpiredRefreshTokens();
-    return this.refreshTokenRepository.deleteByTokenId(tokenId)
+    if (tokenId) {
+      await this.refreshTokenRepository.deleteByTokenId(tokenId);
+    }
+    return this.deleteExpiredRefreshTokens();
   }
 
   public async isExists(tokenId: string): Promise<boolean> {

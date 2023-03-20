@@ -48,20 +48,49 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
   public async findByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findFirst({
       where: { email },
+      include: {
+        coachFeatures: true,
+        userFeatures: true,
+      }
     });
   }
 
   public async findById(id: number): Promise<User> {
     return this.prisma.user.findFirst({
       where: { id },
+      include: {
+        coachFeatures: true,
+        userFeatures: true,
+      }
     });
   }
 
   public async update(id: number, item: Partial<UserEntity>): Promise<User> {
+    const features = (item.role === UserRole.User) ? {
+      userFeatures: {
+        update: {
+          ...item.features
+        }
+      }
+    } : {
+      coachFeatures: {
+        update: {
+          ...item.features
+        }
+      }
+    }
+
+    delete item.features;
+
     return this.prisma.user.update({
       where: { id },
       data: {
         ...item,
+        ...features,
+      },
+      include: {
+        coachFeatures: true,
+        userFeatures: true,
       }
     })
   }

@@ -2,6 +2,8 @@ export const SALT_ROUNDS = 10;
 
 export const UserAuthMessages = {
   ALREADY_EXISTS: 'User with this email already exists',
+  UNAUTHORIZED: 'User is not authorized',
+  INVALID_TOKEN: 'Token is invalid or not found',
   NOT_FOUND: 'User not found',
   WRONG_PASSWORD: 'User password is wrong',
   WRONG_LOGIN: 'User login is wrong.',

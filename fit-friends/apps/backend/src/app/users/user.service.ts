@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserNotFoundEmailException, UserPasswordWrongException } from '@fit-friends/core';
+import { UserExistsException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException } from '@fit-friends/core';
 import { RefreshTokenPayload, User } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -9,6 +9,9 @@ import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 import { RefreshTokenService } from '../refresh-token/refresh-token.service';
 import { randomUUID } from 'crypto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { resolve } from 'path'
+import { existsSync, unlinkSync } from 'fs';
 
 @Injectable()
 export class UserService {
@@ -48,7 +51,7 @@ export class UserService {
     return existUser;
   }
 
-  public async loginUser(user: Pick<User, 'id' | 'email' | 'name' | 'role'>,  refreshTokenId?: string) {
+  public async loginUser(user: Pick<User, 'id' | 'email' | 'name' | 'role'>, refreshTokenId?: string) {
     const payload = {
       sub: user.id,
       email: user.email,
@@ -58,7 +61,7 @@ export class UserService {
 
     await this.refreshTokenService.deleteRefreshSession(refreshTokenId);
 
-    const refreshTokenPayload: RefreshTokenPayload = {...payload, refreshTokenId: randomUUID()}
+    const refreshTokenPayload: RefreshTokenPayload = { ...payload, refreshTokenId: randomUUID() }
 
     await this.refreshTokenService.createRefreshSession(refreshTokenPayload);
 
@@ -70,5 +73,29 @@ export class UserService {
         expiresIn: this.configService.get<string>('jwt.refreshTokenExpiresIn')
       })
     };
+  }
+
+  public async updateUser(id: number, dto: UpdateUserDto): Promise<User> {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
+
+    if (existUser.role !== dto.role) {
+      throw new UserRoleChangeException(this.logger);
+    }
+
+    const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
+
+    const userAvatar = existUser?.avatar;
+    if (userAvatar && dto.avatar) {
+      const avatarPath = resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${userAvatar}`);
+      if (existsSync(avatarPath) && (userAvatar !== defaultAvatar)) {
+        //todo
+        console.log(`avatarPath: ${avatarPath}`)
+        unlinkSync(avatarPath);
+      }
+    }
+    return this.userRepository.update(id, { ...dto, updatedAt: new Date() });
   }
 }

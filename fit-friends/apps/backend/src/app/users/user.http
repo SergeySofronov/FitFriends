@@ -42,13 +42,13 @@ Content-Type: application/json
 # Проверить авторизацию пользователя (ожидает access_token)
 GET /fit-friends/users/login HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzkyNDc5MTQsImV4cCI6MTY3OTg1MjcxNH0.x0LmF7oGEAeF20-dNdzwDX8oOB3Q6Z-HMfGhXfQqZKA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI4ODA4YWQxNi1kMDZiLTQyODQtOWM2MS03NjBjYjQ0N2E2OGIiLCJpYXQiOjE2NzkzMzM0OTgsImV4cCI6MTY3OTkzODI5OH0.o7XDjY4-Bh9A7U7QJ29aSk-nOFcl8rqfkTaBFW2bQA8
 ###
 
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2NzkyNDc5MzcsImV4cCI6MTY3OTg1MjczN30.xLkMnuDQWvxwDDS0VbMNyMEGMOAWWAzLNr46XwT14F4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI2NzM1ZGQzZS03Zjc3LTRiZjMtOTY4Ny0zNDc5ZDYzNGRkMTciLCJpYXQiOjE2NzkzMzU2NTEsImV4cCI6MTY3OTk0MDQ1MX0.H10JgV3dBj_TaR1aiZyrnOaTEoJROJ0XoUcepzlxJO0
 ###
 
 
@@ -75,14 +75,17 @@ Content-Type: application/json
 ###
 
 # Редактировать пользователя (WIP)
-PATCH  /users/auth/ HTTP/1.1
+PATCH  /fit-friends/users/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5MjQ3OTY1LCJleHAiOjE2NzkyNDg4NjV9.Zw6_ZlKIOEyIc96jwb2mdCnGoVmQ5bbghlAD23xLcbM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5MzM1NjUxLCJleHAiOjE2NzkzMzY1NTF9.0dXMpR9XgcjB3k_e37zmQcog79RqUo7tVTRPCG0gFuM
 Content-Type: application/json
 
 {
-  "firstName": "Filidor",
-  "lastName": "Zeleniy"
+  "name": "Filidor Zeleniy",
+  "role" : "User",
+  "features" : {
+    "trainingTime" : "Max50"
+  }
 }
 ###
 

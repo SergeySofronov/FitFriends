@@ -1,6 +1,6 @@
 import { UserRoleType } from "./user-role.enum";
 
-export type TokenPayload = {
+export class TokenPayload {
   sub: number;
   name: string;
   email: string;

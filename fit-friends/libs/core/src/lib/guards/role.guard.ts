@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { UserNotAdminException } from '../users-exceptions';
+import { UserRoleException } from '../users-exceptions';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -20,6 +20,6 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    throw new UserNotAdminException(this.logger, request.user?.sub);
+    throw new UserRoleException(this.logger, request.user?.sub);
   }
 }
