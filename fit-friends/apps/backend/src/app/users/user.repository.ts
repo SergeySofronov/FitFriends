@@ -4,6 +4,8 @@ import { CRUDRepositoryInterface } from '@fit-friends/core';
 import { User, UserRole } from '@fit-friends/shared-types';
 import { UserEntity } from './user.entity';
 import { CoachFeatures, UserFeatures } from 'libs/shared-types/src/lib/user-features.type';
+import { UserQuery } from './query/user.query';
+import { UserSort, UserQueryDefault as UQ, UserSortField} from './user.constant';
 
 @Injectable()
 export class UserRepository implements CRUDRepositoryInterface<UserEntity, number, User> {
@@ -56,12 +58,35 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
   }
 
   public async findById(id: number): Promise<User> {
-    return this.prisma.user.findFirst({
+    return await this.prisma.user.findFirst({
       where: { id },
       include: {
         coachFeatures: true,
         userFeatures: true,
       }
+    });
+  }
+
+  public async find({
+    limit = UQ.EFAULT_USER_QUERY_LIMIT,
+    page = 1,
+    sortDirection = UQ.DEFAULT_USER_SORT_DIRECTION,
+    sortType = UserSort.Date,
+  }: UserQuery): Promise<User[]> {
+    const sortField = { [UserSortField[sortType]]: sortDirection };
+
+    return this.prisma.user.findMany({
+      take: limit,
+      include: {
+        coachFeatures: true,
+        userFeatures: true,
+      },
+      orderBy: [
+        {
+          ...sortField
+        }
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

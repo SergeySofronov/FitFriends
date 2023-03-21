@@ -4,7 +4,7 @@ export const UserAuthMessages = {
   ALREADY_EXISTS: 'User with this email already exists',
   UNAUTHORIZED: 'User is not authorized',
   INVALID_TOKEN: 'Token is invalid or not found',
-  NOT_FOUND: 'User not found',
+  USER_NOT_FOUND: 'User not found',
   WRONG_PASSWORD: 'User password is wrong',
   WRONG_LOGIN: 'User login is wrong.',
   CREATE: 'Creates a new user.',
@@ -27,3 +27,17 @@ export enum UserValidity {
   MeritsMinLength = 10,
   MeritsMaxLength = 140,
 }
+
+export const UserQueryDefault = {
+  EFAULT_USER_QUERY_LIMIT: 50,
+  DEFAULT_USER_SORT_DIRECTION: 'desc',
+} as const;
+
+export enum UserSort {
+  Date = 'date',
+}
+
+export const UserSortField = {
+  [UserSort.Date]: 'createdAt',
+};
+

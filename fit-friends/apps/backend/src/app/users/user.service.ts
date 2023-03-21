@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException } from '@fit-friends/core';
+import { UserExistsException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException } from '@fit-friends/core';
 import { RefreshTokenPayload, User } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -12,6 +12,7 @@ import { randomUUID } from 'crypto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { resolve } from 'path'
 import { existsSync, unlinkSync } from 'fs';
+import { UserQuery } from './query/user.query';
 
 @Injectable()
 export class UserService {
@@ -75,7 +76,7 @@ export class UserService {
     };
   }
 
-  public async updateUser(id: number, dto: UpdateUserDto): Promise<User> {
+  public async updateUser(id: number, dto: Partial<UpdateUserDto>): Promise<User> {
     const existUser = await this.userRepository.findById(id);
     if (!existUser) {
       throw new UserNotFoundIdException(this.logger, id);
@@ -85,17 +86,58 @@ export class UserService {
       throw new UserRoleChangeException(this.logger);
     }
 
-    const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
+    return this.userRepository.update(id, { ...dto, updatedAt: new Date() });
+  }
+
+  public async updateUserAvatar(id: number, avatar: string): Promise<User> {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
 
     const userAvatar = existUser?.avatar;
-    if (userAvatar && dto.avatar) {
+
+    if (userAvatar && avatar) {
       const avatarPath = resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${userAvatar}`);
-      if (existsSync(avatarPath) && (userAvatar !== defaultAvatar)) {
-        //todo
-        console.log(`avatarPath: ${avatarPath}`)
+      if (existsSync(avatarPath)) {
         unlinkSync(avatarPath);
       }
     }
-    return this.userRepository.update(id, { ...dto, updatedAt: new Date() });
+
+    delete existUser["coachFeatures"];
+    delete existUser["userFeatures"];
+
+    return this.userRepository.update(id, { ...existUser, avatar, updatedAt: new Date() });
+  }
+
+  public async getUserAvatarPath(id: number): Promise<string> {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
+    const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
+    if (existUser.avatar === defaultAvatar) {
+      return resolve(__dirname, `${this.configService.get<string>('file.defaultAvatarFolder')}/${existUser.avatar}`);
+    }
+
+    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${existUser.avatar}`);
+  }
+
+  async getUsers(query: UserQuery): Promise<User[]> {
+    const existUsers = await this.userRepository.find(query);
+
+    if (!existUsers?.length) {
+      throw new UsersNotFoundException(this.logger);
+    }
+    return existUsers;
+  }
+
+  async getUser(id: number): Promise<User> {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
+
+    return existUser;
   }
 }

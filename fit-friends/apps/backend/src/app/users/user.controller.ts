@@ -1,13 +1,19 @@
-import { Body, Controller, HttpCode, HttpStatus, Patch, Post, Get, Res, Req, UseGuards } from '@nestjs/common';
+import {
+  Body, Controller, HttpCode, HttpStatus, Patch, Param, Query,
+  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors
+} from '@nestjs/common';
 import { Response } from 'express';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard } from '@fit-friends/core';
-import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload } from '@fit-friends/shared-types';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { fillObject, getMulterOptions, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserAuthMessages } from './user.constant';
 import { UserRdo } from './rdo/user.rdo';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiIndexQuery } from './query/user.api-query.decorator';
+import { UserQuery } from './query/user.query';
 
 @ApiTags('users')
 @Controller('users')
@@ -62,9 +68,53 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Patch('/')
   @ApiResponse({ status: HttpStatus.OK, description: UserAuthMessages.UPDATE, type: UserRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.NOT_FOUND, type: UserRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.USER_NOT_FOUND, type: UserRdo })
   public async update(@Req() { user }: RequestWithTokenPayload<RefreshTokenPayload>, @Body() dto: UpdateUserDto) {
     const updatedUser = await this.userService.updateUser(user.sub, dto);
     return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('avatar', getMulterOptions()))
+  @Post('/:id/avatar')
+  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for setting user avatar', type: UserRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.USER_NOT_FOUND })
+  public async upload(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    const updatedUser = this.userService.updateUserAvatar(id, file.filename);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/avatar')
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting user avatar', type: UserRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.USER_NOT_FOUND })
+  public async read(@Req() { user }: RequestWithTokenPayload<RefreshTokenPayload>, @Res() res: Response) {
+    const avatarPath = await this.userService.getUserAvatarPath(user.sub);
+    return res.sendFile(avatarPath);
+  }
+
+  @Get('/')
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.User}`)
+  @ApiIndexQuery()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a array of users', type: UserRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Users not found', })
+  async index(@Query() query: UserQuery) {
+    const users = await this.userService.getUsers(query);
+    return fillObject(UserRdo, users);
+  }
+
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting detailed information about the user', type: UserRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found', })
+  async show(@Param('id') id: number) {
+    const user = await this.userService.getUser(id);
+    return fillObject(UserRdo, user);
   }
 }

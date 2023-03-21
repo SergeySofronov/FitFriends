@@ -77,7 +77,7 @@ Content-Type: application/json
 # Редактировать пользователя (WIP)
 PATCH  /fit-friends/users/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5MzM1NjUxLCJleHAiOjE2NzkzMzY1NTF9.0dXMpR9XgcjB3k_e37zmQcog79RqUo7tVTRPCG0gFuM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDE3ODkzLCJleHAiOjE2Nzk0MTg3OTN9.wBYmvYCglJbdShPFQ5AWlxtO9y9qR4IbEEnGnjIpKQE
 Content-Type: application/json
 
 {
@@ -89,3 +89,35 @@ Content-Type: application/json
 }
 ###
 
+#  Загрузка аватарки пользователя
+POST /fit-friends/users/1/avatar/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDIwNDE4LCJleHAiOjE2Nzk0MjEzMTh9.CoRT3OkOm5kDYKBo9mD_LDCC-QjQQ1l-1XF-PPCDEtk
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="05.jpg"
+Content-Type: image/jpeg
+
+< D:/загрузки/05.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+###
+
+#  Получить аватарку пользователя
+GET /fit-friends/users/avatar/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDIyMTYxLCJleHAiOjE2Nzk0MjMwNjF9.KTOZ0kZJN20sA13kJ3Rk9mundVU-Y-OpHf8QPzZaZFE
+###
+
+#  Получить список пользователей
+# ?limit=50&page=0&sortType=date&sortDirection=desc
+GET /fit-friends/users?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
+###
+
+#  Получить информацию о пользователе
+GET /fit-friends/users/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
+###
