@@ -4,11 +4,10 @@ import { MulterModuleOptions } from '@nestjs/platform-express/multer';
 export const fileUploadOptions = registerAs('file', () => ({
   dest: process.env.FILE_UPLOAD_DEST,
   fileSize: parseInt(process.env.FILE_MAX_SIZE, 10),
-  fileFilterExt: process.env.FILE_EXT_REGEXP,
+  fileFilterExp: process.env.FILE_FILTER_REGEXP,
   defaultAvatar: process.env.DEFAULT_AVATAR,
   defaultAvatarFolder: process.env.DEFAULT_AVATAR_FOLDER,
 }));
-
 
 export async function getFileUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
   return {

@@ -7,7 +7,7 @@ export const envFileUploadSchema = Joi.object({
   FILE_MAX_SIZE: Joi
     .number()
     .required(),
-  FILE_EXT_REGEXP: Joi
+  FILE_FILTER_REGEXP: Joi
     .string()
     .required(),
 });

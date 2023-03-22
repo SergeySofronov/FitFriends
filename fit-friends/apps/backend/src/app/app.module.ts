@@ -3,11 +3,19 @@ import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/user.module';
-import { fileUploadOptions, frontendUrlOptions, jwtOptions } from '@fit-friends/core';
+import {
+  fileUploadOptions,
+  frontendUrlOptions,
+  jwtOptions,
+} from '@fit-friends/core';
 import { ENV_FILE_PATH } from './app.constant';
 import { envValidationSchema } from './env.validation.schema';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import { join } from 'path';
+import { TrainingModule } from './training/training.module';
+import { CommentsModule } from './comments/comments.module';
+import { GymsModule } from './gyms/gyms.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
@@ -15,8 +23,8 @@ import { join } from 'path';
       rootPath: join(__dirname, 'assets'),
       serveStaticOptions: {
         redirect: false,
-        index: false
-      }
+        index: false,
+      },
     }),
     ConfigModule.forRoot({
       cache: true,
@@ -28,8 +36,12 @@ import { join } from 'path';
     PrismaModule,
     UsersModule,
     RefreshTokenModule,
+    TrainingModule,
+    CommentsModule,
+    GymsModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

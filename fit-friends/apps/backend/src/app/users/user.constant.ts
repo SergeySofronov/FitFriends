@@ -9,6 +9,7 @@ export const UserAuthMessages = {
   WRONG_LOGIN: 'User login is wrong.',
   CREATE: 'Creates a new user.',
   LOGIN: "User's login procedure",
+  LOGOUT: "User's logout procedure",
   UPDATE: "Updates the user's profile data",
   OK:'User authorized',
 } as const;
@@ -29,7 +30,7 @@ export enum UserValidity {
 }
 
 export const UserQueryDefault = {
-  EFAULT_USER_QUERY_LIMIT: 50,
+  DEFAULT_USER_QUERY_LIMIT: 50,
   DEFAULT_USER_SORT_DIRECTION: 'desc',
 } as const;
 

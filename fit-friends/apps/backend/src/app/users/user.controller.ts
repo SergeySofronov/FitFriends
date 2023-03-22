@@ -1,7 +1,8 @@
 import {
   Body, Controller, HttpCode, HttpStatus, Patch, Param, Query,
-  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors
+  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -19,6 +20,7 @@ import { UserQuery } from './query/user.query';
 @Controller('users')
 export class UserController {
   constructor(
+    private readonly configService: ConfigService,
     private readonly userService: UserService,
   ) { }
 
@@ -65,7 +67,7 @@ export class UserController {
     return res.status(HttpStatus.OK).send({ message: UserAuthMessages.OK });
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtRefreshGuard)
   @Patch('/')
   @ApiResponse({ status: HttpStatus.OK, description: UserAuthMessages.UPDATE, type: UserRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.USER_NOT_FOUND, type: UserRdo })
@@ -81,7 +83,6 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for setting user avatar', type: UserRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserAuthMessages.USER_NOT_FOUND })
   public async upload(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
-    console.log(file);
     const updatedUser = this.userService.updateUserAvatar(id, file.filename);
     return fillObject(UserRdo, updatedUser);
   }
@@ -116,5 +117,14 @@ export class UserController {
   async show(@Param('id') id: number) {
     const user = await this.userService.getUser(id);
     return fillObject(UserRdo, user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  @ApiResponse({ status: HttpStatus.OK, description: UserAuthMessages.LOGOUT })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found' })
+  async logout(@Req() { user }: RequestWithTokenPayload<RefreshTokenPayload>, @Res() res: Response) {
+    await this.userService.logoutUser(user.sub);
+    return res.status(HttpStatus.OK).send({ message: UserAuthMessages.UNAUTHORIZED })
   }
 }

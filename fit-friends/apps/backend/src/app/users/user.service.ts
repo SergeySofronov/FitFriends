@@ -140,4 +140,13 @@ export class UserService {
 
     return existUser;
   }
+
+  async logoutUser(id: number): Promise<void> {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
+
+    await this.refreshTokenService.deleteRefreshTokens(id);
+  }
 }

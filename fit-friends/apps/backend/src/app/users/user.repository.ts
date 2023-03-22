@@ -68,7 +68,7 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
   }
 
   public async find({
-    limit = UQ.EFAULT_USER_QUERY_LIMIT,
+    limit = UQ.DEFAULT_USER_QUERY_LIMIT,
     page = 1,
     sortDirection = UQ.DEFAULT_USER_SORT_DIRECTION,
     sortType = UserSort.Date,

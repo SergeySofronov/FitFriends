@@ -34,4 +34,12 @@ export class RefreshTokenRepository {
       }
     })
   }
+
+  public async deleteAll(userId: number) {
+    return this.prisma.token.deleteMany({
+      where: {
+        userId
+      }
+    })
+  }
 }

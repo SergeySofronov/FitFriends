@@ -4,7 +4,7 @@ import { ValidityMessage as VM } from '@fit-friends/core';
 import { UserQueryDefault as UQ, UserSort } from '../user.constant';
 
 export class UserQuery {
-  @Transform(({ value }) => +value || UQ.EFAULT_USER_QUERY_LIMIT)
+  @Transform(({ value }) => (+value && (+value < UQ.DEFAULT_USER_QUERY_LIMIT) ? +value : UQ.DEFAULT_USER_QUERY_LIMIT))
   @IsNumber()
   @IsOptional()
   public limit?: number;

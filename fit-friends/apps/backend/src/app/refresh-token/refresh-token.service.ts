@@ -41,4 +41,8 @@ export class RefreshTokenService {
   public async deleteExpiredRefreshTokens() {
     return this.refreshTokenRepository.deleteExpiredTokens();
   }
+
+  public async deleteRefreshTokens(userId: number) {
+    return this.refreshTokenRepository.deleteAll(userId);
+  }
 }
