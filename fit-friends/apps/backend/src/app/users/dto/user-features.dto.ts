@@ -49,15 +49,15 @@ export class UserFeaturesDto extends FeaturesDto {
 
 export class CoachFeaturesDto extends FeaturesDto {
   @ApiProperty({
-    description: "Trainer's certificate, link to pdf file",
+    description: "Trainer's certificate,  <name>.pdf file",
     example: 'certificate.pdf',
-    minLength: UV.CertificateMinLength,
-    maxLength: UV.CertificateMaxLength,
+    minLength: UV.CertificateTitleMinLength,
+    maxLength: UV.CertificateTitleMaxLength,
     required: true,
   })
   @Matches('.(pdf)$')
-  @MinLength(UV.CertificateMinLength, { message: VM.MinValueMessage })
-  @MaxLength(UV.CertificateMaxLength, { message: VM.MaxValueMessage })
+  @MinLength(UV.CertificateTitleMinLength, { message: VM.MinValueMessage })
+  @MaxLength(UV.CertificateTitleMaxLength, { message: VM.MaxValueMessage })
   certificate: string;
 
   @ApiProperty({

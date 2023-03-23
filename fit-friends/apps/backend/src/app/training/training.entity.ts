@@ -1,6 +1,7 @@
 import { Entity } from '@fit-friends/core';
-import { Training, TrainingStyle, TrainingTime, UserGenderType, UserLevelType } from '@fit-friends/shared-types';
+import { Training, TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserGender, UserGenderType, UserLevel, UserLevelType } from '@fit-friends/shared-types';
 import { Injectable } from '@nestjs/common'
+import { TrainingValidity } from './training.constant';
 
 @Injectable()
 export class TrainingEntity implements Entity<TrainingEntity, Training>, Training {
@@ -8,8 +9,8 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
   public title: string;
   public backgroundImage: string;
   public level: UserLevelType;
-  public trainingStyle: TrainingStyle;
-  public trainingTime: TrainingTime;
+  public trainingStyle: TrainingStyleType;
+  public trainingTime: TrainingTimeType;
   public price: number;
   public caloriesLoss: number;
   public description: string;
@@ -18,9 +19,11 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
   public rating: number;
   public coachId: number;
   public isSpecial: boolean;
+  public createdAt: Date;
+  public updatedAt: Date;
 
-  constructor(Training: Training) {
-    this.fillEntity(Training);
+  constructor(training: Training) {
+    this.fillEntity(training);
   }
 
   public toObject() {
@@ -31,30 +34,17 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
     this.id = training.id;
     this.title = training.title;
     this.backgroundImage = training.backgroundImage;
-    this.level =
-    this.trainingStyle: TrainingStyle;
-    this.trainingTime: TrainingTime;
-    this.price: number;
-    this.caloriesLoss: number;
-    this.description: string;
-    this.gender: UserGenderType;
-    this.video: string;
-    this.rating: number;
-    this.coachId: number;
-    this.isSpecial: boolean;
-
-    this.email = training.email;
-    this.avatar = training.avatar;
-    this.name = training.name;
-    this.role = TrainingRole.Training;
-    this.password = training.password;
-    this.gender = training.gender || TrainingGender.Indifferent;
-    this.dateBirth = training.dateBirth;
-    this.role = training.role || TrainingRole.Training;
-    this.location = training.location;
-    this.level = training.level || TrainingLevel.Beginner;
+    this.level = training.level || UserLevel.Beginner;
     this.trainingStyle = training.trainingStyle || TrainingStyle.Aerobics;
-    this.features = training.features;
+    this.trainingTime = training.trainingTime || TrainingTime.Max30;
+    this.price = training.price || TrainingValidity.PriceMinValue;
+    this.caloriesLoss = training.caloriesLoss || TrainingValidity.CaloriesLossMinValue;
+    this.description = training.description;
+    this.gender = training.gender || UserGender.Indifferent;
+    this.video = training.video;
+    this.rating = TrainingValidity.DefaultRating;
+    this.coachId = training.coachId;
+    this.isSpecial = training.isSpecial;
     this.createdAt = training.createdAt || new Date();
     this.updatedAt = training.updatedAt || new Date();
   }

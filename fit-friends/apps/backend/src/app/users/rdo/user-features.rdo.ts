@@ -42,8 +42,8 @@ export class FeaturesRdo {
   @ApiProperty({
     description: "Trainer's certificate, link to pdf file",
     example: 'certificate.pdf',
-    minLength: UV.CertificateMinLength,
-    maxLength: UV.CertificateMaxLength,
+    minLength: UV.CertificateTitleMinLength,
+    maxLength: UV.CertificateTitleMaxLength,
   })
   @Expose()
   certificate: string;

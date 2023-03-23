@@ -117,7 +117,7 @@ export class UserService {
     }
     const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
     if (existUser.avatar === defaultAvatar) {
-      return resolve(__dirname, `${this.configService.get<string>('file.defaultAvatarFolder')}/${existUser.avatar}`);
+      return resolve(__dirname, `${this.configService.get<string>('file.defaultResourceFolder')}/${existUser.avatar}`);
     }
 
     return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${existUser.avatar}`);

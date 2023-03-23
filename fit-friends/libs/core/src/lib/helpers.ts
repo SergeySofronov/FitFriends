@@ -16,7 +16,8 @@ export function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V, g
 
 export function getMulterOptions() {
   return {
-    storage: diskStorage({
+    storage:
+    diskStorage({
       destination: (req: Request, _file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
         const folderName = req.params.id;
         const folderPath = resolve(__dirname, process.env.FILE_UPLOAD_DEST, folderName);
@@ -39,7 +40,7 @@ export function getMulterOptions() {
       },
     }),
     fileFilter: (_req: Request, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) => {
-      if (!file.originalname.match(new RegExp(process.env.FILE_FILTER_REGEXP))) {
+      if (!file.originalname.match(new RegExp(process.env.IMAGE_FILTER_REGEXP))) {
         return callback(
           new HttpException(
             'Not allowed file extension',

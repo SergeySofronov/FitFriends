@@ -1,6 +1,6 @@
 export const SALT_ROUNDS = 10;
 
-export const UserAuthMessages = {
+export const UserMessages = {
   ALREADY_EXISTS: 'User with this email already exists',
   UNAUTHORIZED: 'User is not authorized',
   INVALID_TOKEN: 'Token is invalid or not found',
@@ -19,8 +19,8 @@ export enum UserValidity {
   NameMaxLength = 15,
   PasswordMinLength = 6,
   PasswordMaxLength = 12,
-  CertificateMinLength = 5,
-  CertificateMaxLength = 100,
+  CertificateTitleMinLength = 5,
+  CertificateTitleMaxLength = 100,
   CaloriesLossMinValue = 1000,
   CaloriesLossMaxValue = 5000,
   CaloriesLossPerDayMinValue = 1000,
