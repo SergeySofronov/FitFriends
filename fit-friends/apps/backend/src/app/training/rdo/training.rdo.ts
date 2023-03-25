@@ -1,100 +1,107 @@
-import { Expose, Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { Location, LocationType, TrainingStyle, TrainingStyleType, UserGenderType, UserLevel, UserLevelType, UserRole, UserRoleType } from '@fit-friends/shared-types';
-import { UserGender } from '@prisma/client';
-import { FeaturesRdo } from './user-features.rdo';
+import { Expose, Transform } from 'class-transformer';
+import { TrainingValidity as TV } from '../training.constant';
+import { TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserGender, UserGenderType, UserLevel, UserLevelType } from '@fit-friends/shared-types';
 
-export class UserRdo {
+export class TrainingRdo {
   @ApiProperty({
-    description: 'User unique identifier',
-    example: 1,
+    description: 'Training title',
+    example: 'Run, Forest, run',
   })
   @Expose()
-  public id: string;
-
-  @ApiProperty({
-    description: 'User unique email address',
-    example: 'user@user.ru',
-  })
-  @Expose()
-  public email: string;
-
-  @ApiProperty({
-    description: 'User first name',
-    example: 'John Doe',
-  })
-  @Expose()
-  public name: string;
-
-  @ApiProperty({
-    description: "User's avatar",
-    example: 'default-avatar.jpg',
-  })
-  @Expose()
-  public avatar?: string;
-
-  @ApiProperty({
-    description: "User's gender",
-    example: `${UserGender.Male}`,
-  })
-  @Expose()
-  public gender: UserGenderType;
-
-  @ApiProperty({
-    description: "User's date of birth",
-    example: `${new Date().toISOString()}`,
-  })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
-  @Expose()
-  public dateBirth: Date;
-
-  @ApiProperty({
-    description: "User's role",
-    example: `${UserRole.User}`,
-    type: () => String,
-    enum: UserRole,
-  })
-  @Expose()
-  public role: UserRoleType;
-
-  @ApiProperty({
-    description: "User's location",
-    example: `${Location.Petrogradskaya}`,
-    type: () => String,
-    enum: Location,
-  })
-  @Expose()
-  public location: LocationType;
+  public title: string;
 
   @ApiProperty({
     description: "User's training level",
-    example: `${UserLevel.Beginner}`,
-    type: () => String,
-    enum: UserLevel,
-    required: true,
+    example: UserLevel.Beginner,
   })
   @Expose()
   public level: UserLevelType;
 
   @ApiProperty({
-    description: "User's trining style",
-    example: `${TrainingStyle.Aerobics}`,
-    type: () => String,
-    enum: TrainingStyle,
+    description: "Trining style",
+    example: TrainingStyle.Aerobics,
   })
   @Expose()
   public trainingStyle: TrainingStyleType;
 
   @ApiProperty({
-    description: 'User first name',
-    example: 'John Doe',
+    description: "Estimated training time",
+    example: TrainingTime.Max30,
   })
   @Expose()
-  @Type(() => FeaturesRdo)
-  @Transform(({ obj }) => {
-    obj.features = obj.userFeatures ? obj.userFeatures : obj.coachFeatures;
-    delete obj.features.id;
-    return obj.features;
+  trainingTime: TrainingTimeType;
+
+  @ApiProperty({
+    description: 'The price of training',
+    example: TV.PriceMinValue,
   })
-  public features: FeaturesRdo;
+  @Expose()
+  public price: number;
+
+  @ApiProperty({
+    description: 'Еhe number of calories consumed during a workout',
+    example: TV.CaloriesLossMinValue,
+  })
+  @Expose()
+  public caloriesLoss: number;
+
+  @ApiProperty({
+    description: 'Training description',
+    example: 'A complex set of exercises for professional athletes to work out indicators in the classical style',
+  })
+  @Expose()
+  public description: string;
+
+  @ApiProperty({
+    description: "User's gender",
+    example: UserGender.Male,
+  })
+  @Expose()
+  public gender: UserGenderType;
+
+  @ApiProperty({
+    description: 'Training video link',
+    example: '/folder/file.mp4',
+  })
+  @Expose()
+  public video: string;
+
+  @ApiProperty({
+    description: 'User rating of the workout',
+    example: TV.RatingMinValue,
+  })
+  @Expose()
+  public rating: number;
+
+
+  @ApiProperty({
+    description: 'Coach unique identifier',
+    example: 1,
+  })
+  @Expose()
+  public coachId: number;
+
+  @ApiProperty({
+    description: "The flag defines the participation of the training as a special offer",
+    example: true,
+  })
+  @Expose()
+  public isSpecial: boolean;
+
+  @ApiProperty({
+    description: 'Date of creation of the training',
+    example: `${new Date().toISOString()}`,
+  })
+  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Expose()
+  public createdAt: Date;
+
+  @ApiProperty({
+    description: 'Date of update of the training',
+    example: `${new Date().toISOString()}`,
+  })
+  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Expose()
+  public updatedAt: Date;
 }

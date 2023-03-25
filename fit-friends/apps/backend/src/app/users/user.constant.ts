@@ -29,8 +29,9 @@ export enum UserValidity {
   MeritsMaxLength = 140,
 }
 
-export const UserQueryDefault = {
-  DEFAULT_USER_QUERY_LIMIT: 50,
+export const UserQuery = {
+  USER_QUERY_MAX: 50,
+  USER_QUERY_MIN: 1,
   DEFAULT_USER_SORT_DIRECTION: 'desc',
 } as const;
 

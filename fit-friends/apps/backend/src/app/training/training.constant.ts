@@ -7,20 +7,24 @@ export enum TrainingValidity {
   CaloriesLossMaxValue = 5000,
   DescriptionMinLength = 10,
   DescriptionMaxLength = 140,
-  DefaultRating = 0,
+  RatingMinValue = 0,
+  RatingMaxValue = 0,
 }
 
-export const TrainingQueryDefault = {
-  DEFAULT_TRAINING_QUERY_LIMIT: 50,
+export const TrainingQuery = {
+  TRAINING_QUERY_MAX: 50,
+  TRAINING_QUERY_MIN: 1,
   DEFAULT_TRAINING_SORT_DIRECTION: 'desc',
 } as const;
 
 export enum TrainingSort {
   Date = 'date',
+  Price = 'price'
 }
 
 export const TrainingSortField = {
   [TrainingSort.Date]: 'createdAt',
+  [TrainingSort.Price]: 'price',
 };
 
 

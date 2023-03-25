@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsDateString, IsEmail, IsEnum, IsNotEmptyObject, MaxLength, MinLength, ValidateNested } from 'class-validator';
+import { IsDateString, IsEmail, IsEnum, IsNotEmptyObject, Matches, MaxLength, MinLength, ValidateNested } from 'class-validator';
 import { ValidityMessage as VM } from '@fit-friends/core';
 import { UserValidity as UV } from '../user.constant';
 import { Features, Location, LocationType, TrainingStyle, TrainingStyleType, UserGender, UserGenderType, UserLevel, UserLevelType, UserRole, UserRoleType } from '@fit-friends/shared-types';
@@ -19,9 +19,11 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User name',
     example: 'John Doe',
+    minLength: UV.NameMinLength,
+    maxLength: UV.NameMaxLength,
     required: true,
   })
-  @Transform(({ value }) => value instanceof String ? value.trim() : value)
+  @Transform(({ value }) => value instanceof String ? value.replace(/\s{2,}/g,' ').trim() : value)
   @MinLength(UV.NameMinLength, { message: VM.MinValueMessage })
   @MaxLength(UV.NameMaxLength, { message: VM.MaxValueMessage })
   public name: string;
@@ -29,16 +31,18 @@ export class CreateUserDto {
   @ApiProperty({
     description: 'User password',
     example: '123456',
+    minLength: UV.PasswordMinLength,
+    maxLength: UV.PasswordMaxLength,
     required: true,
   })
-  @Transform(({ value }) => value instanceof String ? value.trim() : value)
   @MinLength(UV.PasswordMinLength, { message: VM.MinValueMessage })
   @MaxLength(UV.PasswordMaxLength, { message: VM.MaxValueMessage })
+  @Matches(/[a-zA-Z0-9]+/)
   public password: string;
 
   @ApiProperty({
     description: "User's gender",
-    example: `${UserGender.Male}`,
+    example: UserGender.Male,
     type: () => String,
     enum: UserGender,
     required: true,
@@ -57,7 +61,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: "User's role",
-    example: `${UserRole.User}`,
+    example: UserRole.User,
     type: () => String,
     enum: UserRole,
     required: true,
@@ -67,7 +71,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: "User's location",
-    example: `${Location.Petrogradskaya}`,
+    example: Location.Petrogradskaya,
     type: () => String,
     enum: Location,
     required: true,
@@ -77,7 +81,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: "User's training level",
-    example: `${UserLevel.Beginner}`,
+    example: UserLevel.Beginner,
     type: () => String,
     enum: UserLevel,
     required: true,
@@ -87,7 +91,7 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: "User's trining style",
-    example: `${TrainingStyle.Aerobics}`,
+    example: TrainingStyle.Aerobics,
     type: () => String,
     enum: TrainingStyle,
     required: true,

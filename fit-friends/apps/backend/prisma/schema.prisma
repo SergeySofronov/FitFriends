@@ -91,7 +91,7 @@ model User {
   trainingStyle TrainingStyle  @default(Aerobics)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())
-  comment       Comment[]
+  review       Review[]
   order         Order[]
   requester     Request[]      @relation(name: "requester")
   requested     Request[]      @relation(name: "requested")
@@ -141,7 +141,7 @@ model Training {
   coach           User          @relation(fields: [coachId], references: [id])
   coachId         Int
   isSpecial       Boolean
-  comment         Comment[]
+  review         Review[]
   order           Order[]
 
   @@map("trainings")
@@ -162,7 +162,7 @@ model Gym {
   @@map("gyms")
 }
 
-model Comment {
+model Review {
   id         Int      @id @default(autoincrement())
   training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   trainingId Int
@@ -172,7 +172,7 @@ model Comment {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
 
-  @@map("comments")
+  @@map("reviews")
 }
 
 model Order {

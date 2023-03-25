@@ -97,4 +97,20 @@ export class UserRdo {
     return obj.features;
   })
   public features: FeaturesRdo;
+
+  @ApiProperty({
+    description: 'Date of creation of the user account',
+    example: `${new Date().toISOString()}`,
+  })
+  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Expose()
+  public createdAt: Date;
+
+  @ApiProperty({
+    description: 'Date of update of the user account',
+    example: `${new Date().toISOString()}`,
+  })
+  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Expose()
+  public updatedAt: Date;
 }

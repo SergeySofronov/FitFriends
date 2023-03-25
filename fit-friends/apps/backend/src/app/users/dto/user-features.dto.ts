@@ -8,8 +8,8 @@ export abstract class FeaturesDto { }
 
 export class UserFeaturesDto extends FeaturesDto {
   @ApiProperty({
-    description: "User's trining style",
-    example: `${TrainingTime.Max30}`,
+    description: 'Desired training time',
+    example: TrainingTime.Max30,
     type: () => String,
     enum: TrainingTime,
     required: true,
@@ -19,6 +19,7 @@ export class UserFeaturesDto extends FeaturesDto {
 
   @ApiProperty({
     description: 'Number of calories to lose',
+    example: UV.CaloriesLossMinValue,
     minimum: UV.CaloriesLossMinValue,
     maximum: UV.CaloriesLossMaxValue,
     required: true,
@@ -29,6 +30,7 @@ export class UserFeaturesDto extends FeaturesDto {
 
   @ApiProperty({
     description: 'Number of calories to lose per day',
+    example: UV.CaloriesLossPerDayMinValue,
     minimum: UV.CaloriesLossPerDayMinValue,
     maximum: UV.CaloriesLossPerDayMaxValue,
     required: true,

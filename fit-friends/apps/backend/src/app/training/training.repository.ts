@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CRUDRepositoryInterface } from '@fit-friends/core';
-import { TrainingSort, TrainingQueryDefault as UQ, TrainingSortField } from './training.constant';
+import { TrainingSort, TrainingQuery as TQ, TrainingSortField } from './training.constant';
 import { TrainingEntity } from './training.entity';
 import { Training } from '@fit-friends/shared-types';
 import { TrainingQuery } from './query/training.query';
@@ -26,9 +26,9 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
   }
 
   public async find({
-    limit = UQ.DEFAULT_TRAINING_QUERY_LIMIT,
+    limit = TQ.TRAINING_QUERY_MAX,
     page = 1,
-    sortDirection = UQ.DEFAULT_TRAINING_SORT_DIRECTION,
+    sortDirection = TQ.DEFAULT_TRAINING_SORT_DIRECTION,
     sortType = TrainingSort.Date,
   }: TrainingQuery): Promise<Training[]> {
     const sortField = { [TrainingSortField[sortType]]: sortDirection };

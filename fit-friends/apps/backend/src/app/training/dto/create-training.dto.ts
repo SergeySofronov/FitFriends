@@ -1,83 +1,26 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsDateString, IsEmail, IsEnum, IsNotEmptyObject, MaxLength, MinLength, ValidateNested } from 'class-validator';
-import { ValidityMessage as VM } from '@fit-friends/core';
-import { UserValidity as UV } from '../user.constant';
-import { Features, Location, LocationType, TrainingStyle, TrainingStyleType, UserGender, UserGenderType, UserLevel, UserLevelType, UserRole, UserRoleType } from '@fit-friends/shared-types';
-import { CoachFeaturesDto, FeaturesDto, UserFeaturesDto } from './user-features.dto';
+import { Transform } from 'class-transformer';
+import { IsEnum, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { BooleanParamDecorator, ValidityMessage as VM } from '@fit-friends/core';
+import { TrainingValidity as TV } from '../training.constant';
+import { TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserGender, UserGenderType, UserLevel, UserLevelType } from '@fit-friends/shared-types';
 
-export class CreateUserDto {
+export class CreateTrainingDto {
   @ApiProperty({
-    description: 'User unique email address',
-    example: 'user@user.ru',
+    description: 'Training title',
+    example: 'Run, Forest, run',
+    minLength: TV.TitleMinLength,
+    maxLength: TV.TitleMaxLength,
     required: true,
   })
-  @Transform(({ obj }) => { obj.features.__role = obj.role; return obj.email; })
-  @IsEmail({}, { message: VM.IsEmailMessage })
-  public email: string;
-
-  @ApiProperty({
-    description: 'User name',
-    example: 'John Doe',
-    required: true,
-  })
-  @Transform(({ value }) => value instanceof String ? value.trim() : value)
-  @MinLength(UV.NameMinLength, { message: VM.MinValueMessage })
-  @MaxLength(UV.NameMaxLength, { message: VM.MaxValueMessage })
-  public name: string;
-
-  @ApiProperty({
-    description: 'User password',
-    example: '123456',
-    required: true,
-  })
-  @Transform(({ value }) => value instanceof String ? value.trim() : value)
-  @MinLength(UV.PasswordMinLength, { message: VM.MinValueMessage })
-  @MaxLength(UV.PasswordMaxLength, { message: VM.MaxValueMessage })
-  public password: string;
-
-  @ApiProperty({
-    description: "User's gender",
-    example: `${UserGender.Male}`,
-    type: () => String,
-    enum: UserGender,
-    required: true,
-  })
-  @IsEnum(UserGender, { message: `${VM.IsEnumMessage} ${Object.values(UserGender).join(', ')}` })
-  public gender: UserGenderType;
-
-  @ApiProperty({
-    description: "User's date of birth",
-    example: `${new Date().toISOString()}}`,
-    type: () => String,
-    required: true,
-  })
-  @IsDateString()
-  public dateBirth: Date;
-
-  @ApiProperty({
-    description: "User's role",
-    example: `${UserRole.User}`,
-    type: () => String,
-    enum: UserRole,
-    required: true,
-  })
-  @IsEnum(UserRole, { message: `${VM.IsEnumMessage} ${Object.values(UserRole).join(', ')}` })
-  public role: UserRoleType;
-
-  @ApiProperty({
-    description: "User's location",
-    example: `${Location.Petrogradskaya}`,
-    type: () => String,
-    enum: Location,
-    required: true,
-  })
-  @IsEnum(Location, { message: `${VM.IsEnumMessage} ${Object.values(Location).join(', ')}` })
-  public location: LocationType;
+  @MinLength(TV.TitleMinLength, { message: VM.MinValueMessage })
+  @MaxLength(TV.TitleMaxLength, { message: VM.MaxValueMessage })
+  @Transform(({ value }) => value instanceof String ? value.replace(/\s{2,}/g, ' ').trim() : value)
+  public title: string;
 
   @ApiProperty({
     description: "User's training level",
-    example: `${UserLevel.Beginner}`,
+    example: UserLevel.Beginner,
     type: () => String,
     enum: UserLevel,
     required: true,
@@ -86,8 +29,8 @@ export class CreateUserDto {
   public level: UserLevelType;
 
   @ApiProperty({
-    description: "User's trining style",
-    example: `${TrainingStyle.Aerobics}`,
+    description: "Trining style",
+    example: TrainingStyle.Aerobics,
     type: () => String,
     enum: TrainingStyle,
     required: true,
@@ -96,22 +39,64 @@ export class CreateUserDto {
   public trainingStyle: TrainingStyleType;
 
   @ApiProperty({
-    description: 'User features. Depends on "role" field',
-    type: () => UserFeaturesDto,  //todo: как задокументировать UserFeaturesDto и CoachFeaturesDto одновременно?
+    description: "Estimated training time",
+    example: TrainingTime.Max30,
+    type: () => String,
+    enum: TrainingTime,
     required: true,
   })
-  @Type(() => FeaturesDto, {
-    keepDiscriminatorProperty: false,
-    discriminator: {
-      property: "__role",
-      subTypes: [
-        { value: UserFeaturesDto, name: UserRole.User },
-        { value: CoachFeaturesDto, name: UserRole.Coach }
-      ]
-    }
-  })
-  @IsNotEmptyObject()
-  @ValidateNested()
-  public features: Features;
+  @IsEnum(TrainingTime, { message: `${VM.IsEnumMessage} ${Object.values(TrainingTime).join(', ')}` })
+  trainingTime: TrainingTimeType;
 
+  @ApiProperty({
+    description: 'The price of training',
+    example: TV.PriceMinValue,
+    minimum: TV.PriceMinValue,
+    maximum: TV.PriceMaxValue,
+    required: true,
+  })
+  @Min(TV.PriceMinValue, { message: VM.MinValueMessage })
+  @Max(TV.PriceMaxValue, { message: VM.MaxValueMessage })
+  public price: number;
+
+  @ApiProperty({
+    description: 'Еhe number of calories consumed during a workout',
+    example: TV.CaloriesLossMinValue,
+    minimum: TV.CaloriesLossMinValue,
+    maximum: TV.CaloriesLossMaxValue,
+    required: true,
+  })
+  @Min(TV.CaloriesLossMinValue, { message: VM.MinValueMessage })
+  @Max(TV.CaloriesLossMaxValue, { message: VM.MaxValueMessage })
+  public caloriesLoss: number;
+
+  @ApiProperty({
+    description: 'Training description',
+    example: 'A complex set of exercises for professional athletes to work out indicators in the classical style',
+    minLength: TV.DescriptionMinLength,
+    maxLength: TV.DescriptionMaxLength,
+    required: true,
+  })
+  @MinLength(TV.DescriptionMinLength, { message: VM.MinValueMessage })
+  @MaxLength(TV.DescriptionMaxLength, { message: VM.MaxValueMessage })
+  @Transform(({ value }) => value instanceof String ? value.replace(/\s{2,}/g, ' ').trim() : value)
+  public description: string;
+
+  @ApiProperty({
+    description: "User's gender",
+    example: UserGender.Male,
+    type: () => String,
+    enum: UserGender,
+    required: true,
+  })
+  @IsEnum(UserGender, { message: `${VM.IsEnumMessage} ${Object.values(UserGender).join(', ')}` })
+  public gender: UserGenderType;
+
+  @ApiProperty({
+    description: "The flag defines the participation of the training as a special offer",
+    example: true,
+    required: true,
+  })
+  @BooleanParamDecorator({ message: VM.isBoolean })
+  public isSpecial: boolean;
 }

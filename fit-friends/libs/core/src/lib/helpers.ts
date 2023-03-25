@@ -17,28 +17,28 @@ export function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V, g
 export function getMulterOptions() {
   return {
     storage:
-    diskStorage({
-      destination: (req: Request, _file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
-        const folderName = req.params.id;
-        const folderPath = resolve(__dirname, process.env.FILE_UPLOAD_DEST, folderName);
-        const isFolderExists = existsSync(folderPath) || mkdirSync(folderPath, { recursive: true });
+      diskStorage({
+        destination: (req: Request, _file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
+          const folderName = req.params.id;
+          const folderPath = resolve(__dirname, process.env.FILE_UPLOAD_DEST, folderName);
+          const isFolderExists = existsSync(folderPath) || mkdirSync(folderPath, { recursive: true });
 
-        if (isFolderExists) {
-          return callback(null, folderPath);
-        }
+          if (isFolderExists) {
+            return callback(null, folderPath);
+          }
 
-        return callback(new HttpException('Error while attempt to create file', HttpStatus.BAD_REQUEST,), '');
-      },
-      filename: (_req: Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
-        const name = file.originalname.split('.')[0];
-        const fileExtName = extname(file.originalname);
-        const randomName = Array(4)
-          .fill(null)
-          .map(() => Math.round(Math.random() * 10).toString(10))
-          .join('');
-        callback(null, `${name}${randomName}${fileExtName}`)
-      },
-    }),
+          return callback(new HttpException('Error while attempt to create file', HttpStatus.BAD_REQUEST,), '');
+        },
+        filename: (_req: Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
+          const name = file.originalname.split('.')[0];
+          const fileExtName = extname(file.originalname);
+          const randomName = Array(4)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 10).toString(10))
+            .join('');
+          callback(null, `${name}${randomName}${fileExtName}`)
+        },
+      }),
     fileFilter: (_req: Request, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) => {
       if (!file.originalname.match(new RegExp(process.env.IMAGE_FILTER_REGEXP))) {
         return callback(
@@ -53,4 +53,22 @@ export function getMulterOptions() {
       return callback(null, true);
     },
   }
+}
+
+export function transformToMin(value: unknown, borderMin: number, borderMax: number) {
+  const min = +value;
+  if (!min || (min < borderMin) || (min > borderMax)) {
+    return borderMin;
+  }
+
+  return min;
+}
+
+export function transformToMax(value: unknown, borderMin: number, borderMax: number) {
+  const max = +value;
+  if (!max || (max < borderMin) || (max > borderMax)) {
+    return borderMax;
+  }
+
+  return max;
 }

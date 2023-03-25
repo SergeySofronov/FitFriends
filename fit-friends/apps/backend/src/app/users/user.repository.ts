@@ -5,7 +5,7 @@ import { User, UserRole } from '@fit-friends/shared-types';
 import { UserEntity } from './user.entity';
 import { CoachFeatures, UserFeatures } from 'libs/shared-types/src/lib/user-features.type';
 import { UserQuery } from './query/user.query';
-import { UserSort, UserQueryDefault as UQ, UserSortField} from './user.constant';
+import { UserSort, UserQuery as UQ, UserSortField} from './user.constant';
 
 @Injectable()
 export class UserRepository implements CRUDRepositoryInterface<UserEntity, number, User> {
@@ -68,7 +68,7 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
   }
 
   public async find({
-    limit = UQ.DEFAULT_USER_QUERY_LIMIT,
+    limit = UQ.USER_QUERY_MAX,
     page = 1,
     sortDirection = UQ.DEFAULT_USER_SORT_DIRECTION,
     sortType = UserSort.Date,

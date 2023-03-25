@@ -13,7 +13,7 @@ import { envValidationSchema } from './env.validation.schema';
 import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import { join } from 'path';
 import { TrainingModule } from './training/training.module';
-import { CommentsModule } from './comments/comments.module';
+import { ReviewsModule } from './reviews/review.module';
 import { GymsModule } from './gyms/gyms.module';
 import { OrdersModule } from './orders/orders.module';
 
@@ -37,7 +37,7 @@ import { OrdersModule } from './orders/orders.module';
     UsersModule,
     RefreshTokenModule,
     TrainingModule,
-    CommentsModule,
+    ReviewsModule,
     GymsModule,
     OrdersModule,
   ],
