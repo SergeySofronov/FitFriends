@@ -42,7 +42,7 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
     this.description = training.description;
     this.gender = training.gender || UserGender.Indifferent;
     this.video = training.video;
-    this.rating = TrainingValidity.RatingMinValue;
+    this.rating = training.rating || TrainingValidity.RatingMinValue;
     this.coachId = training.coachId;
     this.isSpecial = training.isSpecial;
     this.createdAt = training.createdAt || new Date();

@@ -91,7 +91,7 @@ model User {
   trainingStyle TrainingStyle  @default(Aerobics)
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now())
-  review       Review[]
+  review        Review[]
   order         Order[]
   requester     Request[]      @relation(name: "requester")
   requested     Request[]      @relation(name: "requested")
@@ -141,7 +141,9 @@ model Training {
   coach           User          @relation(fields: [coachId], references: [id])
   coachId         Int
   isSpecial       Boolean
-  review         Review[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  review          Review[]
   order           Order[]
 
   @@map("trainings")

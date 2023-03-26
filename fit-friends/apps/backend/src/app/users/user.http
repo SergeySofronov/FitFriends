@@ -3,40 +3,40 @@ POST /fit-friends/users/register HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
 
-{
-  "name": "John Doe",
-  "email": "user@user.ru",
-  "password": "123456",
-  "gender": "Male",
-  "dateBirth" : "2011-10-05T14:48:00.000Z",
-  "role" : "User",
-  "location" : "Pionerskaya",
-  "level" : "Beginner",
-  "trainingStyle" : "Yoga",
-  "features" : {
-    "trainingTime" : "Max30",
-    "caloriesLoss" : 1000,
-    "caloriesLossPerDay" : 1000,
-    "isReadyForTraining" : true
-  }
-}
-
 # {
 #   "name": "John Doe",
-#   "email": "user@coach.ru",
+#   "email": "user@user.ru",
 #   "password": "123456",
 #   "gender": "Male",
 #   "dateBirth" : "2011-10-05T14:48:00.000Z",
-#   "role" : "Coach",
+#   "role" : "User",
 #   "location" : "Pionerskaya",
 #   "level" : "Beginner",
 #   "trainingStyle" : "Yoga",
 #   "features" : {
-#     "certificate" : "certificate.pdf",
-#     "merits" : "Master of sports",
-#     "isPersonalCoach" : true
+#     "trainingTime" : "Max30",
+#     "caloriesLoss" : 1000,
+#     "caloriesLossPerDay" : 1000,
+#     "isReadyForTraining" : true
 #   }
-#  }
+# }
+
+{
+  "name": "John Doe",
+  "email": "user@coach.ru",
+  "password": "123456",
+  "gender": "Male",
+  "dateBirth" : "2011-10-05T14:48:00.000Z",
+  "role" : "Coach",
+  "location" : "Pionerskaya",
+  "level" : "Beginner",
+  "trainingStyle" : "Yoga",
+  "features" : {
+    "certificate" : "certificate.pdf",
+    "merits" : "Master of sports",
+    "isPersonalCoach" : true
+  }
+ }
 ###
 
 # Проверить авторизацию пользователя (ожидает access_token)
@@ -48,7 +48,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI2NzM1ZGQzZS03Zjc3LTRiZjMtOTY4Ny0zNDc5ZDYzNGRkMTciLCJpYXQiOjE2NzkzMzU2NTEsImV4cCI6MTY3OTk0MDQ1MX0.H10JgV3dBj_TaR1aiZyrnOaTEoJROJ0XoUcepzlxJO0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiIyYTllNzU0NC0zZTZhLTQ4OTgtOWViYi0yOWZlMWU5OTg2MWEiLCJpYXQiOjE2Nzk4NDU0NzgsImV4cCI6MTY4MDQ1MDI3OH0.QF1UBWG-xT7HSOLsJmqYPkZdXq5d3reCFl11_ArY-uc
 ###
 
 # Выход из аккаунта
@@ -79,7 +79,7 @@ Content-Type: application/json
 }
 ###
 
-# Редактировать пользователя (WIP)
+# Редактировать пользователя
 PATCH  /fit-friends/users/ HTTP/1.1
 Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI2Njk4ZDRkNy1lZjkyLTQ4NDQtOWE2Ni03OTNjMDc3NDVhOTUiLCJpYXQiOjE2Nzk1MDUyNzEsImV4cCI6MTY4MDExMDA3MX0.z64lw2laVDyh2Y6lh28EsszBE8hPijl-h2ucGdizXi8
@@ -111,7 +111,7 @@ Content-Type: image/jpeg
 #  Получить аватарку пользователя
 GET /fit-friends/users/avatar/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDIyMTYxLCJleHAiOjE2Nzk0MjMwNjF9.KTOZ0kZJN20sA13kJ3Rk9mundVU-Y-OpHf8QPzZaZFE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5ODQ3OTY1LCJleHAiOjE2Nzk4NDg4NjV9.LmlRFsuiE2MzoNK9LQ7qvDdszv3S5u1gBv5ALep00L4
 ###
 
 #  Получить список пользователей

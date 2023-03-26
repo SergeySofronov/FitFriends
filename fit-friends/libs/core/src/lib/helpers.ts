@@ -5,6 +5,13 @@ import { diskStorage } from 'multer';
 import { Request } from 'express';
 import { extname, resolve } from 'path';
 
+export function getRandomInteger(a = 0, b = 1) {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
+}
+
 export function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V, groups?: string[]) {
   const options: ClassTransformOptions = { excludeExtraneousValues: true };
   if (groups) {

@@ -26,10 +26,12 @@ export class TrainingQuery {
 
   @IsNumber()
   @Transform(({ value }) => transformToMin(value, TV.PriceMinValue, TV.PriceMaxValue))
+  @IsOptional()
   public priceMin?: number;
 
   @IsNumber()
   @Transform(({ value }) => transformToMax(value, TV.PriceMinValue, TV.PriceMaxValue))
+  @IsOptional()
   public priceMax?: number;
 
   @IsNumber()

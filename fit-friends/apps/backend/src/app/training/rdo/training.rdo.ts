@@ -12,6 +12,13 @@ export class TrainingRdo {
   public title: string;
 
   @ApiProperty({
+    description: 'Training background image',
+    example: 'training-1.png',
+  })
+  @Expose()
+  public backgroundImage: string;
+
+  @ApiProperty({
     description: "User's training level",
     example: UserLevel.Beginner,
   })

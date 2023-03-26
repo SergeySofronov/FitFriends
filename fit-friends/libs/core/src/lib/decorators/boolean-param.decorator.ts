@@ -3,7 +3,13 @@ import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorCon
 @ValidatorConstraint({ async: false })
 export class BooleanParamConstraint implements ValidatorConstraintInterface {
   validate(value: string | boolean) {
-    return (value === 'true') || (value === '1') || (value === true);
+    return (
+      (value === 'true') ||
+      (value === '1') ||
+      (value === true) ||
+      (value === false) ||
+      (value === '0')
+    );
   }
 }
 

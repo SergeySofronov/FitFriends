@@ -30,11 +30,39 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
     page = 1,
     sortDirection = TQ.DEFAULT_TRAINING_SORT_DIRECTION,
     sortType = TrainingSort.Date,
+    priceMin,
+    priceMax,
+    ratingMin,
+    ratingMax
   }: TrainingQuery): Promise<Training[]> {
     const sortField = { [TrainingSortField[sortType]]: sortDirection };
-
+console.log(ratingMin)
     return this.prisma.training.findMany({
       take: limit,
+      where: {
+        AND: [
+          {
+            price: {
+              gte: priceMin
+            }
+          },
+          {
+            price: {
+              lte: priceMax
+            }
+          },
+          {
+            rating: {
+              gte: ratingMin
+            }
+          },
+          {
+            rating: {
+              lte: ratingMax
+            }
+          }
+        ],
+      },
       orderBy: [
         {
           ...sortField

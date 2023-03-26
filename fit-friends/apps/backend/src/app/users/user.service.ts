@@ -98,7 +98,12 @@ export class UserService {
     const userAvatar = existUser?.avatar;
 
     if (userAvatar && avatar) {
-      const avatarPath = resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${userAvatar}`);
+      const avatarPath = resolve(
+        __dirname,
+        this.configService.get<string>('file.dest'),
+        existUser.id.toString(),
+        userAvatar
+      );
       if (existsSync(avatarPath)) {
         unlinkSync(avatarPath);
       }
@@ -117,7 +122,7 @@ export class UserService {
     }
     const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
     if (existUser.avatar === defaultAvatar) {
-      return resolve(__dirname, `${this.configService.get<string>('file.defaultResourceFolder')}/${existUser.avatar}`);
+      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), this.configService.get<string>('file.defaultAvatarFolder'), existUser.avatar);
     }
 
     return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${existUser.avatar}`);

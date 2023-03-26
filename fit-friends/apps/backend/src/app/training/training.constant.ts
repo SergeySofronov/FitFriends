@@ -7,8 +7,8 @@ export enum TrainingValidity {
   CaloriesLossMaxValue = 5000,
   DescriptionMinLength = 10,
   DescriptionMaxLength = 140,
-  RatingMinValue = 0,
-  RatingMaxValue = 0,
+  RatingMinValue = 1,
+  RatingMaxValue = 5,
 }
 
 export const TrainingQuery = {

@@ -27,5 +27,6 @@ import { RefreshTokenModule } from '../refresh-token/refresh-token.module';
     JwtRefreshStrategy,
     Logger
   ],
+  exports: [UserRepository]
 })
 export class UsersModule { }
