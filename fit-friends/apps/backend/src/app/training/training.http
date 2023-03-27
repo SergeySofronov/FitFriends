@@ -13,7 +13,7 @@ Content-Type: application/json
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiN2Y0OTk3YmItODkyMC00MTQzLThhZjUtYzYyNWNmYjI0MDY1IiwiaWF0IjoxNjc5ODU1MDE4LCJleHAiOjE2ODA0NTk4MTh9.TQ_mQq0jtADknt6ThMEbupQocUQeAbh4ouComyoyll8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiNGQ4YzY4MzItNTRhNi00NzVlLTgxY2YtNDU5MDdhOGNkODEyIiwiaWF0IjoxNjc5OTM0Mzg1LCJleHAiOjE2ODA1MzkxODV9.DCgtLqYk4BzKbVLKF4u_Bl4QiufT4xjVCw0vM-DNjXM
 ###
 
 #======================= Training ==================
@@ -59,7 +59,7 @@ Content-Type: application/json
 #  Загрузка фонового изображения тренировки
 POST /fit-friends/training/1/background/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1NDA0OSwiZXhwIjoxNjc5ODU0OTQ5fQ.uZAmokUCWsfphof9m_yuy4jWn_u6dDXyIz3NBJ8frsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzMDkyNiwiZXhwIjoxNjc5OTMxODI2fQ.mvqbHB1BVspWuFwbudzZVUR2KTJy5wzORyjqwkWhKoU
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -97,10 +97,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 ###
 
 #  Получить список тренировок
-# ?limit=50&page=0&sortType=date&sortDirection=desc
-GET /fit-friends/training?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=1&ratingMax=2 HTTP/1.1
+# ?limit=50&page=0&sortType=date&sortDirection=desc&trainingTime=Max30
+GET /fit-friends/training?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=0&ratingMax=5&trainingTime=Max30 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1NTAxOCwiZXhwIjoxNjc5ODU1OTE4fQ.OkvO3alfN38RTjkEB6Qric47UtsPK1GTueLAhKdIUSs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
 ###
 
 #  Получить информацию о тренировке

@@ -14,7 +14,7 @@ export class UserQuery {
   @IsOptional()
   public page?: number;
 
-  @IsEnum(UserSort, { message: VM.IsEnumMessage })
+  @IsEnum(UserSort, { message: `${VM.IsEnumMessage} ${Object.values(UserSort).join(', ')}` })
   @IsOptional()
   public sortType?: UserSort = UserSort.Date;
 

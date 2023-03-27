@@ -14,8 +14,8 @@ import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import { join } from 'path';
 import { TrainingModule } from './training/training.module';
 import { ReviewsModule } from './reviews/review.module';
-import { GymsModule } from './gyms/gyms.module';
-import { OrdersModule } from './orders/orders.module';
+import { GymsModule } from './gyms/gym.module';
+import { OrderModule } from './orders/order.module';
 
 @Module({
   imports: [
@@ -39,7 +39,7 @@ import { OrdersModule } from './orders/orders.module';
     TrainingModule,
     ReviewsModule,
     GymsModule,
-    OrdersModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

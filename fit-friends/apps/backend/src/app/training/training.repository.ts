@@ -33,13 +33,15 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
     priceMin,
     priceMax,
     ratingMin,
-    ratingMax
+    ratingMax,
+    trainingTime,
   }: TrainingQuery): Promise<Training[]> {
     const sortField = { [TrainingSortField[sortType]]: sortDirection };
-console.log(ratingMin)
+
     return this.prisma.training.findMany({
       take: limit,
       where: {
+        trainingTime,
         AND: [
           {
             price: {

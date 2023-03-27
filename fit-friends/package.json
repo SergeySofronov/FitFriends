@@ -25,6 +25,7 @@
     "passport-local": "1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
+    "sanitize-html": "2.10.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
@@ -45,6 +46,7 @@
     "@types/passport": "1.0.12",
     "@types/passport-jwt": "3.0.8",
     "@types/passport-local": "1.0.35",
+    "@types/sanitize-html": "^2.9.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "~8.15.0",
