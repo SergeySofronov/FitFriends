@@ -62,7 +62,7 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.OK, description: UserMessages.LOGIN, type: TokenPayload })
   @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: UserMessages.UNAUTHORIZED })
   public async checkAuth(@Res() res: Response) {
-    return res.status(HttpStatus.OK).send({ message: UserMessages.OK });
+    return res.status(HttpStatus.OK).send({ message: UserMessages.AUTHORIZED });
   }
 
   @Patch('/')
@@ -100,8 +100,8 @@ export class UserController {
   @Roles(`${UserRole.User}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of users', type: UserRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Users not found', })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of users', type: [UserRdo] })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND, })
   async index(@Query() query: UserQuery) {
     const users = await this.userService.getUsers(query);
     return fillObject(UserRdo, users);
@@ -111,18 +111,50 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @ApiParam({ name: "id", required: true, description: "User unique identifier" })
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting detailed information about the user', type: UserRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found', })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND, })
   async show(@Param('id') id: number) {
-    const user = await this.userService.getUser(id);
+    const user = await this.userService.getUserById(id);
     return fillObject(UserRdo, user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('logout')
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: HttpStatus.OK, description: UserMessages.LOGOUT })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
   async logout(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
     await this.userService.logoutUser(user.sub);
     return res.status(HttpStatus.OK).send({ message: UserMessages.UNAUTHORIZED })
   }
+
+  @Post('add/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource to add to friends' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
+  async add(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.userService.addFriend(user.sub, id);
+    return res.status(HttpStatus.OK).send();
+  }
+
+  @Post('remove/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource to add to friends' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
+  async remove(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.userService.removeFriend(user.sub, id);
+    return res.status(HttpStatus.OK).send();
+  }
+
+  @Get('/friends')
+  @UseGuards(JwtAuthGuard)
+  @ApiIndexQuery()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an friend list', type: [UserRdo] })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND, })
+  async friends(@Query() query: UserQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const users = await this.userService.getFriends(user.sub, query);
+    return fillObject(UserRdo, users);
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException } from '@fit-friends/core';
+import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException } from '@fit-friends/core';
 import { RefreshTokenPayload, User } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -24,10 +24,26 @@ export class UserService {
     private readonly logger: Logger,
   ) { }
 
+  private async checkUserIdMath(userId: number, friendId: number) {
+    const user = await this.getUserById(userId);
+    const friend = await this.getUserById(friendId);
+    if (user.id === friend.id) {
+      throw new UserFriendIdException(this.logger);
+    }
+  }
+
+  public async getUserById(id: number) {
+    const existUser = await this.userRepository.findById(id);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, id);
+    }
+
+    return existUser;
+  }
+
   public async register(dto: CreateUserDto) {
     const { email, password } = dto;
     const existUser = await this.userRepository.findByEmail(email);
-
     if (existUser) {
       throw new UserExistsException(this.logger, email);
     }
@@ -38,12 +54,10 @@ export class UserService {
 
   public async verifyUser(dto: LoginUserDto) {
     const { email, password } = dto;
-    const existUser = await this.userRepository.findByEmail(email);
-
+   const existUser = await this.userRepository.findByEmail(email);
     if (!existUser) {
-      throw new UserNotFoundEmailException(this.logger, dto.email);
+      throw new UserNotFoundEmailException(this.logger, email);
     }
-
     const userEntity = new UserEntity(existUser);
     if (! await userEntity.comparePassword(password)) {
       throw new UserPasswordWrongException(this.logger);
@@ -77,10 +91,7 @@ export class UserService {
   }
 
   public async updateUser(id: number, dto: Partial<UpdateUserDto>): Promise<User> {
-    const existUser = await this.userRepository.findById(id);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, id);
-    }
+    const existUser = await this.getUserById(id);
 
     if (existUser.role !== dto.role) {
       throw new UserRoleChangeException(this.logger);
@@ -90,10 +101,7 @@ export class UserService {
   }
 
   public async updateUserAvatar(id: number, avatar: string): Promise<User> {
-    const existUser = await this.userRepository.findById(id);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, id);
-    }
+    const existUser = await this.getUserById(id);
 
     const userAvatar = existUser?.avatar;
 
@@ -116,10 +124,7 @@ export class UserService {
   }
 
   public async getUserAvatarPath(id: number): Promise<string> {
-    const existUser = await this.userRepository.findById(id);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, id);
-    }
+    const existUser = await this.getUserById(id);
     const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
     if (existUser.avatar === defaultAvatar) {
       return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), this.configService.get<string>('file.defaultAvatarFolder'), existUser.avatar);
@@ -137,21 +142,22 @@ export class UserService {
     return existUsers;
   }
 
-  async getUser(id: number): Promise<User> {
-    const existUser = await this.userRepository.findById(id);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, id);
-    }
-
-    return existUser;
+  async logoutUser(id: number): Promise<void> {
+    await this.getUserById(id);
+    await this.refreshTokenService.deleteRefreshTokens(id);
   }
 
-  async logoutUser(id: number): Promise<void> {
-    const existUser = await this.userRepository.findById(id);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, id);
-    }
+  async addFriend(userId: number, friendId: number): Promise<User> {
+    await this.checkUserIdMath(userId, friendId);
+    return this.userRepository.addFriend(userId, friendId);
+  }
 
-    await this.refreshTokenService.deleteRefreshTokens(id);
+  async removeFriend(userId: number, friendId: number): Promise<User> {
+    await this.checkUserIdMath(userId, friendId);
+    return this.userRepository.removeFriend(userId, friendId);
+  }
+
+  async getFriends(userId: number, query: UserQuery): Promise<User[]> {
+    return this.userRepository.find(query, userId);
   }
 }

@@ -1,4 +1,4 @@
-export type Comment = {
+export type Review = {
   id?: number;
   userId: number;
   trainingId: number;

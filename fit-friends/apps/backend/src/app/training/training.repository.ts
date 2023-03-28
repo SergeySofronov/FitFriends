@@ -35,6 +35,7 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
     ratingMin,
     ratingMax,
     trainingTime,
+    trainingStyle,
   }: TrainingQuery): Promise<Training[]> {
     const sortField = { [TrainingSortField[sortType]]: sortDirection };
 
@@ -42,27 +43,12 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
       take: limit,
       where: {
         trainingTime,
+        trainingStyle,
         AND: [
-          {
-            price: {
-              gte: priceMin
-            }
-          },
-          {
-            price: {
-              lte: priceMax
-            }
-          },
-          {
-            rating: {
-              gte: ratingMin
-            }
-          },
-          {
-            rating: {
-              lte: ratingMax
-            }
-          }
+          { price: { gte: priceMin } },
+          { price: { lte: priceMax } },
+          { rating: { gte: ratingMin } },
+          { rating: { lte: ratingMax } }
         ],
       },
       orderBy: [

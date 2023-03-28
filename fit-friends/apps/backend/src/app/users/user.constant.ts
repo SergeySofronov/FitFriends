@@ -2,16 +2,17 @@ export const SALT_ROUNDS = 10;
 
 export const UserMessages = {
   ALREADY_EXISTS: 'User with this email already exists',
+  AUTHORIZED:'User authorized',
   UNAUTHORIZED: 'User is not authorized',
   INVALID_TOKEN: 'Token is invalid or not found',
-  USER_NOT_FOUND: 'User not found',
+  USER_NOT_FOUND: 'User(s) not found',
   WRONG_PASSWORD: 'User password is wrong',
   WRONG_LOGIN: 'User login is wrong.',
   CREATE: 'Creates a new user.',
   LOGIN: "User's login procedure",
   LOGOUT: "User's logout procedure",
   UPDATE: "Updates the user's profile data",
-  OK:'User authorized',
+  FRIEND: 'Add/remove friend',
 } as const;
 
 export enum UserValidity {

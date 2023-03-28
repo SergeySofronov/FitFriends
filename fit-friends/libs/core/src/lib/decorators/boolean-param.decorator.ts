@@ -2,13 +2,12 @@ import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorCon
 
 @ValidatorConstraint({ async: false })
 export class BooleanParamConstraint implements ValidatorConstraintInterface {
-  validate(value: string | boolean) {
+  validate(value: number | boolean) {
     return (
-      (value === 'true') ||
-      (value === '1') ||
+      (value === 1) ||
+      (value === 0) ||
       (value === true) ||
-      (value === false) ||
-      (value === '0')
+      (value === false)
     );
   }
 }

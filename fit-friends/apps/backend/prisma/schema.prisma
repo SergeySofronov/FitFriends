@@ -78,28 +78,30 @@ enum RequestStatus {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique()
-  name          String
-  avatar        String
-  password      String
-  gender        UserGender
-  dateBirth     DateTime
-  role          UserRole       @default(User)
-  location      Location
-  level         UserLevel      @default(Beginner)
-  trainingStyle TrainingStyle  @default(Aerobics)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @default(now())
-  review        Review[]
-  order         Order[]
-  requester     Request[]      @relation(name: "requester")
-  requested     Request[]      @relation(name: "requested")
-  notification  Notification[]
-  token         Token[]
-  userFeatures  UserFeatures?
-  coachFeatures CoachFeatures?
-  training      Training[]
+  id               Int            @id @default(autoincrement())
+  email            String         @unique()
+  name             String
+  avatar           String
+  password         String
+  gender           UserGender
+  dateBirth        DateTime
+  role             UserRole       @default(User)
+  location         Location
+  level            UserLevel      @default(Beginner)
+  trainingStyle    TrainingStyle  @default(Aerobics)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @default(now())
+  review           Review[]
+  order            Order[]
+  requester        Request[]      @relation(name: "requester")
+  requested        Request[]      @relation(name: "requested")
+  notification     Notification[]
+  token            Token[]
+  userFeatures     UserFeatures?
+  coachFeatures    CoachFeatures?
+  training         Training[]
+  friends          User[]         @relation(name: "friends")
+  symmetricFriends User[]         @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
 
   @@map("users")
 }
@@ -170,6 +172,7 @@ model Review {
   trainingId Int
   user       User     @relation(fields: [userId], references: [id])
   userId     Int
+  rating     Int
   content    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
@@ -213,7 +216,9 @@ model Notification {
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   text      String
+  isChecked Boolean
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 
   @@map("notification")
 }

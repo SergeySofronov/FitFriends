@@ -1,10 +1,10 @@
-import { RequestStatus } from "./request-status.enum";
+import { RequestStatusType } from "./request-status.enum";
 
-export type Request = {
+export type UserRequest = {
   id?: number;
   requesterId: number;
   requestedId: number;
-  status: RequestStatus;
+  status: RequestStatusType;
   createdAt?: Date;
   updatedAt?: Date;
 }

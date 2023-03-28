@@ -16,6 +16,8 @@ import { TrainingModule } from './training/training.module';
 import { ReviewsModule } from './reviews/review.module';
 import { GymsModule } from './gyms/gym.module';
 import { OrderModule } from './orders/order.module';
+import { NotifyModule } from './notify/notify.module';
+import { RequestModule } from './requests/request.module';
 
 @Module({
   imports: [
@@ -40,8 +42,8 @@ import { OrderModule } from './orders/order.module';
     ReviewsModule,
     GymsModule,
     OrderModule,
+    NotifyModule,
+    RequestModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

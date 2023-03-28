@@ -5,7 +5,7 @@ import { User, UserRole } from '@fit-friends/shared-types';
 import { UserEntity } from './user.entity';
 import { CoachFeatures, UserFeatures } from 'libs/shared-types/src/lib/user-features.type';
 import { UserQuery } from './query/user.query';
-import { UserSort, UserQuery as UQ, UserSortField} from './user.constant';
+import { UserSort, UserQuery as UQ, UserSortField } from './user.constant';
 
 @Injectable()
 export class UserRepository implements CRUDRepositoryInterface<UserEntity, number, User> {
@@ -72,11 +72,18 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
     page = 1,
     sortDirection = UQ.DEFAULT_USER_SORT_DIRECTION,
     sortType = UserSort.Date,
-  }: UserQuery): Promise<User[]> {
+  }: UserQuery, friendId?: number): Promise<User[]> {
     const sortField = { [UserSortField[sortType]]: sortDirection };
 
     return this.prisma.user.findMany({
       take: limit,
+      where: {
+        friends: {
+          every: {
+            id: friendId
+          }
+        }
+      },
       include: {
         coachFeatures: true,
         userFeatures: true,
@@ -118,6 +125,36 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
         userFeatures: true,
       }
     })
+  }
+
+  public async addFriend(id: number, friendId: number): Promise<User> {
+    const [user] = await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id },
+        data: { friends: { connect: [{ id: friendId }] } },
+      }),
+      this.prisma.user.update({
+        where: { id: friendId },
+        data: { friends: { connect: [{ id }] } },
+      })
+    ]);
+
+    return user;
+  }
+
+  public async removeFriend(id: number, friendId: number): Promise<User> {
+    const [user] = await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id },
+        data: { friends: { disconnect: [{ id: friendId }] } },
+      }),
+      this.prisma.user.update({
+        where: { id: friendId },
+        data: { friends: { disconnect: [{ id }] } },
+      })
+    ]);
+
+    return user;
   }
 
   public async destroy(id: number): Promise<void> {

@@ -1,15 +1,15 @@
-import { OrderCategory } from "./order-category.enum";
-import { Payment } from "./payment.enum";
+import { OrderCategoryType } from "./order-category.enum";
+import { PaymentType } from "./payment.enum";
 
 export type Order = {
   id?: number;
   userId: number;
-  category: OrderCategory;
-  serviceId?: number;
+  category: OrderCategoryType;
+  serviceId: number;
   price: number;
   quantity: number;
   total: number;
-  paymentMethod: Payment;
+  paymentMethod: PaymentType;
   createdAt?: Date;
   updatedAt?: Date;
 }
