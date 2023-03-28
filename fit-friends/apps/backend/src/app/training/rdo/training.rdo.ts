@@ -5,6 +5,13 @@ import { TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserG
 
 export class TrainingRdo {
   @ApiProperty({
+    description: 'Training unique identifier',
+    example: 1,
+  })
+  @Expose()
+
+  public id: string;
+  @ApiProperty({
     description: 'Training title',
     example: 'Run, Forest, run',
   })

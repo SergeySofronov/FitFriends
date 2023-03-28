@@ -14,7 +14,7 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
   public async create(item: OrderEntity): Promise<Order> {
     const entityData = item.toObject();
     const isIncluded = entityData.category === OrderCategory.SeasonPass;
-    const order = await this.prisma.order.create({
+    return await this.prisma.order.create({
       data: {
         ...entityData,
       },
@@ -23,7 +23,6 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
         training: !isIncluded,
       }
     });
-    return order;
   }
 
   public async findById(id: number): Promise<Order> {

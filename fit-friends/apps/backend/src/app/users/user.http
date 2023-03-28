@@ -1,25 +1,31 @@
-# Создать (зарегистрировать) пользователя
+# Создать (зарегистрировать) пользователя User
 POST /fit-friends/users/register HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
 
-# {
-#   "name": "John Doe",
-#   "email": "user@user.ru",
-#   "password": "123456",
-#   "gender": "Male",
-#   "dateBirth" : "2011-10-05T14:48:00.000Z",
-#   "role" : "User",
-#   "location" : "Pionerskaya",
-#   "level" : "Beginner",
-#   "trainingStyle" : "Yoga",
-#   "features" : {
-#     "trainingTime" : "Max30",
-#     "caloriesLoss" : 1000,
-#     "caloriesLossPerDay" : 1000,
-#     "isReadyForTraining" : true
-#   }
-# }
+{
+  "name": "John Doe",
+  "email": "user@user1.ru",
+  "password": "123456",
+  "gender": "Male",
+  "dateBirth" : "2011-10-05T14:48:00.000Z",
+  "role" : "User",
+  "location" : "Pionerskaya",
+  "level" : "Beginner",
+  "trainingStyle" : "Yoga",
+  "features" : {
+    "trainingTime" : "Max30",
+    "caloriesLoss" : 1000,
+    "caloriesLossPerDay" : 1000,
+    "isReadyForTraining" : true
+  }
+}
+###
+
+# Создать (зарегистрировать) пользователя Coach
+POST /fit-friends/users/register HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
 
 {
   "name": "John Doe",
@@ -39,6 +45,12 @@ Content-Type: application/json
  }
 ###
 
+# Удалить пользователя
+DELETE /fit-friends/users/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMDI1MjI1LCJleHAiOjE2ODAwMjYxMjV9.APu2Bw7obEu4r-ErzEzpzC_fk9HgciOMMN-iAs273Ps
+###
+
 # Проверить авторизацию пользователя (ожидает access_token)
 GET /fit-friends/users/login HTTP/1.1
 Host: localhost:3333
@@ -48,7 +60,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiIyYTllNzU0NC0zZTZhLTQ4OTgtOWViYi0yOWZlMWU5OTg2MWEiLCJpYXQiOjE2Nzk4NDU0NzgsImV4cCI6MTY4MDQ1MDI3OH0.QF1UBWG-xT7HSOLsJmqYPkZdXq5d3reCFl11_ArY-uc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiIzNzZkZmM4NS0zNjE1LTRkZGItYTI1MC1kYTYxMDczNWJlOGYiLCJpYXQiOjE2ODAwMjUyMjUsImV4cCI6MTY4MDYzMDAyNX0.mqGc8ZDHlBEqfFOr8_WqJhbVXx90of25cs6EbdqI5t8
 ###
 
 # Выход из аккаунта
@@ -63,7 +75,7 @@ Host: localhost:3333
 Content-Type: application/json
 
 {
-  "email": "user@user.ru",
+  "email": "user@user1.ru",
   "password": "123456"
 }
 ###

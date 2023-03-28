@@ -1,6 +1,6 @@
 import {
   Body, Controller, HttpCode, HttpStatus, Patch, Param, Query,
-  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors,
+  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors, Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -155,6 +155,17 @@ export class UserController {
   async friends(@Query() query: UserQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
     const users = await this.userService.getFriends(user.sub, query);
     return fillObject(UserRdo, users);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for deleting an order' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
+  async destroy(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.userService.deleteUser(user.sub);
+    return res.status(HttpStatus.OK).send();
   }
 
 }

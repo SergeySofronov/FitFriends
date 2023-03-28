@@ -1,6 +1,6 @@
 import { fillObject, getMulterOptions, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload, UserRole } from '@fit-friends/shared-types';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -41,31 +41,6 @@ export class TrainingController {
     return fillObject(TrainingRdo, updatedTraining);
   }
 
-  @Post('/:id/background')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
-  @UseInterceptors(FileInterceptor('background', getMulterOptions()))
-  @ApiParam({ name: "id", required: true, description: 'Training unique identifier' })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for uploading training video', type: TrainingRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found' })
-  public async uploadBackground(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
-    const updatedUser = this.trainingService.updateTrainingBackground(id, file.filename);
-    return fillObject(TrainingRdo, updatedUser);
-  }
-
-  @Get('/:id/background')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
-  @ApiParam({ name: "id", required: true, description: 'Training unique identifier' })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting user avatar', type: TrainingRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found' })
-  public async readBackground(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
-    const backgroundPath = await this.trainingService.getTrainingBackgroundPath(id, user.sub);
-    return res.sendFile(backgroundPath);
-  }
-
   @Post('/:id/video')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
@@ -97,7 +72,7 @@ export class TrainingController {
   @Roles(`${UserRole.Coach}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of ', type: TrainingRdo })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of trainings', type: TrainingRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Trainings not found', })
   async index(@Query() query: TrainingQuery) {
     const users = await this.trainingService.getTrainings(query);
@@ -110,7 +85,20 @@ export class TrainingController {
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting detailed information about certain training', type: TrainingRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found', })
   async show(@Param('id') id: number) {
-    const user = await this.trainingService.getTraining(id);
+    const user = await this.trainingService.getTrainingById(id);
     return fillObject(TrainingRdo, user);
+  }
+
+  @Delete('/:id')
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.Coach}`)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiParam({ name: "id", required: true, description: 'Training unique identifier' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for deleting a training' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found', })
+  async destroy(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.trainingService.deleteTraining(id, user.sub);
+    return res.status(HttpStatus.OK).send();
   }
 }

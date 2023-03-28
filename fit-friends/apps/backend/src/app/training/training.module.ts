@@ -16,5 +16,8 @@ import { TrainingRepository } from './training.repository';
     JwtStrategy,
     Logger
   ],
+  exports:[
+    TrainingRepository
+  ]
 })
 export class TrainingModule { }

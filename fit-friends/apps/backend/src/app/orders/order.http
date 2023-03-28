@@ -1,0 +1,33 @@
+#======================= Authorization ==================
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiNGNlMDVjMjUtZjdmZS00MjZlLThiZDMtMWViYTc2MmUzZDBhIiwiaWF0IjoxNjgwMDIxNTI3LCJleHAiOjE2ODA2MjYzMjd9.-IAN_mq3mbn9R82NnaJ7c4aUx6VgvQOy-o0qFGV3_so
+###
+
+#======================= Order ==================
+# Создать заказ
+POST /fit-friends/orders/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMDI0NzM0LCJleHAiOjE2ODAwMjU2MzR9.-3qUJACj_oUbXipLNK-AHl5MtRcEPT7_Fff93pDW-lY
+Content-Type: application/json
+
+{
+  "category": "Training",
+  "serviceId" : 1,
+  "quantity" : 2,
+  "paymentMethod" : "Mir"
+}
+###
+
+# Обновить заказ
+PATCH /fit-friends/orders/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMDI0NzM0LCJleHAiOjE2ODAwMjU2MzR9.-3qUJACj_oUbXipLNK-AHl5MtRcEPT7_Fff93pDW-lY
+Content-Type: application/json
+
+{
+  "quantity" : 1,
+  "paymentMethod" : "Visa"
+}
+###

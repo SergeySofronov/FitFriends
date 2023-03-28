@@ -1,11 +1,16 @@
 import { fillObject, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload } from '@fit-friends/shared-types';
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserRole } from '@prisma/client';
+import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderService } from './order.service';
 import { ApiIndexQuery } from './query/order.api-query.decorator';
 import { OrderQuery } from './query/order.query';
+import { OrderRdo } from './rdo/order.rdo';
+import { PurchaseRdo } from './rdo/purchase.rdo';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -17,7 +22,7 @@ export class OrderController {
   @Post('/')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
+  @Roles(`${UserRole.User}`)
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: HttpStatus.CREATED, description: 'Resource for user registration', type: OrderRdo })
   public async create(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Body() dto: CreateOrderDto) {
@@ -28,12 +33,12 @@ export class OrderController {
   @Patch('/:id')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
+  @Roles(`${UserRole.User}`)
   @ApiParam({ name: "id", required: true, description: 'Order unique identifier' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for editing order information', type: OrderRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Order not found' })
   public async update(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Body() dto: UpdateOrderDto) {
-    const updatedOrder = await this.orderService.updateOrder(id, { ...dto, coachId: user.sub });
+    const updatedOrder = await this.orderService.updateOrder(dto, id, user.sub);
     return fillObject(OrderRdo, updatedOrder);
   }
 
@@ -43,20 +48,36 @@ export class OrderController {
   @Roles(`${UserRole.Coach}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of ', type: OrderRdo })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of coach orders', type: OrderRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
-  async index(@Query() query: OrderQuery) {
-    const users = await this.orderService.getOrders(query);
+  async orders(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const users = await this.orderService.getOrders(query, user.sub);
     return fillObject(OrderRdo, users);
   }
 
-  @Get('/:id')
+  @Get('/')
+  @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.Coach}`)
+  @ApiIndexQuery()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of user purchases', type: OrderRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
+  async purchases(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const users = await this.orderService.getPurchases(query, user.sub);
+    return fillObject(PurchaseRdo, users);
+  }
+
+  @Delete('/:id')
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.Coach}`)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({ name: "id", required: true, description: 'Order unique identifier' })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting detailed information about certain order', type: OrderRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Order not found', })
-  async show(@Param('id') id: number) {
-    const user = await this.orderService.getOrder(id);
-    return fillObject(OrderDetailedRdo, user);
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for deleting an order' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
+  async destroy(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.orderService.deleteOrder(id, user.sub);
+    return res.status(HttpStatus.OK).send();
   }
 }

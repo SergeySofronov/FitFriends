@@ -160,4 +160,8 @@ export class UserService {
   async getFriends(userId: number, query: UserQuery): Promise<User[]> {
     return this.userRepository.find(query, userId);
   }
+
+  public async deleteUser(userId: number) {
+    return this.userRepository.destroy(userId);
+  }
 }

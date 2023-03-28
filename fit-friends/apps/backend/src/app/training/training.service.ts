@@ -21,15 +21,39 @@ export class TrainingService {
     private readonly logger: Logger,
   ) { }
 
+  private async checkTrainingOwner(id: number, userId: number) {
+    const user = await this.checkUserExist(userId);
+    const training = await this.getTrainingById(id);
+    if (user.id !== training.coachId) {
+      throw new TrainingNotOwnerIdException(this.logger, id, userId);
+    }
+  }
+
+  public async checkUserExist(userId: number) {
+    const existUser = await this.userRepository.findById(userId);
+    if (!existUser) {
+      throw new UserNotFoundIdException(this.logger, userId);
+    }
+    return existUser;
+  }
+
+  async getTrainingById(id: number): Promise<Training> {
+    const existTraining = await this.trainingRepository.findById(id);
+    if (!existTraining) {
+      throw new TrainingNotFoundIdException(this.logger, id);
+    }
+
+    return existTraining;
+  }
+
   public async createTraining(dto: CreateTrainingDto, coachId: number) {
     const existCoach = await this.userRepository.findById(coachId);
-    const video = this.configService.get<string>('file.defaultTrainingVideo');
-    let backgroundImage = '';
-
     if (!existCoach) {
       throw new UserNotFoundIdException(this.logger, coachId);
     }
 
+    let backgroundImage = '';
+    const video = this.configService.get<string>('file.defaultTrainingVideo');
     const resourceFolder = this.configService.get<string>('file.defaultResourceFolder');
     const imageFolder = this.configService.get<string>('file.defaultTrainingBackgroundFolder');
     const imagePath = resolve(__dirname, resourceFolder, imageFolder);
@@ -48,81 +72,13 @@ export class TrainingService {
     return this.trainingRepository.create(newTraining);
   }
 
-  public async updateTraining(id: number, dto: Partial<UpdateTrainingDto>): Promise<Training> {
-    const existCoach = await this.trainingRepository.findById(id);
-
-    if (!existCoach) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
-
-    if (existCoach.coachId !== dto.coachId) {
-      throw new TrainingNotOwnerIdException(this.logger, id, dto.coachId);
-    }
-
+  public async updateTraining(id: number, dto: UpdateTrainingDto): Promise<Training> {
+    await this.checkTrainingOwner(id, dto.coachId);
     return this.trainingRepository.update(id, dto);
   }
 
-  public async updateTrainingBackground(id: number, backgroundImage: string): Promise<Training> {
-    const existTraining = await this.trainingRepository.findById(id);
-    if (!existTraining) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
-
-    const currentImage = existTraining?.backgroundImage;
-
-    if (currentImage && backgroundImage) {
-      const imagePath = resolve(
-        __dirname,
-        this.configService.get<string>('file.dest'),
-        existTraining.id.toString(),
-        currentImage
-      );
-      if (existsSync(imagePath)) {
-        unlinkSync(imagePath);
-      }
-    }
-
-    return this.trainingRepository.update(id, { ...existTraining, backgroundImage, updatedAt: new Date() });
-  }
-
-
-  public async getTrainingBackgroundPath(id: number, coachId: number): Promise<string> {
-    const existTraining = await this.trainingRepository.findById(id);
-    if (!existTraining) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
-
-    if (existTraining.coachId !== coachId) {
-      throw new TrainingNotOwnerIdException(this.logger, id, coachId);
-    }
-
-    const resourceFolder = this.configService.get<string>('file.defaultResourceFolder');
-    const imageFolder = this.configService.get<string>('file.defaultTrainingBackgroundFolder');
-    const imagePath = resolve(__dirname, resourceFolder, imageFolder);
-    let isDefaultImage = false;
-
-    try {
-      const files = readdirSync(imagePath, { withFileTypes: true });
-      isDefaultImage = files.map(item => item.name).includes(existTraining.backgroundImage);
-    }
-    catch (error) {
-      throw new BadRequestException('Internal error. Cannot create entity');
-    }
-
-    console.log(isDefaultImage);
-    const defaultBackgroundFolder = this.configService.get<string>('file.defaultTrainingBackgroundFolder');
-    if (isDefaultImage) {
-      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), defaultBackgroundFolder, existTraining.backgroundImage);
-    }
-
-    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existTraining.id.toString()}/${existTraining.backgroundImage}`);
-  }
-
   public async updateTrainingVideo(id: number, video: string): Promise<Training> {
-    const existTraining = await this.trainingRepository.findById(id);
-    if (!existTraining) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
+    const existTraining = await this.getTrainingById(id);
 
     const currentVideo = existTraining?.backgroundImage;
 
@@ -142,10 +98,7 @@ export class TrainingService {
   }
 
   public async getTrainingVideoPath(id: number, coachId: number): Promise<string> {
-    const existTraining = await this.trainingRepository.findById(id);
-    if (!existTraining) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
+    const existTraining = await this.getTrainingById(id);
 
     if (existTraining.coachId !== coachId) {
       throw new TrainingNotOwnerIdException(this.logger, id, coachId);
@@ -167,12 +120,8 @@ export class TrainingService {
     return existTraining;
   }
 
-  async getTraining(id: number): Promise<Training> {
-    const existTraining = await this.trainingRepository.findById(id);
-    if (!existTraining) {
-      throw new TrainingNotFoundIdException(this.logger, id);
-    }
-
-    return existTraining;
+  public async deleteTraining(orderId: number, userId: number) {
+    await this.checkTrainingOwner(orderId, userId);
+    return this.trainingRepository.destroy(orderId);
   }
 }

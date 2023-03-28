@@ -1,98 +1,66 @@
+import { OrderCategory, OrderCategoryType, PaymentType } from '@fit-friends/shared-types';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
+import { TrainingRdo } from '../../training/rdo/training.rdo';
+import { UserRdo } from '../../users/rdo/user.rdo';
+import { OrderValidity as OV } from '../order.constant';
 
-export class TrainingRdo {
+export class OrderRdo {
   @ApiProperty({
-    description: 'Training title',
-    example: 'Run, Forest, run',
+    description: 'Order unique identifier',
+    example: 1,
   })
   @Expose()
-  public title: string;
 
   @ApiProperty({
-    description: 'Training background image',
-    example: 'training-1.png',
+    description: 'Unique identifier of the customer',
+    example: 1,
+    type: () => UserRdo
   })
   @Expose()
-  public backgroundImage: string;
+  public user: UserRdo;
 
   @ApiProperty({
-    description: "User's training level",
-    example: UserLevel.Beginner,
+    description: "Order category",
+    example: OrderCategory.Training,
   })
   @Expose()
-  public level: UserLevelType;
+  public category: OrderCategoryType;
 
   @ApiProperty({
-    description: "Trining style",
-    example: TrainingStyle.Aerobics,
+    description: 'Contents of the order item',
+    type: () => TrainingRdo
   })
   @Expose()
-  public trainingStyle: TrainingStyleType;
+  public service: TrainingRdo /*| GymRdo*/; //todo WIP
 
   @ApiProperty({
-    description: "Estimated training time",
-    example: TrainingTime.Max30,
-  })
-  @Expose()
-  trainingTime: TrainingTimeType;
-
-  @ApiProperty({
-    description: 'The price of training',
-    example: TV.PriceMinValue,
+    description: 'Order item price',
+    example: 1000,
   })
   @Expose()
   public price: number;
 
   @ApiProperty({
-    description: 'Еhe number of calories consumed during a workout',
-    example: TV.CaloriesLossMinValue,
+    description: 'Order items quantity',
+    example: OV.ItemQuantityMin,
   })
   @Expose()
-  public caloriesLoss: number;
+  public quantity: number;
 
   @ApiProperty({
-    description: 'Training description',
-    example: 'A complex set of exercises for professional athletes to work out indicators in the classical style',
+    description: 'The total price of order',
+    example: 1000,
   })
   @Expose()
-  public description: string;
+  public total: number;
 
   @ApiProperty({
-    description: "User's gender",
-    example: UserGender.Male,
+    description: "Payment method",
+    example: OrderCategory.Training,
   })
   @Expose()
-  public gender: UserGenderType;
-
-  @ApiProperty({
-    description: 'Training video link',
-    example: '/folder/file.mp4',
-  })
-  @Expose()
-  public video: string;
-
-  @ApiProperty({
-    description: 'User rating of the workout',
-    example: TV.RatingMinValue,
-  })
-  @Expose()
-  public rating: number;
-
-
-  @ApiProperty({
-    description: 'Coach unique identifier',
-    example: 1,
-  })
-  @Expose()
-  public coachId: number;
-
-  @ApiProperty({
-    description: "The flag defines the participation of the training as a special offer",
-    example: true,
-  })
-  @Expose()
-  public isSpecial: boolean;
+  public paymentMethod: PaymentType;
 
   @ApiProperty({
     description: 'Date of creation of the training',

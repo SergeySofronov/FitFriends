@@ -13,7 +13,7 @@ Content-Type: application/json
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiNGQ4YzY4MzItNTRhNi00NzVlLTgxY2YtNDU5MDdhOGNkODEyIiwiaWF0IjoxNjc5OTM0Mzg1LCJleHAiOjE2ODA1MzkxODV9.DCgtLqYk4BzKbVLKF4u_Bl4QiufT4xjVCw0vM-DNjXM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiOTNkNDQ3MjMtMTg2Ni00MmQ2LTg1NjItZGY5N2Y1ZDA3MjVkIiwiaWF0IjoxNjgwMDI2ODA5LCJleHAiOjE2ODA2MzE2MDl9.mRNm3-Hr8PCMZBpeoeRS_m7PJXNGLPCWb3TQzQi1Ugc
 ###
 
 #======================= Training ==================
@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 # Создать тренировку
 POST /fit-friends/training/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1MDQyMiwiZXhwIjoxNjc5ODUxMzIyfQ.r0ZiGkMNpz-oasU94Fc_A1kYuOChQNMJjYZQPMyNthg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDAyNjgwOSwiZXhwIjoxNjgwMDI3NzA5fQ.0_GfhI6FQ2zB4KK6dRU4BTqZeWyaUqxKIc6KLiTy4mg
 Content-Type: application/json
 
 {
@@ -38,9 +38,9 @@ Content-Type: application/json
 ###
 
 # Обновить тренировку
-PATCH /fit-friends/training/1 HTTP/1.1
+PATCH /fit-friends/training/2 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1MDQyMiwiZXhwIjoxNjc5ODUxMzIyfQ.r0ZiGkMNpz-oasU94Fc_A1kYuOChQNMJjYZQPMyNthg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDAyNjgwOSwiZXhwIjoxNjgwMDI3NzA5fQ.0_GfhI6FQ2zB4KK6dRU4BTqZeWyaUqxKIc6KLiTy4mg
 Content-Type: application/json
 
 {
@@ -56,24 +56,10 @@ Content-Type: application/json
 }
 ###
 
-#  Загрузка фонового изображения тренировки
-POST /fit-friends/training/1/background/ HTTP/1.1
+# Удалить тренировку
+DELETE /fit-friends/training/1 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzMDkyNiwiZXhwIjoxNjc5OTMxODI2fQ.mvqbHB1BVspWuFwbudzZVUR2KTJy5wzORyjqwkWhKoU
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="background"; filename="training-4.png"
-Content-Type: image/jpeg
-
-< D:/загрузки/training-4.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-###
-
-#  Получить фоновое изображение тренировки
-GET /fit-friends/training/1/background/ HTTP/1.1
-Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1NDA0OSwiZXhwIjoxNjc5ODU0OTQ5fQ.uZAmokUCWsfphof9m_yuy4jWn_u6dDXyIz3NBJ8frsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDAyNjgwOSwiZXhwIjoxNjgwMDI3NzA5fQ.0_GfhI6FQ2zB4KK6dRU4BTqZeWyaUqxKIc6KLiTy4mg
 ###
 
 #  Загрузка видео тренировки
