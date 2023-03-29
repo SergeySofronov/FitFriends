@@ -4,10 +4,37 @@ export const envFileUploadSchema = Joi.object({
   FILE_UPLOAD_DEST: Joi
     .string()
     .required(),
-  FILE_MAX_SIZE: Joi
+  AVATAR_MAX_SIZE: Joi
+    .number()
+    .required(),
+  TRAINING_VIDEO_MAX_SIZE: Joi
     .number()
     .required(),
   IMAGE_FILTER_REGEXP: Joi
+    .string()
+    .required(),
+  VIDEO_FILTER_REGEXP: Joi
+    .string()
+    .required(),
+  TRAINING_VIDEO_UPLOAD_DEST: Joi
+    .string()
+    .required(),
+  DEFAULT_RESOURCE_FOLDER: Joi
+    .string()
+    .required(),
+  DEFAULT_AVATAR_FOLDER: Joi
+    .string()
+    .required(),
+  DEFAULT_TRAINING_BACKGROUND_IMAGES_FOLDER: Joi
+    .string()
+    .required(),
+  DEFAULT_TRAINING_VIDEO_FOLDER: Joi
+    .string()
+    .required(),
+  DEFAULT_AVATAR: Joi
+    .string()
+    .required(),
+  DEFAULT_TRAINING_VIDEO: Joi
     .string()
     .required(),
 });

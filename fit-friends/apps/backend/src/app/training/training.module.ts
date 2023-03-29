@@ -1,13 +1,20 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { getTrainingVideoUploadConfig, JwtStrategy } from '@fit-friends/core';
 import { Logger, Module } from '@nestjs/common';
+import { MulterModule } from '@nestjs/platform-express/multer';
 import { TrainingService } from './training.service';
 import { TrainingController } from './training.controller';
-import { JwtStrategy } from '@fit-friends/core';
 import { UsersModule } from '../users/user.module';
 import { TrainingRepository } from './training.repository';
 
 @Module({
   imports: [
-    UsersModule
+    UsersModule,
+    MulterModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: getTrainingVideoUploadConfig,
+      inject: [ConfigService],
+    }),
   ],
   controllers: [TrainingController],
   providers: [
@@ -16,8 +23,8 @@ import { TrainingRepository } from './training.repository';
     JwtStrategy,
     Logger
   ],
-  exports:[
-    TrainingRepository
+  exports: [
+    TrainingService
   ]
 })
 export class TrainingModule { }

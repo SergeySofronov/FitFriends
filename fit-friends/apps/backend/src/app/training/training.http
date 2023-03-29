@@ -63,23 +63,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 ###
 
 #  Загрузка видео тренировки
-POST /fit-friends/training/1/video/ HTTP/1.1
+POST /fit-friends/training/2/video/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1MTU3OCwiZXhwIjoxNjc5ODUyNDc4fQ.EfnDjpjElRNW5ym1iDYzaMN36nLojDvocYiVeb3KAwk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNjkxNywiZXhwIjoxNjgwMTE3ODE3fQ.XN6TVdoC4YRZmY2UOtNfBMRB_PuXDruuRhEYGIVR894
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="video"; filename="05.jpg"
-Content-Type: image/jpeg
+Content-Disposition: form-data; name="video"; filename="traffic.mp4"
+Content-Type: video/mp4
 
-< D:/загрузки/05.jpg
+< D:/загрузки/traffic.mp4
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 ###
 
 #  Получить видео тренировки
-GET /fit-friends/training/1/video/ HTTP/1.1
+GET /fit-friends/training/2/video/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1NDA0OSwiZXhwIjoxNjc5ODU0OTQ5fQ.uZAmokUCWsfphof9m_yuy4jWn_u6dDXyIz3NBJ8frsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNjkxNywiZXhwIjoxNjgwMTE3ODE3fQ.XN6TVdoC4YRZmY2UOtNfBMRB_PuXDruuRhEYGIVR894
 ###
 
 #  Получить список тренировок

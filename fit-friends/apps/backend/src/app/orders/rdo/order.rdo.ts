@@ -11,6 +11,7 @@ export class OrderRdo {
     example: 1,
   })
   @Expose()
+  public id: number;
 
   @ApiProperty({
     description: 'Unique identifier of the customer',
@@ -31,6 +32,7 @@ export class OrderRdo {
     description: 'Contents of the order item',
     type: () => TrainingRdo
   })
+  @Transform(({ obj }) => obj.category === OrderCategory.SeasonPass ? obj.service = obj.gym : obj.service = obj.training)
   @Expose()
   public service: TrainingRdo /*| GymRdo*/; //todo WIP
 
@@ -66,15 +68,15 @@ export class OrderRdo {
     description: 'Date of creation of the training',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public createdAt: Date;
+  public createdAt: string;
 
   @ApiProperty({
     description: 'Date of update of the training',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public updatedAt: Date;
+  public updatedAt: string;
 }

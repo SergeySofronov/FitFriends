@@ -80,7 +80,7 @@ export class TrainingService {
   public async updateTrainingVideo(id: number, video: string): Promise<Training> {
     const existTraining = await this.getTrainingById(id);
 
-    const currentVideo = existTraining?.backgroundImage;
+    const currentVideo = existTraining?.video;
 
     if (currentVideo && video) {
       const videoPath = resolve(
@@ -106,10 +106,10 @@ export class TrainingService {
 
     const defaultVideo = `${this.configService.get<string>('file.defaultTrainingVideoFolder')}/${this.configService.get<string>('file.defaultTrainingVideo')}`;
     if (existTraining.backgroundImage === defaultVideo) {
-      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), defaultVideo, existTraining.backgroundImage);
+      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), defaultVideo, existTraining.video);
     }
 
-    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existTraining.id.toString()}/${existTraining.backgroundImage}`);
+    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existTraining.id.toString()}/${existTraining.video}`);
   }
 
   async getTrainings(query: TrainingQuery): Promise<Training[]> {

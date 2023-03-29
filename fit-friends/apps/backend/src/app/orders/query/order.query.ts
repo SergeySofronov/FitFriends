@@ -18,7 +18,7 @@ export class OrderQuery {
 
   @IsEnum(OrderSort, { message: `${VM.IsEnumMessage} ${Object.values(OrderSort).join(', ')}` })
   @IsOptional()
-  public sortType?: OrderSort = OrderSort.Price;
+  public sortType?: OrderSort = OrderSort.Total;
 
   @IsIn(['asc', 'desc'])
   @IsOptional()

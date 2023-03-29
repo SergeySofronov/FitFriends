@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Entity } from '@fit-friends/core';
-import { Gym, GymFeature, Location } from '@fit-friends/shared-types';
+import { Gym, GymFeatureType, Location } from '@fit-friends/shared-types';
 
 @Injectable()
 export class GymEntity implements Entity<GymEntity, Gym>, Gym {
@@ -8,7 +8,7 @@ export class GymEntity implements Entity<GymEntity, Gym>, Gym {
   public title: string;
   public location: Location;
   public isVerified: boolean;
-  public gymType: GymFeature;
+  public gymType: GymFeatureType;
   public photo: string[];
   public description: string;
   public price: number;

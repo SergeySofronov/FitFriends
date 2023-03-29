@@ -1,9 +1,15 @@
 import { ConfigService, registerAs } from '@nestjs/config';
 import { MulterModuleOptions } from '@nestjs/platform-express/multer';
+import { diskStorage } from 'multer';
+import { Request } from 'express';
+import { existsSync, mkdirSync } from 'fs';
+import { extname, resolve } from 'path';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export const fileUploadOptions = registerAs('file', () => ({
   dest: process.env.FILE_UPLOAD_DEST,
-  fileSize: parseInt(process.env.FILE_MAX_SIZE, 10),
+  avatarSize: parseInt(process.env.AVATAR_MAX_SIZE, 10),
+  trainingVideoSize: parseInt(process.env.TRAINING_VIDEO_MAX_SIZE, 10),
   imageFilterExp: process.env.IMAGE_FILTER_REGEXP,
   videoFilterExp: process.env.VIDEO_FILTER_REGEXP,
   defaultAvatar: process.env.DEFAULT_AVATAR,
@@ -14,11 +20,74 @@ export const fileUploadOptions = registerAs('file', () => ({
   defaultResourceFolder: process.env.DEFAULT_RESOURCE_FOLDER,
 }));
 
-export async function getFileUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
+function getFileName() {
+  return ((_req: Request, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) => {
+    const name = file.originalname.split('.')[0];
+    const fileExtName = extname(file.originalname);
+    const randomName = Array(4)
+      .fill(null)
+      .map(() => Math.round(Math.random() * 10).toString(10))
+      .join('');
+    callback(null, `${name}${randomName}${fileExtName}`)
+  });
+}
+
+function getFileDestination(configService: ConfigService) {
+  return ((req: Request, _file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
+    const folderName = `${req.user['sub']}`;
+    const folderPath = resolve(__dirname, configService.get<string>('file.dest'), folderName);
+    const isFolderExists = existsSync(folderPath) || mkdirSync(folderPath, { recursive: true });
+
+    if (isFolderExists) {
+      return callback(null, folderPath);
+    }
+
+    return callback(new HttpException('Error while attempt to create file', HttpStatus.BAD_REQUEST,), '');
+  });
+}
+
+function getFileFilter(filter: string) {
+  return ((_req: Request, file: Express.Multer.File, callback: (error: Error | null, acceptFile: boolean) => void) => {
+    if (!file.originalname.match(new RegExp(filter))) {
+      return callback(
+        new HttpException(
+          'Not allowed file extension',
+          HttpStatus.BAD_REQUEST,
+        ),
+        false,
+      );
+    }
+
+    return callback(null, true);
+  })
+}
+
+export async function getAvatarUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
   return {
     dest: configService.get<string>('file.dest'),
     limits: {
-      fileSize: configService.get<number>('file.fileSize'),
+      fileSize: configService.get<number>('file.avatarSize'),
     },
+    storage:
+      diskStorage({
+        destination: getFileDestination(configService),
+        filename: getFileName(),
+      }),
+    fileFilter: getFileFilter(configService.get<string>('file.imageFilterExp')),
+  }
+}
+
+export async function getTrainingVideoUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
+  return {
+    dest: configService.get<string>('file.dest'),
+    limits: {
+      fileSize: configService.get<number>('file.trainingVideoSize'),
+    },
+    storage:
+      diskStorage({
+        destination: getFileDestination(configService),
+        filename: getFileName(),
+      }),
+    fileFilter: getFileFilter(configService.get<string>('file.videoFilterExp')),
   }
 }

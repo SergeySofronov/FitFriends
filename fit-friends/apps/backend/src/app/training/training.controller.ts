@@ -1,4 +1,4 @@
-import { fillObject, getMulterOptions, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
@@ -45,7 +45,7 @@ export class TrainingController {
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Roles(`${UserRole.Coach}`)
-  @UseInterceptors(FileInterceptor('video', getMulterOptions()))
+  @UseInterceptors(FileInterceptor('video'))
   @ApiParam({ name: "id", required: true, description: 'Training unique identifier' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for uploading training video', type: TrainingRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found' })

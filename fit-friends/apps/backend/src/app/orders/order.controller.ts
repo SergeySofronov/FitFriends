@@ -42,7 +42,7 @@ export class OrderController {
     return fillObject(OrderRdo, updatedOrder);
   }
 
-  @Get('/')
+  @Get('/coach')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Roles(`${UserRole.Coach}`)
@@ -51,21 +51,22 @@ export class OrderController {
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of coach orders', type: OrderRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
   async orders(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
-    const users = await this.orderService.getOrders(query, user.sub);
-    return fillObject(OrderRdo, users);
+    const orders = await this.orderService.getOrders(query, user.sub);
+    return fillObject(OrderRdo, orders);
   }
 
-  @Get('/')
+  @Get('/user')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
+  @Roles(`${UserRole.User}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of user purchases', type: OrderRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
   async purchases(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
-    const users = await this.orderService.getPurchases(query, user.sub);
-    return fillObject(PurchaseRdo, users);
+    console.log('user')
+    const orders = await this.orderService.getPurchases(query, user.sub);
+    return fillObject(PurchaseRdo, orders);
   }
 
   @Delete('/:id')

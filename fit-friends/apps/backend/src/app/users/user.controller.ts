@@ -5,7 +5,7 @@ import {
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, getMulterOptions, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
 import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserMessages } from './user.constant';
@@ -74,14 +74,13 @@ export class UserController {
     return fillObject(UserRdo, updatedUser);
   }
 
-  @Post('/:id/avatar')
+  @Post('/avatar')
   @UseGuards(JwtAuthGuard)
-  @UseInterceptors(FileInterceptor('avatar', getMulterOptions()))
-  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
+  @UseInterceptors(FileInterceptor('avatar'))
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for setting user avatar', type: UserRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
-  public async upload(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
-    const updatedUser = this.userService.updateUserAvatar(id, file.filename);
+  public async upload(@UploadedFile() file: Express.Multer.File, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const updatedUser = this.userService.updateUserAvatar(user.sub, file.filename);
     return fillObject(UserRdo, updatedUser);
   }
 

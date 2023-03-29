@@ -107,15 +107,15 @@ export class TrainingRdo {
     description: 'Date of creation of the training',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public createdAt: Date;
+  public createdAt: string;
 
   @ApiProperty({
     description: 'Date of update of the training',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public updatedAt: Date;
+  public updatedAt: string;
 }

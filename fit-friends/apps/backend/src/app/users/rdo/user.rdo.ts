@@ -44,9 +44,9 @@ export class UserRdo {
     description: "User's date of birth",
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public dateBirth: Date;
+  public dateBirth: string;
 
   @ApiProperty({
     description: "User's role",
@@ -102,15 +102,15 @@ export class UserRdo {
     description: 'Date of creation of the user account',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public createdAt: Date;
+  public createdAt: string;
 
   @ApiProperty({
     description: 'Date of update of the user account',
     example: `${new Date().toISOString()}`,
   })
-  @Transform(({ obj }) => new Date(obj.updatedAt).toISOString())
+  @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public updatedAt: Date;
+  public updatedAt: string;
 }

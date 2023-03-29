@@ -90,7 +90,7 @@ export class UserService {
     };
   }
 
-  public async updateUser(id: number, dto: Partial<UpdateUserDto>): Promise<User> {
+  public async updateUser(id: number, dto: UpdateUserDto): Promise<User> {
     const existUser = await this.getUserById(id);
 
     if (existUser.role !== dto.role) {
@@ -104,6 +104,8 @@ export class UserService {
     const existUser = await this.getUserById(id);
 
     const userAvatar = existUser?.avatar;
+
+    console.log(userAvatar)
 
     if (userAvatar && avatar) {
       const avatarPath = resolve(
@@ -126,6 +128,10 @@ export class UserService {
   public async getUserAvatarPath(id: number): Promise<string> {
     const existUser = await this.getUserById(id);
     const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
+
+    console.log(defaultAvatar)
+    console.log(existUser.avatar)
+
     if (existUser.avatar === defaultAvatar) {
       return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), this.configService.get<string>('file.defaultAvatarFolder'), existUser.avatar);
     }

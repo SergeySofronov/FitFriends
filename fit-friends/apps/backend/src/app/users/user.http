@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
   "name": "John Doe",
-  "email": "user@user1.ru",
+  "email": "user@user.ru",
   "password": "123456",
   "gender": "Male",
   "dateBirth" : "2011-10-05T14:48:00.000Z",
@@ -60,7 +60,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiIzNzZkZmM4NS0zNjE1LTRkZGItYTI1MC1kYTYxMDczNWJlOGYiLCJpYXQiOjE2ODAwMjUyMjUsImV4cCI6MTY4MDYzMDAyNX0.mqGc8ZDHlBEqfFOr8_WqJhbVXx90of25cs6EbdqI5t8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiMDgzN2I3ZmMtN2VmYy00OTRiLTgxMDctNDUwZGQyZTMxYmIwIiwiaWF0IjoxNjgwMTE2OTE3LCJleHAiOjE2ODA3MjE3MTd9.A3KAIUMhwJtCUqGyUDtqnu2Is40LCRrDx0f8JFqfPcY
 ###
 
 # Выход из аккаунта
@@ -75,7 +75,7 @@ Host: localhost:3333
 Content-Type: application/json
 
 {
-  "email": "user@user1.ru",
+  "email": "user@user.ru",
   "password": "123456"
 }
 ###
@@ -94,7 +94,7 @@ Content-Type: application/json
 # Редактировать пользователя
 PATCH  /fit-friends/users/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI2Njk4ZDRkNy1lZjkyLTQ4NDQtOWE2Ni03OTNjMDc3NDVhOTUiLCJpYXQiOjE2Nzk1MDUyNzEsImV4cCI6MTY4MDExMDA3MX0.z64lw2laVDyh2Y6lh28EsszBE8hPijl-h2ucGdizXi8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExMjE5NywiZXhwIjoxNjgwMTEzMDk3fQ.ZQxYdO5O3NZML_GreKBNU8DWI1EoehgXCknKpNJgkW4
 Content-Type: application/json
 
 {
@@ -107,9 +107,9 @@ Content-Type: application/json
 ###
 
 #  Загрузка аватарки пользователя
-POST /fit-friends/users/1/avatar/ HTTP/1.1
+POST /fit-friends/users/avatar/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDIwNDE4LCJleHAiOjE2Nzk0MjEzMTh9.CoRT3OkOm5kDYKBo9mD_LDCC-QjQQ1l-1XF-PPCDEtk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNDAxNywiZXhwIjoxNjgwMTE0OTE3fQ.bEW2fqTIZIFy7q_Pf0geXBoceDwO5kuRbkMH1k203Ag
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -123,7 +123,7 @@ Content-Type: image/jpeg
 #  Получить аватарку пользователя
 GET /fit-friends/users/avatar/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5ODQ3OTY1LCJleHAiOjE2Nzk4NDg4NjV9.LmlRFsuiE2MzoNK9LQ7qvDdszv3S5u1gBv5ALep00L4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNDAxNywiZXhwIjoxNjgwMTE0OTE3fQ.bEW2fqTIZIFy7q_Pf0geXBoceDwO5kuRbkMH1k203Ag
 ###
 
 #  Получить список пользователей

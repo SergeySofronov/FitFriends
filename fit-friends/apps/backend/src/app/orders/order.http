@@ -2,32 +2,46 @@
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiNGNlMDVjMjUtZjdmZS00MjZlLThiZDMtMWViYTc2MmUzZDBhIiwiaWF0IjoxNjgwMDIxNTI3LCJleHAiOjE2ODA2MjYzMjd9.-IAN_mq3mbn9R82NnaJ7c4aUx6VgvQOy-o0qFGV3_so
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI4NDkxNGUyMS00MDUzLTRhMGItYjhiYi00MTRlNzBiZTUyZjYiLCJpYXQiOjE2ODAxMDYzOTQsImV4cCI6MTY4MDcxMTE5NH0.oV7xmTyIfr6jKW2sqSiRIwXP6GJ06ypXl_DwLI3jxoE
 ###
 
 #======================= Order ==================
 # Создать заказ
 POST /fit-friends/orders/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMDI0NzM0LCJleHAiOjE2ODAwMjU2MzR9.-3qUJACj_oUbXipLNK-AHl5MtRcEPT7_Fff93pDW-lY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNTQ2NCwiZXhwIjoxNjgwMTA2MzY0fQ.YV4z0z3zV6nzFFTyOnlWVP2ep4zj-ytl3m4L4g0Wq7U
 Content-Type: application/json
 
 {
-  "category": "Training",
-  "serviceId" : 1,
+  "category": "SeasonPass",
+  "serviceId" : 3,
   "quantity" : 2,
   "paymentMethod" : "Mir"
 }
 ###
 
 # Обновить заказ
-PATCH /fit-friends/orders/1 HTTP/1.1
+PATCH /fit-friends/orders/25 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckB1c2VyMS5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMDI0NzM0LCJleHAiOjE2ODAwMjU2MzR9.-3qUJACj_oUbXipLNK-AHl5MtRcEPT7_Fff93pDW-lY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwMTAwODgwLCJleHAiOjE2ODAxMDE3ODB9.gzSPD_HiJOXU1YAwtaYpG3NNpVwyDNmg5ybOqD6XwmM
 Content-Type: application/json
 
 {
   "quantity" : 1,
   "paymentMethod" : "Visa"
 }
+###
+
+#  Получить список заказов (Coach)
+# ?limit=50&page=0&sortType=total&sortDirection=desc
+GET /fit-friends/orders/coach?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNjQzMiwiZXhwIjoxNjgwMTA3MzMyfQ.tBujJ2YVoWWwjxdJWzpjJt4WVrpA9YdVTKpnS06O_4s
+###
+
+#  Получить список покупок (User)
+# ?limit=50&page=0&sortType=total&sortDirection=desc
+GET /fit-friends/orders/user?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNjQzMiwiZXhwIjoxNjgwMTA3MzMyfQ.tBujJ2YVoWWwjxdJWzpjJt4WVrpA9YdVTKpnS06O_4s
 ###

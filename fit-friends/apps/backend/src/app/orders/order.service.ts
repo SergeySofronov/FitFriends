@@ -1,7 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { OrderNotFoundIdException, OrderNotOwnerIdException, UserNotFoundIdException } from '@fit-friends/core';
-import { TrainingRepository } from '../training/training.repository';
+import { OrderNotFoundIdException, OrderNotOwnerIdException, OrdersNotFoundException, UserNotFoundIdException } from '@fit-friends/core';
 import { UserRepository } from '../users/user.repository';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -9,14 +7,14 @@ import { OrderEntity } from './order.entity';
 import { OrderRepository } from './order.repository';
 import { OrderQuery } from './query/order.query';
 import { OrderCategory } from '@fit-friends/shared-types';
+import { TrainingService } from '../training/training.service';
 
 @Injectable()
 export class OrderService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly orderRepository: OrderRepository,
-    private readonly trainingRepository: TrainingRepository,
-    private readonly configService: ConfigService,
+    private readonly trainingService: TrainingService,
     private readonly logger: Logger,
   ) { }
 
@@ -47,10 +45,10 @@ export class OrderService {
 
   public async createOrder(dto: CreateOrderDto, userId: number) {
     await this.checkUserExist(userId);
-    //todo: заменить this.trainingRepository на this.gymRepository
+    //todo: заменить trainingService на gymService в else
     const { price } = (dto.category === OrderCategory.Training) ?
-      await this.trainingRepository.findById(dto.serviceId) :
-      await this.trainingRepository.findById(dto.serviceId);
+      await this.trainingService.getTrainingById(dto.serviceId) :
+      await this.trainingService.getTrainingById(dto.serviceId);
 
     const total = price * dto.quantity;
     const newOrder = new OrderEntity({ ...dto, price, total, userId });
@@ -58,15 +56,24 @@ export class OrderService {
   }
 
   public async updateOrder(dto: UpdateOrderDto, orderId: number, userId: number) {
-    throw new Error();
+    await this.checkOrderOwner(orderId, userId);
+    return this.orderRepository.update(orderId, dto);
   }
 
-  public async getOrders(query: OrderQuery, userId: number) {
-    throw new Error();
+  public async getOrders(query: OrderQuery, coachId: number) {
+    const existOrder = await this.orderRepository.findOrders(query, coachId);
+    if (!existOrder?.length) {
+      throw new OrdersNotFoundException(this.logger);
+    }
+    return existOrder;
   }
 
   public async getPurchases(query: OrderQuery, userId: number) {
-    throw new Error();
+    const existOrder = await this.orderRepository.findPurchases(query, userId);
+    if (!existOrder?.length) {
+      throw new OrdersNotFoundException(this.logger);
+    }
+    return existOrder;
   }
 
   public async deleteOrder(orderId: number, userId: number) {

@@ -11,12 +11,12 @@ export const OrderQuery = {
 
 export enum OrderSort {
   Quantity = 'quantity',
-  Price = 'price'
+  Total = 'total'
 }
 
 export const OrderSortField = {
   [OrderSort.Quantity]: 'quantity',
-  [OrderSort.Price]: 'price',
+  [OrderSort.Total]: 'total',
 };
 
 
