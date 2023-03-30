@@ -2,7 +2,7 @@ import { User } from '@fit-friends/shared-types';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { UserService } from '../../../../../apps/backend/src/app/users/user.service';
+import { UserService } from '../user.service';
 
 
 @Injectable()

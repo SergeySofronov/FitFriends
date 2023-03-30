@@ -5,7 +5,7 @@ import {
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, JwtAuthGuard, JwtRefreshGuard, LocalAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, Roles, RolesGuard } from '@fit-friends/core';
 import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserMessages } from './user.constant';
@@ -14,6 +14,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiIndexQuery } from './query/user.api-query.decorator';
 import { UserQuery } from './query/user.query';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')

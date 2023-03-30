@@ -1,7 +1,7 @@
-import { getRandomInteger, TrainingNotFoundIdException, TrainingNotOwnerIdException, TrainingsNotFoundException, UserNotFoundIdException } from '@fit-friends/core';
-import { Training } from '@fit-friends/shared-types';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { getRandomInteger, TrainingNotFoundIdException, TrainingNotOwnerIdException, TrainingsNotFoundException, UserNotFoundIdException } from '@fit-friends/core';
+import { Training } from '@fit-friends/shared-types';
 import { existsSync, readdirSync, unlinkSync } from 'fs';
 import { resolve } from 'path';
 import { UserRepository } from '../users/user.repository';

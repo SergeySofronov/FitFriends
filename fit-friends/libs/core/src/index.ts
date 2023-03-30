@@ -1,7 +1,6 @@
 export * from './lib/config';
 export * from './lib/env-schemas';
 export * from './lib/guards';
-export * from './lib/strategies';
 export * from './lib/entity.interface';
 export * from './lib/crud-repository.interface';
 export * from './lib/helpers';

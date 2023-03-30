@@ -1,5 +1,5 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { getTrainingVideoUploadConfig, JwtStrategy } from '@fit-friends/core';
+import { getTrainingVideoUploadConfig} from '@fit-friends/core';
 import { Logger, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express/multer';
 import { TrainingService } from './training.service';
@@ -20,7 +20,6 @@ import { TrainingRepository } from './training.repository';
   providers: [
     TrainingService,
     TrainingRepository,
-    JwtStrategy,
     Logger
   ],
   exports: [

@@ -5,10 +5,10 @@ import { RefreshTokenService } from './refresh-token.service';
 @Module({
   providers: [
     RefreshTokenService,
-    RefreshTokenRepository
+    RefreshTokenRepository,
   ],
   exports: [
-    RefreshTokenService
+    RefreshTokenService,
   ]
 })
 export class RefreshTokenModule { }

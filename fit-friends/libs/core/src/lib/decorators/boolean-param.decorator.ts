@@ -1,11 +1,16 @@
 import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 
+const enum BooleanValue {
+  True = 1,
+  False = 0,
+}
+
 @ValidatorConstraint({ async: false })
 export class BooleanParamConstraint implements ValidatorConstraintInterface {
   validate(value: number | boolean) {
     return (
-      (value === 1) ||
-      (value === 0) ||
+      (value === BooleanValue.True) ||
+      (value === BooleanValue.False) ||
       (value === true) ||
       (value === false)
     );

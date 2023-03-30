@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CRUDRepositoryInterface } from '@fit-friends/core';
 import { User, UserRole } from '@fit-friends/shared-types';
 import { UserEntity } from './user.entity';
-import { CoachFeatures, UserFeatures } from 'libs/shared-types/src/lib/user-features.type';
+import { CoachFeatures, UserFeatures } from '@fit-friends/shared-types';
 import { UserQuery } from './query/user.query';
 import { UserSort, UserQuery as UQ, UserSortField } from './user.constant';
 

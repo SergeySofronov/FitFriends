@@ -1,4 +1,4 @@
-import { fillObject, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, Roles, RolesGuard } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload } from '@fit-friends/shared-types';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
@@ -11,6 +11,7 @@ import { OrderQuery } from './query/order.query';
 import { OrderRdo } from './rdo/order.rdo';
 import { PurchaseRdo } from './rdo/purchase.rdo';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 
 @ApiTags('orders')
 @Controller('orders')

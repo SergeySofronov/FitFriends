@@ -1,4 +1,4 @@
-import { fillObject, JwtAuthGuard, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, Roles, RolesGuard } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
@@ -10,6 +10,7 @@ import { TrainingQuery } from './query/training.query';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { TrainingRdo } from './rdo/training.rdo';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 
 @ApiTags('training')
 @Controller('training')

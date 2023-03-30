@@ -4,8 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { RefreshTokenPayload} from '@fit-friends/shared-types';
-import { RefreshTokenService } from '../../../../../apps/backend/src/app/refresh-token/refresh-token.service'
-import { TokenNotExistsException } from '../token-exceptions';
+import { RefreshTokenService } from '../../refresh-token/refresh-token.service';
+import { TokenNotExistsException } from '@fit-friends/core';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh') {
