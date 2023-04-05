@@ -5,7 +5,8 @@ export type Order = {
   id?: number;
   userId: number;
   category: OrderCategoryType;
-  serviceId: number;
+  gymId: number | undefined;
+  trainingId: number | undefined;
   price: number;
   quantity: number;
   total: number;
