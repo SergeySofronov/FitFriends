@@ -2,18 +2,18 @@
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI4NDkxNGUyMS00MDUzLTRhMGItYjhiYi00MTRlNzBiZTUyZjYiLCJpYXQiOjE2ODAxMDYzOTQsImV4cCI6MTY4MDcxMTE5NH0.oV7xmTyIfr6jKW2sqSiRIwXP6GJ06ypXl_DwLI3jxoE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI2MDUzNGFiYy01YzFkLTQyYmEtYTg3NC0wZTZmYjU0NzJhNjMiLCJpYXQiOjE2ODA3MTQ2OTgsImV4cCI6MTY4MTMxOTQ5OH0.XGZLYcO0wbsJUd5PDeaqP3xGvAb6yMk-wWbIF9Uf6-g
 ###
 
 #======================= Order ==================
 # Создать заказ
 POST /fit-friends/orders/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNTQ2NCwiZXhwIjoxNjgwMTA2MzY0fQ.YV4z0z3zV6nzFFTyOnlWVP2ep4zj-ytl3m4L4g0Wq7U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgwNzE0Njk4LCJleHAiOjE2ODA3MTU1OTh9.XrJnNcR6rUjByLUzmOGkkyJWHDInmq-fwAHedpcmE8c
 Content-Type: application/json
 
 {
-  "category": "SeasonPass",
+  "category": "Training",
   "serviceId" : 3,
   "quantity" : 2,
   "paymentMethod" : "Mir"

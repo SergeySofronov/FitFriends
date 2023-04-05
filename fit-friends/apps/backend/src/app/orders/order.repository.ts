@@ -12,6 +12,7 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
 
   public async create(item: OrderEntity): Promise<Order> {
     const entityData = item.toObject();
+    console.log(entityData);
     return await this.prisma.order.create({
       data: {
         ...entityData,
@@ -45,7 +46,7 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
 
     const orders = [];
     const groups = await this.prisma.order.groupBy({
-      by: ['serviceId'],
+      by: ['trainingId'],
       where: {
         AND: [
           { training: { coachId } },
@@ -67,7 +68,7 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
 
     for await (const item of groups) {
       const order = await this.prisma.order.findFirst({
-        where: { serviceId: item.serviceId },
+        where: { trainingId: item.trainingId },
         include: {
           gym: true,
           training: true,

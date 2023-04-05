@@ -50,8 +50,18 @@ export class OrderService {
       await this.trainingService.getTrainingById(dto.serviceId) :
       await this.trainingService.getTrainingById(dto.serviceId);
 
+    let trainingId = undefined;
+    let gymId = undefined;
+
     const total = price * dto.quantity;
-    const newOrder = new OrderEntity({ ...dto, price, total, userId });
+    if (dto.category === OrderCategory.Training) {
+      trainingId = dto.serviceId;
+    } else {
+      gymId = dto.serviceId;
+    }
+    delete dto.serviceId;
+
+    const newOrder = new OrderEntity({ ...dto, trainingId, gymId, price, total, userId });
     return this.orderRepository.create(newOrder);
   }
 

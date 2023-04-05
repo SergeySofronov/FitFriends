@@ -77,6 +77,13 @@ enum RequestStatus {
   Accepted
 }
 
+enum MealTime {
+  Breakfast
+  Lunch
+  Dinner
+  Snack
+}
+
 model User {
   id               Int            @id @default(autoincrement())
   email            String         @unique()
@@ -128,40 +135,43 @@ model CoachFeatures {
 }
 
 model Training {
-  id              Int           @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   title           String
   backgroundImage String
   level           UserLevel
   trainingStyle   TrainingStyle
   trainingTime    TrainingTime
-  price           Int           @default(0)
+  price           Int             @default(0)
   caloriesLoss    Int
   description     String
   gender          UserGender
   video           String
-  rating          Int           @default(0)
-  coach           User          @relation(fields: [coachId], references: [id])
+  rating          Int             @default(0)
+  coach           User            @relation(fields: [coachId], references: [id])
   coachId         Int
   isSpecial       Boolean
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @default(now())
   review          Review[]
   order           Order[]
+  trainingDiary   TrainingDiary[]
+  userBalance     UserBalance[]
 
   @@map("trainings")
 }
 
 model Gym {
-  id               Int        @id @default(autoincrement())
+  id               Int           @id @default(autoincrement())
   title            String
   location         String
   isVerified       Boolean
   gymType          GymFeature
   photo            String[]
   description      String
-  price            Int        @default(0)
+  price            Int           @default(0)
   constructionDate DateTime
   order            Order[]
+  userBalance      UserBalance[]
 
   @@map("gyms")
 }
@@ -185,9 +195,10 @@ model Order {
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
   category      OrderCategory
-  gym           Gym?          @relation(map: "gym", fields: [serviceId], references: [id], onDelete: NoAction)
-  training      Training?     @relation(map: "training", fields: [serviceId], references: [id], onDelete: NoAction)
-  serviceId     Int
+  gym           Gym?          @relation(fields: [gymId], references: [id], onDelete: NoAction)
+  gymId         Int?
+  training      Training?     @relation(fields: [trainingId], references: [id], onDelete: NoAction)
+  trainingId    Int?
   price         Int           @default(0)
   quantity      Int
   total         Int
@@ -232,4 +243,37 @@ model Token {
   createdAt DateTime @default(now())
 
   @@map("tokens")
+}
+
+model FoodDiary {
+  id       Int      @id @default(autoincrement())
+  calories Int
+  date     DateTime
+  mealTime MealTime
+
+  @@map("foodDiaries")
+}
+
+model TrainingDiary {
+  id         Int      @id @default(autoincrement())
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: NoAction)
+  trainingId Int
+  date       DateTime
+
+  @@map("trainingDiaries")
+}
+
+model UserBalance {
+  id                Int       @id @default(autoincrement())
+  gym               Gym?      @relation(fields: [gymId], references: [id], onDelete: NoAction)
+  gymId             Int?
+  gymAvaliable      Int       @default(0)
+  gymSpent          Int       @default(0)
+  training          Training? @relation(fields: [trainingId], references: [id], onDelete: NoAction)
+  trainingId        Int?
+  trainingAvaliable Int       @default(0)
+  trainingSpent     Int       @default(0)
+  date              DateTime
+
+  @@map("userBalances")
 }

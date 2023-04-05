@@ -7,7 +7,8 @@ export class OrderEntity implements Entity<OrderEntity, Order>, Order {
   public id?: number;
   public userId: number;
   public category: OrderCategoryType;
-  public serviceId: number;
+  public gymId: number;
+  public trainingId: number;
   public price: number;
   public quantity: number;
   public total: number;
@@ -19,15 +20,17 @@ export class OrderEntity implements Entity<OrderEntity, Order>, Order {
     this.fillEntity(order);
   }
 
+
   public toObject() {
     return { ...this };
   }
 
   public fillEntity(order: Order) {
     this.id = order.id;
-    this.userId  = order.userId;
+    this.userId = order.userId;
     this.category = order.category;
-    this.serviceId = order.serviceId;
+    this.gymId = order.gymId;
+    this.trainingId = order.trainingId;
     this.price = order.price;
     this.quantity = order.quantity;
     this.total = this.price * this.quantity;
