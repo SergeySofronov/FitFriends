@@ -165,7 +165,7 @@ model Gym {
   title            String
   location         String
   isVerified       Boolean
-  gymType          GymFeature
+  gymType          GymFeature[]
   photo            String[]
   description      String
   price            Int           @default(0)

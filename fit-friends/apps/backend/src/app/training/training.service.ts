@@ -112,6 +112,14 @@ export class TrainingService {
     return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existTraining.id.toString()}/${existTraining.video}`);
   }
 
+  async getCoachTrainings(query: TrainingQuery, coachId: number): Promise<Training[]> {
+    const existTraining = await this.trainingRepository.find(query, { coachId });
+    if (!existTraining?.length) {
+      throw new TrainingsNotFoundException(this.logger);
+    }
+    return existTraining;
+  }
+
   async getTrainings(query: TrainingQuery): Promise<Training[]> {
     const existTraining = await this.trainingRepository.find(query);
     if (!existTraining?.length) {

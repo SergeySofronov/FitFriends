@@ -73,7 +73,18 @@ export class TrainingController {
   @Roles(`${UserRole.Coach}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of trainings', type: TrainingRdo })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a list of workouts of an authorized coach', type: TrainingRdo })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Trainings not found', })
+  async indexCoach(@Query() query: TrainingQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const users = await this.trainingService.getCoachTrainings(query, user.sub);
+    return fillObject(TrainingRdo, users);
+  }
+
+  @Get('/catalog')
+  @UseGuards(JwtAuthGuard)
+  @ApiIndexQuery()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a list of workouts of an authorized client', type: TrainingRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Trainings not found', })
   async index(@Query() query: TrainingQuery) {
     const users = await this.trainingService.getTrainings(query);

@@ -82,9 +82,16 @@ Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNjkxNywiZXhwIjoxNjgwMTE3ODE3fQ.XN6TVdoC4YRZmY2UOtNfBMRB_PuXDruuRhEYGIVR894
 ###
 
-#  Получить список тренировок
+#  Получить список тренировок тренера
 # ?limit=50&page=0&sortType=date&sortDirection=desc&trainingTime=Max30&trainingStyle=Yoga
 GET /fit-friends/training?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=0&ratingMax=5&trainingTime=Max30&trainingStyle=Yoga HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+###
+
+#  Получить каталог тренировок
+# ?limit=50&page=0&sortType=date&sortDirection=desc&trainingTime=Max30&trainingStyle=Yoga
+GET /fit-friends/training/catalog?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=0&ratingMax=5&trainingTime=Max30&trainingStyle=Yoga HTTP/1.1
 Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
 ###

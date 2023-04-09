@@ -8,7 +8,7 @@ export class GymEntity implements Entity<GymEntity, Gym>, Gym {
   public title: string;
   public location: Location;
   public isVerified: boolean;
-  public gymType: GymFeatureType;
+  public gymType: [GymFeatureType];
   public photo: string[];
   public description: string;
   public price: number;

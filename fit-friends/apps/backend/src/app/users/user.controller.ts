@@ -141,7 +141,7 @@ export class UserController {
   @Post('remove/:id')
   @UseGuards(JwtAuthGuard)
   @ApiParam({ name: "id", required: true, description: "User unique identifier" })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource to add to friends' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource to remove from friends' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
   async remove(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
     await this.userService.removeFriend(user.sub, id);
@@ -163,8 +163,8 @@ export class UserController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiParam({ name: "id", required: true, description: "User unique identifier" })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for deleting an order' })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for deleting an user' })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND, })
   async destroy(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
     await this.userService.deleteUser(user.sub);
     return res.status(HttpStatus.OK).send();

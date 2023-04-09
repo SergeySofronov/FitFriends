@@ -6,7 +6,7 @@ export type Gym = {
   title: string;
   location: Location;
   isVerified: boolean;
-  gymType: GymFeatureType;
+  gymType: [GymFeatureType];
   photo: string[];
   description: string;
   price: number;
