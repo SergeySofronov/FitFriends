@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Entity } from '@fit-friends/core';
 import { UserRequest, RequestStatus, RequestStatusType } from '@fit-friends/shared-types';
+import { RequestCategoryType } from 'libs/shared-types/src/lib/request-category.enum';
 
 @Injectable()
 export class RequestEntity implements Entity<RequestEntity, UserRequest>, UserRequest {
@@ -10,6 +11,7 @@ export class RequestEntity implements Entity<RequestEntity, UserRequest>, UserRe
   public status: RequestStatusType;
   public createdAt?: Date;
   public updatedAt?: Date;
+  public category: RequestCategoryType;
 
   constructor(req: UserRequest) {
     this.fillEntity(req);
@@ -21,6 +23,7 @@ export class RequestEntity implements Entity<RequestEntity, UserRequest>, UserRe
 
   public fillEntity(req: UserRequest) {
     this.id = req.id;
+    this.category = req.category;
     this.requesterId = req.requesterId;
     this.requestedId = req.requestedId;
     this.status = req.status || RequestStatus.Pending;

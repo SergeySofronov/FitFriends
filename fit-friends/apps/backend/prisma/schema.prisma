@@ -77,6 +77,12 @@ enum RequestStatus {
   Accepted
 }
 
+enum RequestCategory {
+  Coworking
+  Personal
+  Friendship
+}
+
 enum MealTime {
   Breakfast
   Lunch
@@ -163,7 +169,7 @@ model Training {
 model Gym {
   id               Int           @id @default(autoincrement())
   title            String
-  location         String
+  location         Location
   isVerified       Boolean
   gymType          GymFeature[]
   photo            String[]
@@ -210,14 +216,15 @@ model Order {
 }
 
 model Request {
-  id          Int           @id @default(autoincrement())
-  requester   User          @relation(name: "requester", fields: [requesterId], references: [id], onDelete: Cascade)
+  id          Int             @id @default(autoincrement())
+  category    RequestCategory
+  requester   User            @relation(name: "requester", fields: [requesterId], references: [id], onDelete: Cascade)
   requesterId Int
-  requested   User          @relation(name: "requested", fields: [requestedId], references: [id], onDelete: NoAction)
+  requested   User            @relation(name: "requested", fields: [requestedId], references: [id], onDelete: NoAction)
   requestedId Int
   status      RequestStatus
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @default(now())
 
   @@map("requests")
 }

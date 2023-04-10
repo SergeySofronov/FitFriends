@@ -28,6 +28,9 @@ CREATE TYPE "Payment" AS ENUM ('Visa', 'Mir', 'Umoney');
 -- CreateEnum
 CREATE TYPE "RequestStatus" AS ENUM ('Pending', 'Rejected', 'Accepted');
 
+-- CreateEnum
+CREATE TYPE "MealTime" AS ENUM ('Breakfast', 'Lunch', 'Dinner', 'Snack');
+
 -- CreateTable
 CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
@@ -84,6 +87,8 @@ CREATE TABLE "trainings" (
     "rating" INTEGER NOT NULL DEFAULT 0,
     "coachId" INTEGER NOT NULL,
     "isSpecial" BOOLEAN NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "trainings_pkey" PRIMARY KEY ("id")
 );
@@ -92,9 +97,9 @@ CREATE TABLE "trainings" (
 CREATE TABLE "gyms" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
-    "location" TEXT NOT NULL,
+    "location" "Location" NOT NULL,
     "isVerified" BOOLEAN NOT NULL,
-    "gymType" "GymFeature" NOT NULL,
+    "gymType" "GymFeature"[],
     "photo" TEXT[],
     "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL DEFAULT 0,
@@ -104,15 +109,16 @@ CREATE TABLE "gyms" (
 );
 
 -- CreateTable
-CREATE TABLE "comments" (
+CREATE TABLE "reviews" (
     "id" SERIAL NOT NULL,
     "trainingId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
+    "rating" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "reviews_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -120,7 +126,8 @@ CREATE TABLE "orders" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "category" "OrderCategory" NOT NULL,
-    "serviceId" INTEGER NOT NULL,
+    "gymId" INTEGER,
+    "trainingId" INTEGER,
     "price" INTEGER NOT NULL DEFAULT 0,
     "quantity" INTEGER NOT NULL,
     "total" INTEGER NOT NULL,
@@ -148,7 +155,9 @@ CREATE TABLE "notification" (
     "id" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "text" TEXT NOT NULL,
+    "isChecked" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "notification_pkey" PRIMARY KEY ("id")
 );
@@ -160,37 +169,84 @@ CREATE TABLE "tokens" (
     "tokenId" TEXT NOT NULL,
     "expiresIn" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "tokens_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "foodDiaries" (
+    "id" SERIAL NOT NULL,
+    "calories" INTEGER NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "mealTime" "MealTime" NOT NULL,
+
+    CONSTRAINT "foodDiaries_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "trainingDiaries" (
+    "id" SERIAL NOT NULL,
+    "trainingId" INTEGER NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "trainingDiaries_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "userBalances" (
+    "id" SERIAL NOT NULL,
+    "gymId" INTEGER,
+    "gymAvailable" INTEGER NOT NULL DEFAULT 0,
+    "gymSpent" INTEGER NOT NULL DEFAULT 0,
+    "trainingId" INTEGER,
+    "trainingAvailable" INTEGER NOT NULL DEFAULT 0,
+    "trainingSpent" INTEGER NOT NULL DEFAULT 0,
+    "date" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "userBalances_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_friends" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
--- AddForeignKey
-ALTER TABLE "user-features" ADD CONSTRAINT "user-features_id_fkey" FOREIGN KEY ("id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "tokens_tokenId_key" ON "tokens"("tokenId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_friends_AB_unique" ON "_friends"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_friends_B_index" ON "_friends"("B");
 
 -- AddForeignKey
-ALTER TABLE "coach-features" ADD CONSTRAINT "coach-features_id_fkey" FOREIGN KEY ("id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "user-features" ADD CONSTRAINT "user-features_id_fkey" FOREIGN KEY ("id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "coach-features" ADD CONSTRAINT "coach-features_id_fkey" FOREIGN KEY ("id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "trainings" ADD CONSTRAINT "trainings_coachId_fkey" FOREIGN KEY ("coachId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD CONSTRAINT "comments_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "comments" ADD CONSTRAINT "comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "orders" ADD CONSTRAINT "orders_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "gym" FOREIGN KEY ("serviceId") REFERENCES "gyms"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE "orders" ADD CONSTRAINT "orders_gymId_fkey" FOREIGN KEY ("gymId") REFERENCES "gyms"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "training" FOREIGN KEY ("serviceId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE "orders" ADD CONSTRAINT "orders_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "requests" ADD CONSTRAINT "requests_requesterId_fkey" FOREIGN KEY ("requesterId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -203,3 +259,18 @@ ALTER TABLE "notification" ADD CONSTRAINT "notification_userId_fkey" FOREIGN KEY
 
 -- AddForeignKey
 ALTER TABLE "tokens" ADD CONSTRAINT "tokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "trainingDiaries" ADD CONSTRAINT "trainingDiaries_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "userBalances" ADD CONSTRAINT "userBalances_gymId_fkey" FOREIGN KEY ("gymId") REFERENCES "gyms"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "userBalances" ADD CONSTRAINT "userBalances_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_friends" ADD CONSTRAINT "_friends_A_fkey" FOREIGN KEY ("A") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_friends" ADD CONSTRAINT "_friends_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

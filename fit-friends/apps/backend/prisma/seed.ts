@@ -1,11 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
-import { getRandomInteger } from '@fit-friends/core'
-import { GymFeature, Location } from '@fit-friends/shared-types'
+import { getRandomInteger } from '../../../libs/core/src/lib/helpers'
+import { GymFeature } from '../../../libs/shared-types/src/lib/gym-feature.enum'
+import { Location } from '../../../libs/shared-types/src/lib/user-location.enum'
 import { GymValidity } from '../src/app/gyms/gym.constant'
 
 const TIME_INTERVAL = 1e+12;
+const gymPhotoDir = resolve(__dirname, '../src/assets/gym-photo');
 
 const getRandomDate = (value: number) => new Date(+(new Date()) - (Math.random() * value));
 
@@ -19,10 +21,10 @@ const getRandomEnumValues = (enumEntity: unknown) => {
   const lower = getRandomInteger(0, values.length - 1);
   const upper = getRandomInteger(0, values.length - 1);
   if (upper === lower) {
-    return values.slice();
+    return values.slice(0);
   }
 
-  return upper > lower ? values.slice(lower, upper) : values.slice(lower, upper);
+  return upper > lower ? values.slice(lower, upper) : values.slice(upper, lower);
 }
 
 const getGymImages = () => {
@@ -32,7 +34,7 @@ const getGymImages = () => {
   }
 
   const folderItems = [];
-  folderList.forEach(item => {
+  folderList.forEach((item: string | Buffer) => {
     if (!(typeof item === 'string')) {
       throw new Error(`Cannot create a "Gym" entity. The directory ${gymPhotoDir} has an invalid structure.`);
     }
@@ -59,7 +61,7 @@ const getGymImages = () => {
 const gymImages: string[] = getGymImages();
 
 const prisma = new PrismaClient();
-const gymPhotoDir = resolve(__dirname, '../src/assets/gym-photo');
+
 const gymInfo = [
   {
     id: 1,
@@ -94,8 +96,8 @@ async function fillDb() {
   }
   let index = 0;
 
-  for await (const item of gymInfo) {
-    prisma.gym.upsert({
+  for (const item of gymInfo) {
+    const gym = await prisma.gym.upsert({
       where: { id: item.id },
       update: {},
       create: {
@@ -108,6 +110,7 @@ async function fillDb() {
         photo: gymImages[index++],
       }
     });
+    console.log(gym);
   }
 
   console.info('🤘️ Database was filled');

@@ -81,7 +81,9 @@ export class TrainingController {
   }
 
   @Get('/catalog')
+  @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.User}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a list of workouts of an authorized client', type: TrainingRdo })
