@@ -44,7 +44,7 @@ export class UserFeaturesDto extends FeaturesDto {
     example: true,
     required: true,
   })
-  @BooleanParamDecorator({ message: VM.isBoolean })
+  @BooleanParamDecorator({ message: VM.IsBoolean })
   isReadyForTraining: boolean;
 }
 
@@ -78,7 +78,7 @@ export class CoachFeaturesDto extends FeaturesDto {
     example: true,
     required: true,
   })
-  @BooleanParamDecorator({ message: VM.isBoolean })
+  @BooleanParamDecorator({ message: VM.IsBoolean })
   isPersonalCoach: boolean;
 }
 

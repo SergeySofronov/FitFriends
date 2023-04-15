@@ -24,7 +24,7 @@ export class UserService {
     private readonly logger: Logger,
   ) { }
 
-  private async checkUserIdMath(userId: number, friendId: number) {
+  private async checkUserIdMatch(userId: number, friendId: number) {
     const user = await this.getUserById(userId);
     const friend = await this.getUserById(friendId);
     if (user.id === friend.id) {
@@ -154,12 +154,12 @@ export class UserService {
   }
 
   async addFriend(userId: number, friendId: number): Promise<User> {
-    await this.checkUserIdMath(userId, friendId);
+    await this.checkUserIdMatch(userId, friendId);
     return this.userRepository.addFriend(userId, friendId);
   }
 
   async removeFriend(userId: number, friendId: number): Promise<User> {
-    await this.checkUserIdMath(userId, friendId);
+    await this.checkUserIdMatch(userId, friendId);
     return this.userRepository.removeFriend(userId, friendId);
   }
 

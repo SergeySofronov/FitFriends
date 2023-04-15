@@ -97,6 +97,6 @@ export class CreateTrainingDto {
     example: true,
     required: true,
   })
-  @BooleanParamDecorator({ message: VM.isBoolean })
+  @BooleanParamDecorator({ message: VM.IsBoolean })
   public isSpecial: boolean;
 }

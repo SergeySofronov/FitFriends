@@ -113,8 +113,10 @@ model User {
   userFeatures     UserFeatures?
   coachFeatures    CoachFeatures?
   training         Training[]
-  friends          User[]         @relation(name: "friends")
+  friends          User[]         @relation(name: "friends") // A table for friends is created implicitly through many-to-many self-relation
   symmetricFriends User[]         @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
+  // gyms             FavoriteGyms[]
+  gyms             Gym[]
 
   @@map("users")
 }
@@ -171,16 +173,28 @@ model Gym {
   title            String
   location         Location
   isVerified       Boolean
-  gymType          GymFeature[]
+  gymFeature       GymFeature[]
   photo            String[]
   description      String
   price            Int           @default(0)
   constructionDate DateTime
   order            Order[]
   userBalance      UserBalance[]
+  user             User[]
+  // user             FavoriteGyms[]
 
   @@map("gyms")
 }
+
+// model FavoriteGyms {
+//   userId Int
+//   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   gymId  Int
+//   gym    Gym  @relation(fields: [gymId], references: [id], onDelete: Cascade)
+
+//   @@id([userId, gymId])
+//   @@map("favoriteGyms")
+// }
 
 model Review {
   id         Int      @id @default(autoincrement())

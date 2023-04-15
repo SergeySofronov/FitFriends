@@ -6,4 +6,4 @@ import { GymService } from './gym.service';
   controllers: [GymController],
   providers: [GymService],
 })
-export class GymsModule {}
+export class GymsModule { }

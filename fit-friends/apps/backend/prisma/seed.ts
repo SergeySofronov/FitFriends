@@ -103,7 +103,7 @@ async function fillDb() {
       create: {
         ...item,
         location: getRandomEnumValue(Location),
-        gymType: getRandomEnumValues(GymFeature) as [GymFeature],
+        gymFeature: getRandomEnumValues(GymFeature) as [GymFeature],
         isVerified: !!getRandomInteger(0, 1),
         price: getRandomInteger(GymValidity.PriceMinValue, GymValidity.PriceMaxValue),
         constructionDate: getRandomDate(TIME_INTERVAL),

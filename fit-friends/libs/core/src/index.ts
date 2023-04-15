@@ -10,3 +10,4 @@ export * from './lib/decorators';
 export * from './lib/token-exceptions';
 export * from './lib/training-exceptions';
 export * from './lib/order-exceptions';
+export * from './lib/gym-exceptions';

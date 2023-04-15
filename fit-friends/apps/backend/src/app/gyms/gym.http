@@ -1,0 +1,32 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiOTNkNDQ3MjMtMTg2Ni00MmQ2LTg1NjItZGY5N2Y1ZDA3MjVkIiwiaWF0IjoxNjgwMDI2ODA5LCJleHAiOjE2ODA2MzE2MDl9.mRNm3-Hr8PCMZBpeoeRS_m7PJXNGLPCWb3TQzQi1Ugc
+###
+
+#======================= Gyms ==================
+#  Получить список залов
+# ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
+GET /fit-friends/gyms?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+###
+
+#  Получить список залов пользователя (мои залы)
+# ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
+GET /fit-friends/gyms/favorite HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+###
