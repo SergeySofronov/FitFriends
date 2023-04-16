@@ -19,6 +19,7 @@ export * from './lib/gym-feature.enum'
 export * from './lib/user-location.enum'
 export * from './lib/order-category.enum'
 export * from './lib/request-status.enum'
+export * from './lib/request-category.enum'
 export * from './lib/training-style.enum'
 export * from './lib/user-training-time.enum'
 

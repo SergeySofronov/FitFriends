@@ -9,10 +9,10 @@ export function ApiIndexQuery() {
     ApiQuery({ name: 'page', description: '', required: false, type: () => Number }),
     ApiQuery({ name: 'sortType', description: '', required: false, enum: GymSort }),
     ApiQuery({ name: 'sortDirection', description: '', required: false, enum: ['asc', 'desc'] }),
-    ApiQuery({ name: 'location', description: '', required: false, type: () => [Location], isArray: true }),
+    ApiQuery({ name: 'location', description: '', required: false, enum: Location, isArray: true }),
     ApiQuery({ name: 'priceMin', description: '', required: false, type: () => Number }),
     ApiQuery({ name: 'priceMax', description: '', required: false, type: () => Number }),
     ApiQuery({ name: 'isVerified', description: '', required: false, type: () => Boolean }),
-    ApiQuery({ name: 'gymFeature', description: '', required: false, type: () => [GymFeature], isArray: true }),
+    ApiQuery({ name: 'gymFeature', description: '', required: false, enum: GymFeature, isArray: true }),
   );
 }

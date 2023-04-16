@@ -69,8 +69,8 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
 
   public async find({
     limit = UQ.USER_QUERY_MAX,
-    page = 1,
-    sortDirection = UQ.DEFAULT_USER_SORT_DIRECTION,
+    page = UQ.USER_DEFAULT_PAGE,
+    sortDirection = UQ.USER_DEFAULT_SORT_DIRECTION,
     sortType = UserSort.Date,
   }: UserQuery, friendId?: number): Promise<User[]> {
     const sortField = { [UserSortField[sortType]]: sortDirection };

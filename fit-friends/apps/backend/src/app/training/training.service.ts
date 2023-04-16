@@ -4,37 +4,29 @@ import { getRandomInteger, TrainingNotFoundIdException, TrainingNotOwnerIdExcept
 import { Training } from '@fit-friends/shared-types';
 import { existsSync, readdirSync, unlinkSync } from 'fs';
 import { resolve } from 'path';
-import { UserRepository } from '../users/user.repository';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { TrainingQuery } from './query/training.query';
 import { TrainingValidity } from './training.constant';
 import { TrainingEntity } from './training.entity';
 import { TrainingRepository } from './training.repository';
+import { UserService } from '../users/user.service';
 
 @Injectable()
 export class TrainingService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly userService: UserService,
     private readonly trainingRepository: TrainingRepository,
     private readonly configService: ConfigService,
     private readonly logger: Logger,
   ) { }
 
   private async checkTrainingOwner(id: number, userId: number) {
-    const user = await this.checkUserExist(userId);
+    const user = await this.userService.getUserById(userId);
     const training = await this.getTrainingById(id);
     if (user.id !== training.coachId) {
       throw new TrainingNotOwnerIdException(this.logger, id, userId);
     }
-  }
-
-  public async checkUserExist(userId: number) {
-    const existUser = await this.userRepository.findById(userId);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, userId);
-    }
-    return existUser;
   }
 
   async getTrainingById(id: number): Promise<Training> {
@@ -47,7 +39,7 @@ export class TrainingService {
   }
 
   public async createTraining(dto: CreateTrainingDto, coachId: number) {
-    const existCoach = await this.userRepository.findById(coachId);
+    const existCoach = await this.userService.getUserById(coachId);
     if (!existCoach) {
       throw new UserNotFoundIdException(this.logger, coachId);
     }

@@ -13,20 +13,40 @@ Content-Type: application/json
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiOTNkNDQ3MjMtMTg2Ni00MmQ2LTg1NjItZGY5N2Y1ZDA3MjVkIiwiaWF0IjoxNjgwMDI2ODA5LCJleHAiOjE2ODA2MzE2MDl9.mRNm3-Hr8PCMZBpeoeRS_m7PJXNGLPCWb3TQzQi1Ugc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjFhNTQ4MmQxLTljYzQtNDhjYy1hYjQ4LWU4MTI4OTE5ZjE3NSIsImlhdCI6MTY4MTYzODcxMSwiZXhwIjoxNjgyMjQzNTExfQ.2VEO3FlmNKmN4lCO-iS04KBHjD-SrCJz5weptImJu-I
 ###
 
 #======================= Gyms ==================
 #  Получить список залов
 # ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
-GET /fit-friends/gyms?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true HTTP/1.1
+GET /fit-friends/gyms?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=500&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
 ###
 
 #  Получить список залов пользователя (мои залы)
 # ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
-GET /fit-friends/gyms/favorite HTTP/1.1
+GET /fit-friends/gyms/user/favorite HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Получить информацию о зале
+GET /fit-friends/gyms/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Добавить зал в избранное
+# ?isFavorite=true
+POST /fit-friends/gyms/3?isFavorite=true HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Удалить зал из избранного
+# ?isFavorite=false
+POST /fit-friends/gyms/1?isFavorite=false HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
 ###

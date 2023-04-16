@@ -1,6 +1,7 @@
 export type Notification = {
   id?: number;
-  userId: number;
+  notifiedUserId: number;
+  notifyingUserId?: number;
   text: string;
   isChecked: boolean;
   createdAt?: Date;

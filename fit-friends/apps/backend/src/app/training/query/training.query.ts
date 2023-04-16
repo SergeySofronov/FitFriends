@@ -15,7 +15,7 @@ export class TrainingQuery {
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsOptional()
-  public page?: number;
+  public page?: number = TQ.TRAINING_DEFAULT_PAGE;
 
   @IsEnum(TrainingSort, { message: `${VM.IsEnumMessage} ${Object.values(TrainingSort).join(', ')}` })
   @IsOptional()
@@ -23,7 +23,7 @@ export class TrainingQuery {
 
   @IsIn(['asc', 'desc'])
   @IsOptional()
-  public sortDirection?: 'desc' | 'asc' = TQ.DEFAULT_TRAINING_SORT_DIRECTION;
+  public sortDirection?: 'desc' | 'asc' = TQ.TRAINING_DEFAULT_SORT_DIRECTION;
 
   @IsNumber()
   @Transform(({ value }) => transformToMin(value, TV.PriceMinValue, TV.PriceMaxValue))

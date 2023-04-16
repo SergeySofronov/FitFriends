@@ -4,11 +4,13 @@ import { OrderRepository } from './order.repository';
 import { OrderService } from './order.service';
 import { UsersModule } from '../users/user.module';
 import { TrainingModule } from '../training/training.module';
+import { GymsModule } from '../gyms/gym.module';
 
 @Module({
   imports: [
     UsersModule,
-    TrainingModule
+    TrainingModule,
+    GymsModule
   ],
   controllers: [OrderController],
   providers: [

@@ -12,7 +12,7 @@ export class UserQuery {
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsOptional()
-  public page?: number;
+  public page?: number = UQ.USER_DEFAULT_PAGE;
 
   @IsEnum(UserSort, { message: `${VM.IsEnumMessage} ${Object.values(UserSort).join(', ')}` })
   @IsOptional()
@@ -20,5 +20,5 @@ export class UserQuery {
 
   @IsIn(['asc', 'desc'])
   @IsOptional()
-  public sortDirection?: 'desc' | 'asc' = UQ.DEFAULT_USER_SORT_DIRECTION;
+  public sortDirection?: 'desc' | 'asc' = UQ.USER_DEFAULT_SORT_DIRECTION;
 }

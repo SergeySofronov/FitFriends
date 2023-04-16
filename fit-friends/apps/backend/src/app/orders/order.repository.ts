@@ -38,8 +38,8 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
 
   public async findOrders({
     limit = OQ.ORDER_QUERY_MAX,
-    page = 1,
-    sortDirection = OQ.DEFAULT_ORDER_SORT_DIRECTION,
+    page = OQ.ORDER_DEFAULT_PAGE,
+    sortDirection = OQ.ORDER_DEFAULT_SORT_DIRECTION,
     sortType = OrderSort.Total,
   }: OrderQuery, coachId: number): Promise<Order[]> {
     const sortField = { [OrderSortField[sortType]]: sortDirection };
@@ -87,10 +87,10 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
   }
 
   public async findPurchases({
-    limit = OQ.ORDER_QUERY_MAX,
-    page = 1,
-    sortDirection = OQ.DEFAULT_ORDER_SORT_DIRECTION,
-    sortType = OrderSort.Total,
+    limit,
+    page,
+    sortDirection,
+    sortType,
   }: OrderQuery, userId: number): Promise<Order[]> {
     const sortField = { [OrderSortField[sortType]]: sortDirection };
     return this.prisma.order.findMany({

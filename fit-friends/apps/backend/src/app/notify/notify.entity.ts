@@ -5,7 +5,8 @@ import { Notification } from '@fit-friends/shared-types';
 @Injectable()
 export class NotifyEntity implements Entity<NotifyEntity, Notification>, Notification {
   public id?: number;
-  public userId: number;
+  public notifiedUserId: number;
+  public notifyingUserId?: number;
   public text: string;
   public isChecked: boolean;
   public createdAt?: Date;
@@ -21,7 +22,8 @@ export class NotifyEntity implements Entity<NotifyEntity, Notification>, Notific
 
   public fillEntity(note: Notification) {
     this.id = note.id;
-    this.userId = note.userId;
+    this.notifiedUserId = note.notifiedUserId;
+    this.notifyingUserId = note.notifyingUserId;
     this.text = note.text;
     this.isChecked = note.isChecked;
     this.createdAt = note.createdAt || new Date();

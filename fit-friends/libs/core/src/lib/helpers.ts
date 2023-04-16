@@ -33,3 +33,15 @@ export function transformToMax(value: unknown, borderMin: number, borderMax: num
 
   return max;
 }
+
+export function transformStringToBool(value: unknown) {
+  if ((value === 'true') || (value === '1')) {
+    return true;
+  }
+
+  if ((value === 'false') || (value === '0')) {
+    return false;
+  }
+
+  return undefined;
+}

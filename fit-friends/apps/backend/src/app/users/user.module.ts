@@ -36,6 +36,6 @@ import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
     JwtRefreshStrategy,
     Logger
   ],
-  exports: [UserRepository]
+  exports: [UserService]
 })
 export class UsersModule { }

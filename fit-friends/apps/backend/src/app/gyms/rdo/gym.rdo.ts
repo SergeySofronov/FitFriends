@@ -21,7 +21,6 @@ export class GymRdo {
   @ApiProperty({
     description: 'Gym location',
     example: Location.Petrogradskaya,
-    type: () => String,
     enum: Location,
   })
   @Expose()
@@ -37,7 +36,7 @@ export class GymRdo {
   @ApiProperty({
     description: "Gym features",
     example: [GymFeature.ChildrenRoom, GymFeature.FreeParking],
-    type: () => [GymFeature],
+    enum: GymFeature,
     isArray: true,
   })
   @Expose()

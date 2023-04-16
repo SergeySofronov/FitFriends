@@ -14,7 +14,8 @@ export enum TrainingValidity {
 export const TrainingQuery = {
   TRAINING_QUERY_MAX: 50,
   TRAINING_QUERY_MIN: 1,
-  DEFAULT_TRAINING_SORT_DIRECTION: 'desc',
+  TRAINING_DEFAULT_PAGE: 1,
+  TRAINING_DEFAULT_SORT_DIRECTION: 'desc',
 } as const;
 
 export enum TrainingSort {

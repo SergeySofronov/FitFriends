@@ -6,7 +6,8 @@ export enum OrderValidity {
 export const OrderQuery = {
   ORDER_QUERY_MAX: 50,
   ORDER_QUERY_MIN: 1,
-  DEFAULT_ORDER_SORT_DIRECTION: 'desc',
+  ORDER_DEFAULT_PAGE: 1,
+  ORDER_DEFAULT_SORT_DIRECTION: 'desc',
 } as const;
 
 export enum OrderSort {

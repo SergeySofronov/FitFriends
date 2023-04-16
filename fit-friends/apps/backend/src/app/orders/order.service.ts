@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { OrderNotFoundIdException, OrderNotOwnerIdException, OrdersNotFoundException, UserNotFoundIdException } from '@fit-friends/core';
-import { UserRepository } from '../users/user.repository';
+import { OrderNotFoundIdException, OrderNotOwnerIdException, OrdersNotFoundException } from '@fit-friends/core';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderEntity } from './order.entity';
@@ -8,30 +7,25 @@ import { OrderRepository } from './order.repository';
 import { OrderQuery } from './query/order.query';
 import { OrderCategory } from '@fit-friends/shared-types';
 import { TrainingService } from '../training/training.service';
+import { GymService } from '../gyms/gym.service';
+import { UserService } from '../users/user.service';
 
 @Injectable()
 export class OrderService {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly userService: UserService,
     private readonly orderRepository: OrderRepository,
     private readonly trainingService: TrainingService,
+    private readonly gymService: GymService,
     private readonly logger: Logger,
   ) { }
 
   private async checkOrderOwner(orderId: number, userId: number) {
-    const user = await this.checkUserExist(userId);
+    const user = await this.userService.getUserById(userId);
     const order = await this.getOrderById(orderId);
     if (user.id !== order.userId) {
       throw new OrderNotOwnerIdException(this.logger, orderId, userId);
     }
-  }
-
-  public async checkUserExist(userId: number) {
-    const existUser = await this.userRepository.findById(userId);
-    if (!existUser) {
-      throw new UserNotFoundIdException(this.logger, userId);
-    }
-    return existUser;
   }
 
   public async getOrderById(orderId: number) {
@@ -44,11 +38,11 @@ export class OrderService {
   }
 
   public async createOrder(dto: CreateOrderDto, userId: number) {
-    await this.checkUserExist(userId);
-    //todo: заменить trainingService на gymService в else
+    await this.userService.getUserById(userId);
+
     const { price } = (dto.category === OrderCategory.Training) ?
       await this.trainingService.getTrainingById(dto.serviceId) :
-      await this.trainingService.getTrainingById(dto.serviceId);
+      await this.gymService.getGymById(dto.serviceId);
 
     let trainingId = undefined;
     let gymId = undefined;

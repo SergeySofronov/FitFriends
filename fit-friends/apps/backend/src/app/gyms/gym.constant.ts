@@ -6,15 +6,18 @@ export enum GymValidity {
 export const GymQuery = {
   GYM_QUERY_MAX: 50,
   GYM_QUERY_MIN: 1,
-  DEFAULT_GYM_SORT_DIRECTION: 'desc',
+  GYM_DEFAULT_PAGE: 1,
+  GYM_DEFAULT_SORT_DIRECTION: 'asc',
 } as const;
 
 export enum GymSort {
   Date = 'date',
-  Price = 'price'
+  Price = 'price',
+  Id = 'id'
 }
 
 export const GymSortField = {
   [GymSort.Date]: 'constructionDate',
   [GymSort.Price]: 'price',
+  [GymSort.Id]: 'id',
 };

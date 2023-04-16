@@ -28,7 +28,7 @@ export class GymRepository implements CRUDRepositoryInterface<GymEntity, number,
   public async find({
     limit = GQ.GYM_QUERY_MAX,
     page = 1,
-    sortDirection = GQ.DEFAULT_GYM_SORT_DIRECTION,
+    sortDirection = GQ.GYM_DEFAULT_SORT_DIRECTION,
     sortType = GymSort.Date,
     priceMin,
     priceMax,
@@ -43,11 +43,12 @@ export class GymRepository implements CRUDRepositoryInterface<GymEntity, number,
       where: {
         ...options ?? {},
         isVerified,
-        location,
+        location: { in: location },
         gymFeature: {
-          hasEvery: [...gymFeature]
+          hasEvery: gymFeature || [],
         },
         AND: [
+          { user: { every: { id: 1 } } },
           { price: { gte: priceMin } },
           { price: { lte: priceMax } },
         ],
@@ -87,12 +88,14 @@ export class GymRepository implements CRUDRepositoryInterface<GymEntity, number,
     })
   }
 
-  //todo:remove
-  // public async getFavoriteGyms(userId: number): Promise<Gym[]> {
-  //   return this.prisma.gym.findMany({
-  //     where: { user: { every: { id: userId } } },
-  //   })
-  // }
+  public async toggleFavorite(gymId: number, userId: number, isFavorite: boolean): Promise<Gym> {
+    return this.prisma.gym.update({
+      where: { id: gymId },
+      data: {
+        user: { [isFavorite ? 'connect' : 'disconnect']: { id: userId } }
+      }
+    })
+  }
 
   public async update(id: number, item: Partial<GymEntity>): Promise<Gym> {
     return this.prisma.gym.update({

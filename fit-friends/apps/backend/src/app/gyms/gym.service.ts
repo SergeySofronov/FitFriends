@@ -39,11 +39,16 @@ export class GymService {
   }
 
   async getFavoriteGyms(query: GymQuery, userId: number): Promise<Gym[]> {
-    const gyms = await this.gymRepository.find(query, { user: { every: { id: userId } } });
+    const gyms = await this.gymRepository.find(query, { user: { some: { id: userId } } });
     if (!gyms?.length) {
       throw new GymsNotFoundException(this.logger);
     }
 
     return gyms;
+  }
+
+  async toggleFavorite({isFavorite}: GymQuery, gymId: number, userId: number): Promise<Gym> {
+    await this.getGymById(gymId);
+    return this.gymRepository.toggleFavorite(gymId, userId, isFavorite);
   }
 }

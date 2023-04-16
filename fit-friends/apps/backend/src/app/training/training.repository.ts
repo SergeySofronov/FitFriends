@@ -27,8 +27,8 @@ export class TrainingRepository implements CRUDRepositoryInterface<TrainingEntit
 
   public async find({
     limit = TQ.TRAINING_QUERY_MAX,
-    page = 1,
-    sortDirection = TQ.DEFAULT_TRAINING_SORT_DIRECTION,
+    page = TQ.TRAINING_DEFAULT_PAGE,
+    sortDirection = TQ.TRAINING_DEFAULT_SORT_DIRECTION,
     sortType = TrainingSort.Date,
     priceMin,
     priceMax,

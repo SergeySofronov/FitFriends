@@ -1,0 +1,43 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjFhNTQ4MmQxLTljYzQtNDhjYy1hYjQ4LWU4MTI4OTE5ZjE3NSIsImlhdCI6MTY4MTYzODcxMSwiZXhwIjoxNjgyMjQzNTExfQ.2VEO3FlmNKmN4lCO-iS04KBHjD-SrCJz5weptImJu-I
+###
+
+#======================= Requests ==================
+
+# Создать запрос в друзья
+POST /fit-friends/requests/friends HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "user@user.ru",
+  "password": "123456",
+  "gender": "Male",
+  "dateBirth" : "2011-10-05T14:48:00.000Z",
+  "role" : "User",
+  "location" : "Pionerskaya",
+  "level" : "Beginner",
+  "trainingStyle" : "Yoga",
+  "features" : {
+    "trainingTime" : "Max30",
+    "caloriesLoss" : 1000,
+    "caloriesLossPerDay" : 1000,
+    "isReadyForTraining" : true
+  }
+}
+###

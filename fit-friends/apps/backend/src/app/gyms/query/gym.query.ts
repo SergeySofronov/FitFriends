@@ -1,9 +1,8 @@
 import { Transform } from 'class-transformer';
 import { IsEnum, IsIn, IsNumber, IsOptional } from 'class-validator';
-import { BooleanParamDecorator, transformToMax, transformToMin, ValidityMessage as VM } from '@fit-friends/core';
+import { BooleanParamDecorator, transformStringToBool, transformToMax, transformToMin, ValidityMessage as VM } from '@fit-friends/core';
 import { GymFeature, GymFeatureType, Location, LocationType } from '@fit-friends/shared-types';
 import { GymQuery as GQ, GymSort, GymValidity as GV } from '../gym.constant';
-
 
 
 export class GymQuery {
@@ -15,15 +14,15 @@ export class GymQuery {
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsOptional()
-  public page?: number;
+  public page?: number = GQ.GYM_DEFAULT_PAGE;
 
   @IsEnum(GymSort, { message: `${VM.IsEnumMessage} ${Object.values(GymSort).join(', ')}` })
   @IsOptional()
-  public sortType?: GymSort = GymSort.Date;
+  public sortType?: GymSort = GymSort.Id;
 
   @IsIn(['asc', 'desc'])
   @IsOptional()
-  public sortDirection?: 'desc' | 'asc' = GQ.DEFAULT_GYM_SORT_DIRECTION;
+  public sortDirection?: 'desc' | 'asc' = GQ.GYM_DEFAULT_SORT_DIRECTION;
 
   @IsNumber()
   @Transform(({ value }) => transformToMin(value, GV.PriceMinValue, GV.PriceMaxValue))
@@ -35,16 +34,24 @@ export class GymQuery {
   @IsOptional()
   public priceMax?: number;
 
-  @IsIn([...Object.values(Location)], { message: `${VM.IsInEnumMessage} ${Object.values(Location).join(', ')}` })
+  @IsIn(Object.values(Location), { message: `${VM.IsInEnumMessage} ${Object.values(Location).join(', ')}`, each: true })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
   public location?: LocationType;
 
-  @IsIn([...Object.values(GymFeature)], { message: `${VM.IsEnumMessage} ${Object.values(GymFeature).join(', ')}` })
+  @IsIn(Object.values(GymFeature), { message: `${VM.IsEnumMessage} ${Object.values(GymFeature).join(', ')}`, each: true })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
   public gymFeature?: GymFeatureType[];
 
-  @BooleanParamDecorator({ message: `${VM.IsBoolean} ${Object.values(GymFeature).join(', ')}` })
+  @Transform(({ value }) => transformStringToBool(value))
+  @BooleanParamDecorator({ message: VM.IsBoolean })
   @IsOptional()
-  public isVerified?: boolean = false;
+  public isVerified?: boolean;
+
+  @Transform(({ value }) => transformStringToBool(value))
+  @BooleanParamDecorator({ message: VM.IsBoolean })
+  @IsOptional()
+  public isFavorite?: boolean;
 }
 

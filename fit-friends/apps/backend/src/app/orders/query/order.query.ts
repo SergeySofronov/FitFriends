@@ -14,7 +14,7 @@ export class OrderQuery {
   @Transform(({ value }) => +value)
   @IsNumber()
   @IsOptional()
-  public page?: number;
+  public page?: number = OQ.ORDER_DEFAULT_PAGE;
 
   @IsEnum(OrderSort, { message: `${VM.IsEnumMessage} ${Object.values(OrderSort).join(', ')}` })
   @IsOptional()
@@ -22,5 +22,5 @@ export class OrderQuery {
 
   @IsIn(['asc', 'desc'])
   @IsOptional()
-  public sortDirection?: 'desc' | 'asc' = OQ.DEFAULT_ORDER_SORT_DIRECTION;
+  public sortDirection?: 'desc' | 'asc' = OQ.ORDER_DEFAULT_SORT_DIRECTION;
 }

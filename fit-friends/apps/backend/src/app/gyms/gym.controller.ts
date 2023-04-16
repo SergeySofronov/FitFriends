@@ -1,10 +1,11 @@
-import { Controller, Get, HttpCode, HttpStatus, Param, Query, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles, RolesGuard, fillObject } from '@fit-friends/core';
 import { RequestWithTokenPayload, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { GymService } from './gym.service';
 import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 import { ApiIndexQuery } from './query/gym.api-query.decorator';
-import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GymQuery } from './query/gym.query';
 import { GymRdo } from './rdo/gym.rdo';
 
@@ -38,17 +39,30 @@ export class GymController {
     return fillObject(GymRdo, gyms);
   }
 
-  @Get('/favorite')
+  @Get('user/favorite')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Roles(`${UserRole.User}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a list of favorite gyms', type: [GymRdo], isArray: true })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a list of user favorite gyms', type: [GymRdo], isArray: true })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Gyms not found', })
-  async favorite(@Query() query: GymQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+  async getFavorite(@Query() query: GymQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
     const gyms = await this.gymService.getFavoriteGyms(query, user.sub);
     return fillObject(GymRdo, gyms);
+  }
+
+  @Post('/:id')
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.User}`)
+  @ApiIndexQuery()
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for adding/removing a gym to/from the favorites list', type: [GymRdo], isArray: true })
+  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Gyms not found' })
+  async toggleFavorite(@Param('id') id: number, @Query() query: GymQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
+    await this.gymService.toggleFavorite(query, id, user.sub);
+    return res.status(HttpStatus.OK).send();
   }
 }
 

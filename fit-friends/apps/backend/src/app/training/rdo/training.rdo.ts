@@ -9,8 +9,8 @@ export class TrainingRdo {
     example: 1,
   })
   @Expose()
-
   public id: string;
+
   @ApiProperty({
     description: 'Training title',
     example: 'Run, Forest, run',

@@ -2,7 +2,7 @@ export const SALT_ROUNDS = 10;
 
 export const UserMessages = {
   ALREADY_EXISTS: 'User with this email already exists',
-  AUTHORIZED:'User authorized',
+  AUTHORIZED: 'User authorized',
   UNAUTHORIZED: 'User is not authorized',
   INVALID_TOKEN: 'Token is invalid or not found',
   USER_NOT_FOUND: 'User(s) not found',
@@ -33,7 +33,8 @@ export enum UserValidity {
 export const UserQuery = {
   USER_QUERY_MAX: 50,
   USER_QUERY_MIN: 1,
-  DEFAULT_USER_SORT_DIRECTION: 'desc',
+  USER_DEFAULT_PAGE: 1,
+  USER_DEFAULT_SORT_DIRECTION: 'desc',
 } as const;
 
 export enum UserSort {
