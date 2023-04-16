@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, HttpCode, HttpStatus, Param, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { NotifyService } from './notify.service';
-import { ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 import { ApiIndexQuery } from './query/notify.api-query.decorator';
 import { NotifyQuery } from './query/notify.query';
@@ -9,6 +9,7 @@ import { fillObject } from '@fit-friends/core';
 import { NotifyRdo } from './rdo/notify.rdo';
 import { RequestWithTokenPayload, TokenPayload } from '@fit-friends/shared-types';
 
+@ApiTags('notify')
 @Controller('notify')
 export class NotifyController {
   constructor(

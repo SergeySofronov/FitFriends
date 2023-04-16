@@ -25,7 +25,7 @@ export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['email',
 
   @ApiProperty({
     description: 'User features. Depends on "role" field',
-    type: () => PartialType(UserFeaturesDto),  //todo: как задокументировать UserFeaturesDto и CoachFeaturesDto одновременно?
+    type: () => UserFeaturesDto,  //todo: как задокументировать UserFeaturesDto и CoachFeaturesDto одновременно?
     required: true,
   })
   @Type(() => FeaturesDto, {

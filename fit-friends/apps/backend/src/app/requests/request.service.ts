@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { UserService } from '../users/user.service';
 import { CreateRequestDto } from './dto/create-request.dto';
-import { RequestExistsException, RequestNotFoundIdException, RequestUpdateNotAllowedException } from '@fit-friends/core';
+import { RequestExistsException, RequestNotFoundIdException, RequestSameUserException, RequestUpdateNotAllowedException } from '@fit-friends/core';
 import { RequestRepository } from './request.repository';
 import { RequestEntity } from './request.entity';
 import { RequestStatus, UserRequest } from '@fit-friends/shared-types';
@@ -25,6 +25,11 @@ export class RequestService {
   }
 
   public async createRequest(dto: CreateRequestDto, requesterId: number): Promise<UserRequest> {
+    const requester = await this.userService.getUserById(requesterId);
+    if(requester.id === dto.requestedId){
+      throw new RequestSameUserException(this.logger);
+    }
+
     const existRequest = await this.requestRepository.find({ category: dto.category }, { requestedId: dto.requestedId, requesterId });
     if (existRequest) {
       throw new RequestExistsException(this.logger);

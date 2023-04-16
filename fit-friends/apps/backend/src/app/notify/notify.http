@@ -1,0 +1,31 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6ImVhYjk3Y2RjLWI2NzAtNDk4Ny1iNWFjLTY5ZWZmY2RhZTRlMyIsImlhdCI6MTY4MTY1OTUxNSwiZXhwIjoxNjgyMjY0MzE1fQ.rINKZCJUbjalAsKEkivHeG1jH1uzb5oGskY8pRCWJmQ
+###
+
+#======================= Notify ==================
+#  Получить оповещения
+# ?limit=50&page=0&sortType=date&sortDirection=desc&isChecked=false
+GET /fit-friends/notify?limit=50&page=0&sortType=date&sortDirection=desc&isChecked=false HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2NTg3MDMsImV4cCI6MTY4MTY1OTYwM30.wCMu3aEyrjIkVlNU4D4aSApKLDIxRZHQushmsIG5LPg
+###
+
+# Удалить оповещениe
+DELETE /fit-friends/notify/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2NTg3MDMsImV4cCI6MTY4MTY1OTYwM30.wCMu3aEyrjIkVlNU4D4aSApKLDIxRZHQushmsIG5LPg
+###
