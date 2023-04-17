@@ -10,10 +10,16 @@ Content-Type: application/json
 }
 ###
 
-# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+# Обновить авторизацию пользователя #1 (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6ImVhYjk3Y2RjLWI2NzAtNDk4Ny1iNWFjLTY5ZWZmY2RhZTRlMyIsImlhdCI6MTY4MTY1OTUxNSwiZXhwIjoxNjgyMjY0MzE1fQ.rINKZCJUbjalAsKEkivHeG1jH1uzb5oGskY8pRCWJmQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjI2OGFiNGJlLTljYmEtNDQ4NC1hMWQ0LTU2MDc4ZmZlZjU0NSIsImlhdCI6MTY4MTc1MjkzNiwiZXhwIjoxNjgyMzU3NzM2fQ.NlEDNMtVPcG8jZ3d1lcD8905tR8sR_4of88NCJjvEyU
+###
+
+# Обновить авторизацию пользователя #2 (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwicmVmcmVzaFRva2VuSWQiOiI5MDdhODFjOC1iYTFhLTRiMzAtOWNjYy1iY2ZmZWQwNWQwZDMiLCJpYXQiOjE2ODE3NTI5NTksImV4cCI6MTY4MjM1Nzc1OX0.tCyzqLEYtorMxmMyzdhn5d-C2yMv8ob9T1uSr9g-yec
 ###
 
 #======================= Requests ==================
@@ -22,10 +28,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 POST /fit-friends/requests/ HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2NTk1MTUsImV4cCI6MTY4MTY2MDQxNX0.X1zTTwR11V57wCTMfjeWJzL09hlmiV1yhSMp_YxP99Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE3NTI5MzYsImV4cCI6MTY4MTc1MzgzNn0.eKjRFvNukn5w6yhzdanaGO3wM0JKNaqBD7vQG90Q_bQ
 
 {
-  "requestedId": 1,
+  "requestedId": 2,
   "category": "Friendship"
 }
 ###
+
+#  Получить список запросов
+# ?limit=50&page=0&sortType=date&sortDirection=desc&category=Friendship&status=Pending&requesterId=1
+GET /fit-friends/requests?limit=50&page=0&sortType=date&sortDirection=desc&category=Friendship&requesterId=1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
+###
+
+#  Ответить на запрос (редактировать)
+POST  /fit-friends/requests/3
+Host: localhost:3333
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
+
+{
+  "status": "Accepted"
+}
+###
+

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException } from '@fit-friends/core';
+import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException, getNotificationTextOnFriendRemove } from '@fit-friends/core';
 import { RefreshTokenPayload, User } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -13,10 +13,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { resolve } from 'path'
 import { existsSync, unlinkSync } from 'fs';
 import { UserQuery } from './query/user.query';
+import { NotifyService } from '../notify/notify.service';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly notifyService: NotifyService,
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
@@ -54,7 +56,7 @@ export class UserService {
 
   public async verifyUser(dto: LoginUserDto) {
     const { email, password } = dto;
-   const existUser = await this.userRepository.findByEmail(email);
+    const existUser = await this.userRepository.findByEmail(email);
     if (!existUser) {
       throw new UserNotFoundEmailException(this.logger, email);
     }
@@ -158,13 +160,23 @@ export class UserService {
     return this.userRepository.addFriend(userId, friendId);
   }
 
-  async removeFriend(userId: number, friendId: number): Promise<User> {
+  async removeFriend(userId: number, friendId: number, userName: string): Promise<void> {
     await this.checkUserIdMatch(userId, friendId);
-    return this.userRepository.removeFriend(userId, friendId);
+    await this.userRepository.removeFriend(userId, friendId);
+    await this.notifyService.createNotification({
+      notifiedUserId: friendId,
+      notifyingUserId: userId,
+      text: getNotificationTextOnFriendRemove(userName),
+      isChecked: false,
+    });
   }
 
   async getFriends(userId: number, query: UserQuery): Promise<User[]> {
-    return this.userRepository.find(query, userId);
+    const friends = await this.userRepository.find(query, userId);
+    if (!friends?.length) {
+      throw new UsersNotFoundException(this.logger);
+    }
+    return friends;
   }
 
   public async deleteUser(userId: number) {

@@ -139,21 +139,21 @@ Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
 ###
 
-#  Добавить в друзья
-POST /fit-friends/users/add/1 HTTP/1.1
-Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
-###
+# #  Добавить в друзья
+# POST /fit-friends/users/add/1 HTTP/1.1
+# Host: localhost:3333
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
+# ###
 
 #  Удалить из друзей
 POST /fit-friends/users/remove/1 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
 ###
 
 #  Получить список друзей
 # ?limit=50&page=0&sortType=date&sortDirection=desc
-GET /fit-friends/users/friends?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
+GET /fit-friends/users/user/friends?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkZpbGlkb3IgWmVsZW5peSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjc5NDI0MDkxLCJleHAiOjE2Nzk0MjQ5OTF9.RiaXVZCIRIf_tp2b8UxwOYi3aQB5_zCkkNp_khedJ8o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
 ###

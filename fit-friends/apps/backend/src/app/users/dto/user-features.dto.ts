@@ -48,7 +48,6 @@ export class UserFeaturesDto extends FeaturesDto {
   isReadyForTraining: boolean;
 }
 
-
 export class CoachFeaturesDto extends FeaturesDto {
   @ApiProperty({
     description: "Trainer's certificate,  <name>.pdf file",

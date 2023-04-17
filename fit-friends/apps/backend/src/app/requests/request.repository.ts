@@ -12,6 +12,7 @@ export class RequestRepository implements CRUDRepositoryInterface<RequestEntity,
 
   public async create(item: RequestEntity): Promise<UserRequest> {
     const entityData = item.toObject();
+
     return this.prisma.request.create({
       data: {
         ...entityData,
@@ -32,6 +33,7 @@ export class RequestRepository implements CRUDRepositoryInterface<RequestEntity,
     sortType = RequestSort.Date,
     category,
     status,
+    requesterId,
   }: RequestQuery, options?: Record<string, unknown>): Promise<UserRequest[]> {
     const sortField = { [RequestSortField[sortType]]: sortDirection };
 
@@ -39,8 +41,9 @@ export class RequestRepository implements CRUDRepositoryInterface<RequestEntity,
       take: limit,
       where: {
         ...options ?? {},
-        category,
-        status,
+        category: { in: category },
+        status: { in: status },
+        requesterId,
       },
       orderBy: [
         {

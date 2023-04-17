@@ -12,5 +12,6 @@ export function ApiIndexQuery() {
     ApiQuery({ name: 'sortDirection', description: '', required: false, enum: ['asc', 'desc'] }),
     ApiQuery({ name: 'category', description: '', required: false, type: () => RequestCategory }),
     ApiQuery({ name: 'status', description: '', required: false, type: () => RequestStatus }),
+    ApiQuery({ name: 'requesterId', description: '', required: false, type: () => Number }),
   );
 }

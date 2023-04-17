@@ -1,5 +1,5 @@
 import { Features, UserRole, UserRoleType } from '@fit-friends/shared-types';
-import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType, getSchemaPath } from '@nestjs/swagger';
 import { IsEnum, IsNotEmptyObject, IsOptional, ValidateNested } from 'class-validator';
 import { ValidityMessage as VM } from '@fit-friends/core';
 import { CreateUserDto } from './create-user.dto';
@@ -25,7 +25,10 @@ export class UpdateUserDto extends PartialType(OmitType(CreateUserDto, ['email',
 
   @ApiProperty({
     description: 'User features. Depends on "role" field',
-    type: () => UserFeaturesDto,  //todo: как задокументировать UserFeaturesDto и CoachFeaturesDto одновременно?
+    oneOf: [
+      { $ref: getSchemaPath(UserFeaturesDto) },
+      { $ref: getSchemaPath(CoachFeaturesDto) }
+    ],
     required: true,
   })
   @Type(() => FeaturesDto, {

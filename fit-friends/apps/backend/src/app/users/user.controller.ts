@@ -128,27 +128,17 @@ export class UserController {
     return res.status(HttpStatus.OK).send({ message: UserMessages.UNAUTHORIZED })
   }
 
-  @Post('add/:id')
-  @UseGuards(JwtAuthGuard)
-  @ApiParam({ name: "id", required: true, description: "User unique identifier" })
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource to add to friends' })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
-  async add(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
-    await this.userService.addFriend(user.sub, id);
-    return res.status(HttpStatus.OK).send();
-  }
-
   @Post('remove/:id')
   @UseGuards(JwtAuthGuard)
   @ApiParam({ name: "id", required: true, description: "User unique identifier" })
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource to remove from friends' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
   async remove(@Param('id') id: number, @Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
-    await this.userService.removeFriend(user.sub, id);
+    await this.userService.removeFriend(user.sub, id, user.name);
     return res.status(HttpStatus.OK).send();
   }
 
-  @Get('/friends')
+  @Get('user/friends')
   @UseGuards(JwtAuthGuard)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)

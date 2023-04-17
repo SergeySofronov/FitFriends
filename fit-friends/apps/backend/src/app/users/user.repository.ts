@@ -79,7 +79,7 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
       take: limit,
       where: {
         friends: {
-          every: {
+          some: {
             id: friendId
           }
         }

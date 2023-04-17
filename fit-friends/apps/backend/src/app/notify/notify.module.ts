@@ -10,5 +10,6 @@ import { NotifyRepository } from './notify.repository';
     NotifyRepository,
     Logger
   ],
+  exports: [NotifyService]
 })
 export class NotifyModule { }

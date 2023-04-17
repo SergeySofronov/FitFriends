@@ -2,8 +2,9 @@ import { OrderCategory, OrderCategoryType, PaymentType } from '@fit-friends/shar
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
 import { TrainingRdo } from '../../training/rdo/training.rdo';
-import { UserRdo } from '../../users/rdo/user.rdo';
 import { OrderValidity as OV } from '../order.constant';
+import { UserRdo } from '../../users/rdo/user.rdo';
+import { GymRdo } from '../../gyms/rdo/gym.rdo';
 
 export class OrderRdo {
   @ApiProperty({
@@ -34,7 +35,7 @@ export class OrderRdo {
   })
   @Transform(({ obj }) => obj.category === OrderCategory.SeasonPass ? obj.service = obj.gym : obj.service = obj.training)
   @Expose()
-  public service: TrainingRdo /*| GymRdo*/; //todo WIP
+  public service: TrainingRdo | GymRdo;
 
   @ApiProperty({
     description: 'Order item price',

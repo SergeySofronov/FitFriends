@@ -239,7 +239,7 @@ model Notification {
   notifying       User?    @relation(name: "notifying", fields: [notifyingUserId], references: [id], onDelete: NoAction)
   notifyingUserId Int?
   text            String
-  isChecked       Boolean
+  isChecked       Boolean  @default(false)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
 

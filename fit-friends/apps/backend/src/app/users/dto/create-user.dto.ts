@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import { IsDateString, IsEmail, IsEnum, IsNotEmptyObject, Matches, MaxLength, MinLength, ValidateNested } from 'class-validator';
 import { ValidityMessage as VM } from '@fit-friends/core';
@@ -23,7 +23,7 @@ export class CreateUserDto {
     maxLength: UV.NameMaxLength,
     required: true,
   })
-  @Transform(({ value }) => value instanceof String ? value.replace(/\s{2,}/g,' ').trim() : value)
+  @Transform(({ value }) => value instanceof String ? value.replace(/\s{2,}/g, ' ').trim() : value)
   @MinLength(UV.NameMinLength, { message: VM.MinValueMessage })
   @MaxLength(UV.NameMaxLength, { message: VM.MaxValueMessage })
   public name: string;
@@ -101,7 +101,10 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'User features. Depends on "role" field',
-    type: () => UserFeaturesDto,  //todo: как задокументировать UserFeaturesDto и CoachFeaturesDto одновременно?
+    oneOf: [
+      { $ref: getSchemaPath(UserFeaturesDto) },
+      { $ref: getSchemaPath(CoachFeaturesDto) }
+    ],
     required: true,
   })
   @Type(() => FeaturesDto, {

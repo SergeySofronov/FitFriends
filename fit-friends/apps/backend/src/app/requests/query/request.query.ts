@@ -25,11 +25,18 @@ export class RequestQuery {
   @IsOptional()
   public sortDirection?: 'desc' | 'asc' = RQ.REQUEST_DEFAULT_SORT_DIRECTION;
 
-  @IsEnum(RequestCategory, { message: `${VM.IsEnumMessage} ${Object.values(RequestCategory).join(', ')}` })
+  @IsIn(Object.values(RequestCategory), { message: `${VM.IsInEnumMessage} ${Object.values(RequestCategory).join(', ')}`, each: true })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
   public category?: RequestCategoryType;
 
-  @IsEnum(RequestStatus, { message: `${VM.IsEnumMessage} ${Object.values(RequestStatus).join(', ')}` })
+  @IsIn(Object.values(RequestStatus), { message: `${VM.IsInEnumMessage} ${Object.values(RequestStatus).join(', ')}`, each: true })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
   public status?: RequestStatusType
+
+  @Transform(({ value }) => +value)
+  @IsNumber()
+  @IsOptional()
+  requesterId?: number;
 }

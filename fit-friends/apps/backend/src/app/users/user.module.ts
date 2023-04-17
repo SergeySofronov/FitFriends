@@ -11,9 +11,11 @@ import { MulterModule } from '@nestjs/platform-express';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { NotifyModule } from '../notify/notify.module';
 
 @Module({
   imports: [
+    NotifyModule,
     PassportModule,
     RefreshTokenModule,
     JwtModule.registerAsync({

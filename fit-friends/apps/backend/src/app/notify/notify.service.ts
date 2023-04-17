@@ -3,6 +3,8 @@ import { NotifyRepository } from './notify.repository';
 import { NotifyQuery } from './query/notify.query';
 import { Notification } from '@fit-friends/shared-types';
 import { NotificationNotFoundIdException, NotificationNotOwnerIdException, NotificationsNotFoundException } from '@fit-friends/core';
+import { CreateNotifyDto } from './dto/create-notify.dto';
+import { NotifyEntity } from './notify.entity';
 
 @Injectable()
 export class NotifyService {
@@ -25,6 +27,11 @@ export class NotifyService {
     }
 
     return existNotification;
+  }
+
+  public async createNotification(dto:CreateNotifyDto): Promise<Notification> {
+    const newNotification = new NotifyEntity(dto);
+    return this.notifyService.create(newNotification);
   }
 
   public async getNotifications(query: NotifyQuery, notifiedUserId: number): Promise<Notification[]> {

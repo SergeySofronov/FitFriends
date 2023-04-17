@@ -1,4 +1,5 @@
 import { plainToInstance, ClassConstructor, ClassTransformOptions } from 'class-transformer';
+import { RequestCategory, RequestCategoryType, RequestStatusType } from '@fit-friends/shared-types'
 
 export function getRandomInteger(a = 0, b = 1) {
   const lower = Math.ceil(Math.min(a, b));
@@ -45,3 +46,39 @@ export function transformStringToBool(value: unknown) {
 
   return undefined;
 }
+
+export function getNotificationTextOnRequest(category: RequestCategoryType, userName: string) {
+  switch (category) {
+    case (RequestCategory.Friendship):
+      return `The user ${userName} wants to add you as a friend`;
+
+    case (RequestCategory.Personal):
+      return `The user ${userName} wants to invite you to a joint workout`;
+
+    case (RequestCategory.Coworking):
+      return `The user ${userName} wants to sign up for a personal training session`;
+
+    default: return '';
+  }
+}
+
+export function getNotificationTextOnRequestAction(category: RequestCategoryType, status: RequestStatusType, userName: string) {
+  switch (category) {
+    case (RequestCategory.Friendship):
+      return `The user ${userName} ${status} your friend request`;
+
+    case (RequestCategory.Personal):
+      return `The user ${userName}  ${status} your request for a joint workout`;
+
+    case (RequestCategory.Coworking):
+      return `The user ${userName} ${status} your request for a personal training session`;
+
+    default: return '';
+  }
+}
+
+export function getNotificationTextOnFriendRemove(userName: string) {
+  return `The user ${userName} has removed you from the friends list`;
+}
+
+
