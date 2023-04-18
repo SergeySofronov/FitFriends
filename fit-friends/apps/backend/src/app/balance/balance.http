@@ -1,0 +1,52 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjFhNTQ4MmQxLTljYzQtNDhjYy1hYjQ4LWU4MTI4OTE5ZjE3NSIsImlhdCI6MTY4MTYzODcxMSwiZXhwIjoxNjgyMjQzNTExfQ.2VEO3FlmNKmN4lCO-iS04KBHjD-SrCJz5weptImJu-I
+###
+
+#======================= Balance ==================
+#  Получить список залов
+# ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
+GET /fit-friends/gyms?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=500&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
+###
+
+#  Получить список залов пользователя (мои залы)
+# ?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&location=Pionerskaya,Petrogradskaya&gymFeature=SwimmingPool,FreeParking&isVerified=true
+GET /fit-friends/gyms/user/favorite HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Получить информацию о зале
+GET /fit-friends/gyms/1 HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Добавить зал в избранное
+# ?isFavorite=true
+POST /fit-friends/gyms/3?isFavorite=true HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###
+
+#  Удалить зал из избранного
+# ?isFavorite=false
+POST /fit-friends/gyms/1?isFavorite=false HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+###

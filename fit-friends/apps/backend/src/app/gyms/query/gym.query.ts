@@ -51,7 +51,6 @@ export class GymQuery {
 
   @Transform(({ value }) => transformStringToBool(value))
   @BooleanParamDecorator({ message: VM.IsBoolean })
-  @IsOptional()
-  public isFavorite?: boolean;
+  public isFavorite: boolean;
 }
 

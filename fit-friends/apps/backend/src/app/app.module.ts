@@ -18,6 +18,7 @@ import { GymsModule } from './gyms/gym.module';
 import { OrderModule } from './orders/order.module';
 import { NotifyModule } from './notify/notify.module';
 import { RequestModule } from './requests/request.module';
+import { UserBalanceModule } from './balance/balance.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { RequestModule } from './requests/request.module';
     OrderModule,
     NotifyModule,
     RequestModule,
+    UserBalanceModule,
   ],
 })
 export class AppModule {}

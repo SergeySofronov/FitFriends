@@ -32,16 +32,16 @@ Content-Type: application/json
 }
 ###
 
-#  Получить список заказов (Coach)
+#  Получить список заказов (только для Coach)
 # ?limit=50&page=0&sortType=total&sortDirection=desc
-GET /fit-friends/orders/coach?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
+GET /fit-friends/orders?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
 Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNjQzMiwiZXhwIjoxNjgwMTA3MzMyfQ.tBujJ2YVoWWwjxdJWzpjJt4WVrpA9YdVTKpnS06O_4s
 ###
 
-#  Получить список покупок (User)
-# ?limit=50&page=0&sortType=total&sortDirection=desc
-GET /fit-friends/orders/user?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
-Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNjQzMiwiZXhwIjoxNjgwMTA3MzMyfQ.tBujJ2YVoWWwjxdJWzpjJt4WVrpA9YdVTKpnS06O_4s
-###
+# #  Получить список покупок (User) -> UserBalance
+# # ?limit=50&page=0&sortType=total&sortDirection=desc
+# GET /fit-friends/orders/user?limit=50&page=1&sortType=quantity&sortDirection=asc HTTP/1.1
+# Host: localhost:3333
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDEwNjQzMiwiZXhwIjoxNjgwMTA3MzMyfQ.tBujJ2YVoWWwjxdJWzpjJt4WVrpA9YdVTKpnS06O_4s
+# ###

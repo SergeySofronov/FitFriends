@@ -72,14 +72,6 @@ export class OrderService {
     return existOrder;
   }
 
-  public async getPurchases(query: OrderQuery, userId: number) {
-    const existOrder = await this.orderRepository.findPurchases(query, userId);
-    if (!existOrder?.length) {
-      throw new OrdersNotFoundException(this.logger);
-    }
-    return existOrder;
-  }
-
   public async deleteOrder(orderId: number, userId: number) {
     await this.checkOrderOwner(orderId, userId);
     return this.orderRepository.destroy(orderId);

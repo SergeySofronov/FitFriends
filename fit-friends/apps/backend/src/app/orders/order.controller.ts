@@ -9,7 +9,6 @@ import { OrderService } from './order.service';
 import { ApiIndexQuery } from './query/order.api-query.decorator';
 import { OrderQuery } from './query/order.query';
 import { OrderRdo } from './rdo/order.rdo';
-import { PurchaseRdo } from './rdo/purchase.rdo';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 
@@ -43,7 +42,7 @@ export class OrderController {
     return fillObject(OrderRdo, updatedOrder);
   }
 
-  @Get('/coach')
+  @Get('/')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Roles(`${UserRole.Coach}`)
@@ -54,20 +53,6 @@ export class OrderController {
   async orders(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
     const orders = await this.orderService.getOrders(query, user.sub);
     return fillObject(OrderRdo, orders);
-  }
-
-  @Get('/user')
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.User}`)
-  @ApiIndexQuery()
-  @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting an array of user purchases', type: OrderRdo })
-  @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Orders not found', })
-  async purchases(@Query() query: OrderQuery, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
-    console.log('user')
-    const orders = await this.orderService.getPurchases(query, user.sub);
-    return fillObject(PurchaseRdo, orders);
   }
 
   @Delete('/:id')

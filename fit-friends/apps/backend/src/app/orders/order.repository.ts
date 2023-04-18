@@ -86,32 +86,6 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
     return orders.slice(skip, take);
   }
 
-  public async findPurchases({
-    limit,
-    page,
-    sortDirection,
-    sortType,
-  }: OrderQuery, userId: number): Promise<Order[]> {
-    const sortField = { [OrderSortField[sortType]]: sortDirection };
-    return this.prisma.order.findMany({
-      take: limit,
-      where: {
-        userId
-      },
-      orderBy: [
-        {
-          ...sortField
-        }
-      ],
-      skip: page > 0 ? limit * (page - 1) : undefined,
-      include: {
-        gym: true,
-        training: true,
-        user: true,
-      },
-    });
-  }
-
   public async update(id: number, item: Partial<OrderEntity>): Promise<Order> {
     return this.prisma.order.update({
       where: { id },
