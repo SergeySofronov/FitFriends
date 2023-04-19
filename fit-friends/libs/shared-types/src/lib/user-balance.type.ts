@@ -1,10 +1,12 @@
+import { OrderCategoryType } from "./order-category.enum";
+
 export type UserBalance = {
   id?: number;
+  userId: number;
+  category:OrderCategoryType;
   gymId?: number;
-  gymAvailable?: number;
-  gymSpent?: number;
   trainingId?: number;
-  trainingAvailable?: number;
-  trainingSpent?: number;
-  date?: Date;
+  available?: number;
+  spent?: number;
+  updatedAt?: Date;
 }

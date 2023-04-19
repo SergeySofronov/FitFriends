@@ -1,5 +1,6 @@
 export enum UserBalanceValidity {
   DefaultQuantity = 0,
+  IncreaseValue = 1,
 }
 
 export const UserBalanceQuery = {

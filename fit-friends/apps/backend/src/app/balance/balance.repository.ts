@@ -53,11 +53,12 @@ export class UserBalanceRepository implements CRUDRepositoryInterface<UserBalanc
     });
   }
 
-  public async update(id: number, item: Partial<UserBalanceEntity>): Promise<UserBalance> {
+  public async update(id: number, item: Partial<UserBalanceEntity>, options?: Record<string, unknown>): Promise<UserBalance> {
     return this.prisma.userBalance.update({
       where: { id },
       data: {
         ...item,
+        ...options || {},
       },
     })
   }

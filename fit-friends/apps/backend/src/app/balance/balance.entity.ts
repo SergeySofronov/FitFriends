@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common'
 import { Entity } from '@fit-friends/core';
-import { UserBalance } from '@fit-friends/shared-types';
+import { OrderCategoryType, UserBalance } from '@fit-friends/shared-types';
 import { UserBalanceValidity as BV } from './balance.constant';
 
 @Injectable()
 export class UserBalanceEntity implements Entity<UserBalanceEntity, UserBalance>, UserBalance {
   public id?: number;
+  public userId: number;
+  public category: OrderCategoryType;
   public gymId: number;
-  public gymAvailable: number;
-  public gymSpent: number;
   public trainingId: number;
-  public trainingAvailable: number;
-  public trainingSpent: number;
-  public date: Date;
+  public available: number;
+  public spent: number;
+  public updatedAt: Date;
 
   constructor(balance: UserBalance) {
     this.fillEntity(balance);
@@ -24,12 +24,12 @@ export class UserBalanceEntity implements Entity<UserBalanceEntity, UserBalance>
 
   public fillEntity(balance: UserBalance) {
     this.id = balance.id;
+    this.userId = balance.userId;
+    this.category = balance.category;
     this.gymId = balance.gymId;
-    this.gymAvailable = balance.gymAvailable || BV.DefaultQuantity;
-    this.gymSpent = balance.gymSpent || BV.DefaultQuantity;
     this.trainingId = balance.trainingId;
-    this.trainingAvailable = balance.trainingAvailable || BV.DefaultQuantity;
-    this.trainingSpent = balance.trainingSpent || BV.DefaultQuantity;
-    this.date = balance.date || new Date();
+    this.available = balance.available || BV.DefaultQuantity;
+    this.spent = balance.spent || BV.DefaultQuantity;
+    this.updatedAt = new Date();
   }
 }

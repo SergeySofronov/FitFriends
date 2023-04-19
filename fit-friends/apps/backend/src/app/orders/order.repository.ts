@@ -12,7 +12,6 @@ export class OrderRepository implements CRUDRepositoryInterface<OrderEntity, num
 
   public async create(item: OrderEntity): Promise<Order> {
     const entityData = item.toObject();
-    console.log(entityData);
     return await this.prisma.order.create({
       data: {
         ...entityData,

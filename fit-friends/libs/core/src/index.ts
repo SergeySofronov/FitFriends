@@ -13,3 +13,4 @@ export * from './lib/order-exceptions';
 export * from './lib/gym-exceptions';
 export * from './lib/request-exceptions';
 export * from './lib/notify-exceptions';
+export * from './lib/user-balance-exceptions';

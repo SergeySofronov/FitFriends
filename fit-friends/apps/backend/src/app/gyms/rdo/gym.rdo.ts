@@ -9,8 +9,8 @@ export class GymRdo {
     example: 1,
   })
   @Expose()
+  public id: number;
 
-  public id: string;
   @ApiProperty({
     description: 'Gym title',
     example: 'Fitstar',

@@ -10,7 +10,7 @@ export class UserRdo {
     example: 1,
   })
   @Expose()
-  public id: string;
+  public id: number;
 
   @ApiProperty({
     description: 'User unique email address',

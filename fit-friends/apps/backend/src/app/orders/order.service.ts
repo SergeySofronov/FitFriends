@@ -9,11 +9,13 @@ import { OrderCategory } from '@fit-friends/shared-types';
 import { TrainingService } from '../training/training.service';
 import { GymService } from '../gyms/gym.service';
 import { UserService } from '../users/user.service';
+import { UserBalanceService } from '../balance/balance.service';
 
 @Injectable()
 export class OrderService {
   constructor(
     private readonly userService: UserService,
+    private readonly balanceService: UserBalanceService,
     private readonly orderRepository: OrderRepository,
     private readonly trainingService: TrainingService,
     private readonly gymService: GymService,
@@ -56,6 +58,8 @@ export class OrderService {
     delete dto.serviceId;
 
     const newOrder = new OrderEntity({ ...dto, trainingId, gymId, price, total, userId });
+    await this.balanceService.updateUserBalance(dto.category, dto.serviceId, userId, true);
+
     return this.orderRepository.create(newOrder);
   }
 

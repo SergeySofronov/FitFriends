@@ -8,7 +8,7 @@ export class RequestRdo {
     example: 1,
   })
   @Expose()
-  public id: string;
+  public id: number;
 
   @ApiProperty({
     description: 'Unique identifier of the requesting user',
