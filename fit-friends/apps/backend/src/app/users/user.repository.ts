@@ -157,6 +157,28 @@ export class UserRepository implements CRUDRepositoryInterface<UserEntity, numbe
     return user;
   }
 
+  public async changeSubscription(id: number, coachId: number, isFollow: boolean): Promise<User> {
+    const action = isFollow ? 'connect' : 'disconnect';
+    const [user] = await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id },
+        data: { subscriptions: { [action]: [{ id: coachId }] } },
+      }),
+      this.prisma.user.update({
+        where: { id: coachId },
+        data: { subscriptions: { [action]: [{ id }] } },
+      })
+    ]);
+
+    return user;
+  }
+
+  public async findSubscribed(id: number): Promise<User[]> {
+    return await this.prisma.user.findMany({
+      where: { subscriptions: { some: { id } } },
+    });
+  }
+
   public async destroy(id: number): Promise<void> {
     await this.prisma.user.delete({
       where: { id },

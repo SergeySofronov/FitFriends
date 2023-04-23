@@ -7,7 +7,7 @@ import { resolve } from 'path';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { TrainingQuery } from './query/training.query';
-import { TrainingValidity } from './training.constant';
+import { TrainingValidity as TV } from './training.constant';
 import { TrainingEntity } from './training.entity';
 import { TrainingRepository } from './training.repository';
 import { UserService } from '../users/user.service';
@@ -63,9 +63,11 @@ export class TrainingService {
       throw new BadRequestException('Internal error. Cannot create entity');
     }
 
-    const newTraining = new TrainingEntity({ ...dto, video, coachId, backgroundImage, rating: TrainingValidity.RatingMinValue });
+    const newTraining = new TrainingEntity({ ...dto, video, coachId, backgroundImage, rating: TV.RatingMinValue });
+    const training = await this.trainingRepository.create(newTraining);
+    this.userService.sendEmailToSubscribedUsers(coachId, training);
 
-    return this.trainingRepository.create(newTraining);
+    return training;
   }
 
   public async updateTraining(id: number, dto: UpdateTrainingDto): Promise<Training> {

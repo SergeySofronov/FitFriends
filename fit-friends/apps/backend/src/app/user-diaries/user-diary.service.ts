@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { FoodDiaryRepository } from './food-diary.repository';
 import { TrainingDiaryRepository } from './training-diary.repository';
-import { ConfigService } from '@nestjs/config';
 import { CreateFoodDiaryDto } from './dto/create-food-diary.dto';
 import { CreateTrainingDiaryDto } from './dto/create-training-diary.dto';
 import { FoodDiary, TrainingDiary } from '@fit-friends/shared-types';
@@ -19,7 +18,6 @@ export class UserDiaryService {
   constructor(
     private readonly trainingDiaryRepository: TrainingDiaryRepository,
     private readonly foodDiaryRepository: FoodDiaryRepository,
-    private readonly configService: ConfigService,
     private readonly logger: Logger,
   ) { }
 

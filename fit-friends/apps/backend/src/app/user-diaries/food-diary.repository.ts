@@ -40,8 +40,8 @@ export class FoodDiaryRepository implements CRUDRepositoryInterface<FoodDiaryEnt
       where: {
         ...options ?? {},
         AND: [
-          { date: { gte: fromDate } },
-          { date: { lte: beforeDate } },
+          { createdAt: { gte: fromDate } },
+          { createdAt: { lte: beforeDate } },
         ],
       },
       orderBy: [

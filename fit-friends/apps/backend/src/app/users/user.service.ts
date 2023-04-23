@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UsersNotFoundException, getNotificationTextOnFriendRemove } from '@fit-friends/core';
-import { RefreshTokenPayload, User } from '@fit-friends/shared-types';
+import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UserRoleException, UsersNotFoundException, getNotificationTextOnFriendRemove } from '@fit-friends/core';
+import { RefreshTokenPayload, Training, User, UserRole } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserEntity } from './user.entity';
@@ -14,10 +14,12 @@ import { resolve } from 'path'
 import { existsSync, unlinkSync } from 'fs';
 import { UserQuery } from './query/user.query';
 import { NotifyService } from '../notify/notify.service';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly mail: MailService,
     private readonly notifyService: NotifyService,
     private readonly userRepository: UserRepository,
     private readonly configService: ConfigService,
@@ -26,12 +28,14 @@ export class UserService {
     private readonly logger: Logger,
   ) { }
 
-  private async checkUserIdMatch(userId: number, friendId: number) {
-    const user = await this.getUserById(userId);
-    const friend = await this.getUserById(friendId);
-    if (user.id === friend.id) {
+  private async checkUserIdMatch(userFirstId: number, userSecondId: number) {
+    const first = await this.getUserById(userFirstId);
+    const second = await this.getUserById(userSecondId);
+    if (first.id === second.id) {
       throw new UserFriendIdException(this.logger);
     }
+
+    return [first, second];
   }
 
   public async getUserById(id: number) {
@@ -181,5 +185,21 @@ export class UserService {
 
   public async deleteUser(userId: number) {
     return this.userRepository.destroy(userId);
+  }
+
+  public async updateSubscription(userId: number, coachId: number, isFollow: boolean) {
+    const [, coach] = await this.checkUserIdMatch(userId, coachId);
+    if (coach.role !== UserRole.Coach) {
+      throw new UserRoleException(this.logger, coachId);
+    }
+
+    return this.userRepository.changeSubscription(userId, coachId, isFollow);
+  }
+
+  public async sendEmailToSubscribedUsers(coachId: number, training: Training) {
+    const users = await this.userRepository.findSubscribed(coachId);
+    for(const user of users){
+      this.mail.sendMailNewTraining(user, training);
+    }
   }
 }

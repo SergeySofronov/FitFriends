@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MailerService } from '@nestjs-modules/mailer';
 import { EmailSubject } from './mail.constant';
-import { Training } from '@fit-friends/shared-types';
-import { User } from '@prisma/client';
+import { Training, User } from '@fit-friends/shared-types';
 
 @Injectable()
 export class MailService {
@@ -12,14 +11,15 @@ export class MailService {
     private readonly configService: ConfigService,
   ) { }
 
-  public async sendMailNewTraining(user: User, trainings: Training[]) {
+  public async sendMailNewTraining(user: User, training: Training) {
     await this.mailerService.sendMail({
       to: user.email,
       subject: EmailSubject.EMAIL_ADD_TRAINING_SUBJECT,
       template: './new-training',
       context: {
-        user: `${user.name}`,
-        trainingList: `${trainings.map((item) => `<li><a href="${this.configService.get<string>('frontendUrl.host')}">${item.title}</a></li>`)}`,
+        user: user.name,
+        url: this.configService.get<string>('frontendUrl.host'),
+        title: training.title,
       }
     })
   }

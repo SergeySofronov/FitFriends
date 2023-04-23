@@ -157,3 +157,15 @@ GET /fit-friends/users/user/friends?limit=50&page=0&sortType=date&sortDirection=
 Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
 ###
+
+#  Подписаться на тренера (получение уведомлений о новых тренировках)
+GET /fit-friends/users/subscribe/1/true HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
+###
+
+#  Отписаться от тренера
+GET /fit-friends/users/subscribe/1/false HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckB1c2VyMi5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjgxNzUyOTU5LCJleHAiOjE2ODE3NTM4NTl9.1fm-_-r9yyoRKKTqHCO3avyOD4DCAkl-ypsgW1cKdMw
+###

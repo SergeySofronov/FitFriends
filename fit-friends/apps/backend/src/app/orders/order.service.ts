@@ -9,7 +9,7 @@ import { OrderCategory } from '@fit-friends/shared-types';
 import { TrainingService } from '../training/training.service';
 import { GymService } from '../gyms/gym.service';
 import { UserService } from '../users/user.service';
-import { UserBalanceService } from '../balance/user-balance.service';
+import { UserBalanceService } from '../user-balance/user-balance.service';
 
 @Injectable()
 export class OrderService {

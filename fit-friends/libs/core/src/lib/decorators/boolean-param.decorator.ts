@@ -1,29 +1,17 @@
-import { registerDecorator, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
+import { BadRequestException, createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-const enum BooleanValue {
-  True = 1,
-  False = 0,
-}
+export const BooleanParamDecorator = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
+    const booleanParameter = ctx.switchToHttp().getRequest().params[data];
 
-@ValidatorConstraint({ async: false })
-export class BooleanParamConstraint implements ValidatorConstraintInterface {
-  validate(value: number | boolean) {
-    return (
-      (value === BooleanValue.True) ||
-      (value === BooleanValue.False) ||
-      (value === true) ||
-      (value === false)
-    );
-  }
-}
+    if ((booleanParameter === 'true') || (booleanParameter === '1')) {
+      return true;
+    }
 
-export function BooleanParamDecorator(validationOptions?: ValidationOptions) {
-  return function (object: unknown, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      validator: BooleanParamConstraint,
-    });
-  };
-}
+    if ((booleanParameter === 'false') || (booleanParameter === '0')) {
+      return false;
+    }
+
+    throw new BadRequestException(`Parameter ${data} must be boolean type or number (1 or 0)`);
+  },
+);

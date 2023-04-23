@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsEnum, IsIn, IsNumber, IsOptional } from 'class-validator';
-import { BooleanParamDecorator, transformStringToBool, transformToMax, transformToMin, ValidityMessage as VM } from '@fit-friends/core';
+import { IsBooleanProp, transformStringToBool, transformToMax, transformToMin, ValidityMessage as VM } from '@fit-friends/core';
 import { GymFeature, GymFeatureType, Location, LocationType } from '@fit-friends/shared-types';
 import { GymQuery as GQ, GymSort, GymValidity as GV } from '../gym.constant';
 
@@ -45,12 +45,12 @@ export class GymQuery {
   public gymFeature?: GymFeatureType[];
 
   @Transform(({ value }) => transformStringToBool(value))
-  @BooleanParamDecorator({ message: VM.IsBoolean })
+  @IsBooleanProp({ message: VM.IsBoolean })
   @IsOptional()
   public isVerified?: boolean;
 
   @Transform(({ value }) => transformStringToBool(value))
-  @BooleanParamDecorator({ message: VM.IsBoolean })
+  @IsBooleanProp({ message: VM.IsBoolean })
   public isFavorite: boolean;
 }
 

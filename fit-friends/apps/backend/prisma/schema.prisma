@@ -91,35 +91,37 @@ enum MealTime {
 }
 
 model User {
-  id               Int             @id @default(autoincrement())
-  email            String          @unique()
-  name             String
-  avatar           String
-  password         String
-  gender           UserGender
-  dateBirth        DateTime
-  role             UserRole        @default(User)
-  location         Location
-  level            UserLevel       @default(Beginner)
-  trainingStyle    TrainingStyle   @default(Aerobics)
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @default(now())
-  review           Review[]
-  order            Order[]
-  requester        Request[]       @relation(name: "requester")
-  requested        Request[]       @relation(name: "requested")
-  notifying        Notification[]  @relation(name: "notifying")
-  notified         Notification[]  @relation(name: "notified")
-  token            Token[]
-  userFeatures     UserFeatures?
-  coachFeatures    CoachFeatures?
-  training         Training[]
-  friends          User[]          @relation(name: "friends") // A table for friends is created implicitly through many-to-many self-relation
-  symmetricFriends User[]          @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
-  gyms             Gym[]
-  userBalance      UserBalance[]
-  foodDiary        FoodDiary[]
-  trainingDiary    TrainingDiary[]
+  id                     Int             @id @default(autoincrement())
+  email                  String          @unique()
+  name                   String
+  avatar                 String
+  password               String
+  gender                 UserGender
+  dateBirth              DateTime
+  role                   UserRole        @default(User)
+  location               Location
+  level                  UserLevel       @default(Beginner)
+  trainingStyle          TrainingStyle   @default(Aerobics)
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @default(now())
+  review                 Review[]
+  order                  Order[]
+  requester              Request[]       @relation(name: "requester")
+  requested              Request[]       @relation(name: "requested")
+  notifying              Notification[]  @relation(name: "notifying")
+  notified               Notification[]  @relation(name: "notified")
+  token                  Token[]
+  userFeatures           UserFeatures?
+  coachFeatures          CoachFeatures?
+  training               Training[]
+  friends                User[]          @relation(name: "friends") // A table for friends is created implicitly through many-to-many self-relation
+  symmetricFriends       User[]          @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
+  subscriptions          User[]          @relation(name: "subscriptions") // A table for subscriptions is created implicitly through many-to-many self-relation
+  symmetricSubscriptions User[]          @relation(name: "subscriptions") // This second "side" of the "subscriptions" relation exists to satisfy prisma's requirements, not for direct access
+  gyms                   Gym[]
+  userBalance            UserBalance[]
+  foodDiary              FoodDiary[]
+  trainingDiary          TrainingDiary[]
 
   @@map("users")
 }
@@ -158,6 +160,7 @@ model Training {
   gender          UserGender
   video           String
   rating          Int             @default(0)
+  reviewsCount    Int             @default(0)
   coach           User            @relation(fields: [coachId], references: [id])
   coachId         Int
   isSpecial       Boolean

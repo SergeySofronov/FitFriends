@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IsEnum, IsIn, IsNumber, IsOptional } from 'class-validator';
-import { BooleanParamDecorator, transformStringToBool, transformToMax, ValidityMessage as VM } from '@fit-friends/core';
+import { IsBooleanProp, transformStringToBool, transformToMax, ValidityMessage as VM } from '@fit-friends/core';
 import { NotifyQuery as NQ, NotifySort } from '../notify.constant';
 
 
@@ -24,7 +24,7 @@ export class NotifyQuery {
   public sortDirection?: 'desc' | 'asc' = NQ.NOTIFY_DEFAULT_SORT_DIRECTION;
 
   @Transform(({ value }) => transformStringToBool(value))
-  @BooleanParamDecorator({ message: VM.IsBoolean })
+  @IsBooleanProp({ message: VM.IsBoolean })
   @IsOptional()
   public isChecked?: boolean;
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsEnum, Max, MaxLength, Min, MinLength } from 'class-validator';
-import { BooleanParamDecorator, ValidityMessage as VM } from '@fit-friends/core';
+import { IsBooleanProp, ValidityMessage as VM } from '@fit-friends/core';
 import { TrainingValidity as TV } from '../training.constant';
 import { TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserGender, UserGenderType, UserLevel, UserLevelType } from '@fit-friends/shared-types';
 
@@ -97,6 +97,6 @@ export class CreateTrainingDto {
     example: true,
     required: true,
   })
-  @BooleanParamDecorator({ message: VM.IsBoolean })
+  @IsBooleanProp({ message: VM.IsBoolean })
   public isSpecial: boolean;
 }

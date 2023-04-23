@@ -5,7 +5,7 @@ import {
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, Roles, RolesGuard } from '@fit-friends/core';
+import { fillObject, Roles, RolesGuard, BooleanParamDecorator } from '@fit-friends/core';
 import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserMessages } from './user.constant';
@@ -157,6 +157,20 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND, })
   async destroy(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Res() res: Response) {
     await this.userService.deleteUser(user.sub);
+    return res.status(HttpStatus.OK).send();
+  }
+
+  @Post('subscribe/:coachId/:isFollow')
+  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard)
+  @Roles(`${UserRole.User}`)
+  @HttpCode(HttpStatus.OK)
+  async subscribe(
+    @BooleanParamDecorator('isFollow') isFollow: boolean,
+    @Param('coachId') coachId: number,
+    @Req() { user }: RequestWithTokenPayload<TokenPayload>,
+    @Res() res: Response) {
+    await this.userService.updateSubscription(user.sub, coachId, isFollow);
     return res.status(HttpStatus.OK).send();
   }
 
