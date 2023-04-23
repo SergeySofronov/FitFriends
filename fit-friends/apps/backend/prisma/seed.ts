@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
-import { getRandomInteger } from '../../../libs/core/src/lib/helpers'
-import { GymFeature } from '../../../libs/shared-types/src/lib/gym-feature.enum'
-import { Location } from '../../../libs/shared-types/src/lib/user-location.enum'
+import { getRandomInteger } from '../../../libs/core/src/lib/helpers'// eslint-disable-line
+import { GymFeature } from '../../../libs/shared-types/src/lib/gym-feature.enum'// eslint-disable-line
+import { Location } from '../../../libs/shared-types/src/lib/user-location.enum'// eslint-disable-line
 import { GymValidity } from '../src/app/gyms/gym.constant'
 
 const TIME_INTERVAL = 1e+12;

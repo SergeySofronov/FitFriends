@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { UserBalanceService } from './balance.service';
-import { UserBalanceController } from './balance.controller';
+import { UserBalanceService } from './user-balance.service';
+import { UserBalanceController } from './user-balance.controller';
 
 @Module({
   providers: [UserBalanceService],

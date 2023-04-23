@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { UserBalanceRepository } from './balance.repository';
-import { CreateUserBalanceDto } from './dto/create-balance.dto';
-import { UserBalanceEntity } from './balance.entity';
+import { UserBalanceRepository } from './user-balance.repository';
+import { CreateUserBalanceDto } from './dto/create-user-balance.dto';
+import { UserBalanceEntity } from './user-balance.entity';
 import { OrderCategoryType, UserBalance } from '@fit-friends/shared-types';
-import { UserBalanceQuery } from './query/balance.query';
+import { UserBalanceQuery } from './query/user-balance.query';
 import { OrderCategory } from '@prisma/client';
 import { UserBalanceNotFoundIdException } from '@fit-friends/core';
-import { UserBalanceValidity as BV } from './balance.constant';
+import { UserBalanceValidity as BV } from './user-balance.constant';
 
 @Injectable()
 export class UserBalanceService {
@@ -14,6 +14,15 @@ export class UserBalanceService {
     private readonly balanceRepository: UserBalanceRepository,
     private readonly logger: Logger,
   ) { }
+
+  public async getUserBalanceByService(category: OrderCategoryType, serviceId: number, userId: number): Promise<UserBalance> {
+    const existBalance = await this.balanceRepository.findByServiceId(userId, { serviceId });
+    if (!existBalance) {
+      throw new UserBalanceNotFoundIdException(this.logger, userId);
+    }
+
+    return existBalance;
+  }
 
   public async getUserBalance(query: UserBalanceQuery, userId: number): Promise<UserBalance[]> {
     const existBalance = await this.balanceRepository.find(query, { userId });
@@ -35,7 +44,7 @@ export class UserBalanceService {
       available: BV.IncreaseValue,
       category
     }
-    const existBalance = await this.balanceRepository.findByServiceId({ [service]: serviceId });
+    const existBalance = await this.balanceRepository.findByServiceId(userId, { [service]: serviceId });
 
     if (!existBalance) {
       if (isIncrease) {
@@ -46,11 +55,11 @@ export class UserBalanceService {
     }
 
     if (isIncrease) {
-      return this.balanceRepository.update(existBalance.id, {}, { available: { increment: BV.IncreaseValue } });
+      return this.balanceRepository.update(existBalance.id, { updatedAt: new Date() }, { available: { increment: BV.IncreaseValue } });
     }
 
     if (!isIncrease && existBalance[service] > 0) {
-      return this.balanceRepository.update(existBalance.id, {}, { available: { decrement: BV.IncreaseValue }, spent: { increment: BV.IncreaseValue } });
+      return this.balanceRepository.update(existBalance.id, { updatedAt: new Date() }, { available: { decrement: BV.IncreaseValue }, spent: { increment: BV.IncreaseValue } });
     }
 
     return existBalance;

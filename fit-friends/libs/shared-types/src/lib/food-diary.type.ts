@@ -1,5 +1,9 @@
+import { MealTimeType } from "./meal-time.enum";
+
 export type FoodDiary = {
   id?: number;
+  userId: number;
   calories: number;
-  date: Date;
+  mealTime: MealTimeType;
+  date?: Date;
 }

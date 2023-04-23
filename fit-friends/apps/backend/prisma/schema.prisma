@@ -91,33 +91,35 @@ enum MealTime {
 }
 
 model User {
-  id               Int            @id @default(autoincrement())
-  email            String         @unique()
+  id               Int             @id @default(autoincrement())
+  email            String          @unique()
   name             String
   avatar           String
   password         String
   gender           UserGender
   dateBirth        DateTime
-  role             UserRole       @default(User)
+  role             UserRole        @default(User)
   location         Location
-  level            UserLevel      @default(Beginner)
-  trainingStyle    TrainingStyle  @default(Aerobics)
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @default(now())
+  level            UserLevel       @default(Beginner)
+  trainingStyle    TrainingStyle   @default(Aerobics)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @default(now())
   review           Review[]
   order            Order[]
-  requester        Request[]      @relation(name: "requester")
-  requested        Request[]      @relation(name: "requested")
-  notifying        Notification[] @relation(name: "notifying")
-  notified         Notification[] @relation(name: "notified")
+  requester        Request[]       @relation(name: "requester")
+  requested        Request[]       @relation(name: "requested")
+  notifying        Notification[]  @relation(name: "notifying")
+  notified         Notification[]  @relation(name: "notified")
   token            Token[]
   userFeatures     UserFeatures?
   coachFeatures    CoachFeatures?
   training         Training[]
-  friends          User[]         @relation(name: "friends") // A table for friends is created implicitly through many-to-many self-relation
-  symmetricFriends User[]         @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
+  friends          User[]          @relation(name: "friends") // A table for friends is created implicitly through many-to-many self-relation
+  symmetricFriends User[]          @relation(name: "friends") // This second "side" of the "friends" relation exists to satisfy prisma's requirements, not for direct access
   gyms             Gym[]
   userBalance      UserBalance[]
+  foodDiary        FoodDiary[]
+  trainingDiary    TrainingDiary[]
 
   @@map("users")
 }
@@ -259,19 +261,23 @@ model Token {
 }
 
 model FoodDiary {
-  id       Int      @id @default(autoincrement())
-  calories Int
-  date     DateTime
-  mealTime MealTime
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  calories  Int
+  mealTime  MealTime
+  createdAt DateTime @default(now())
 
   @@map("foodDiaries")
 }
 
 model TrainingDiary {
   id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
   training   Training @relation(fields: [trainingId], references: [id], onDelete: NoAction)
   trainingId Int
-  date       DateTime
+  date       DateTime @default(now())
 
   @@map("trainingDiaries")
 }

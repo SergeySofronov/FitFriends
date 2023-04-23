@@ -5,12 +5,12 @@ import { UserQuery as UQ, UserSort } from '../user.constant';
 
 export class UserQuery {
   @Transform(({ value }) => transformToMax(value, UQ.USER_QUERY_MIN, UQ.USER_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = UQ.USER_DEFAULT_PAGE;
 

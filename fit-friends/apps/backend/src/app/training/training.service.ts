@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { getRandomInteger, TrainingNotFoundIdException, TrainingNotOwnerIdException, TrainingsNotFoundException, UserNotFoundIdException } from '@fit-friends/core';
-import { Training } from '@fit-friends/shared-types';
+import { getRandomInteger, TrainingNotFoundIdException, TrainingNotOwnerIdException, TrainingsNotFoundException, UserBalanceZeroException, UserNotFoundIdException } from '@fit-friends/core';
+import { OrderCategory, Training } from '@fit-friends/shared-types';
 import { existsSync, readdirSync, unlinkSync } from 'fs';
 import { resolve } from 'path';
 import { CreateTrainingDto } from './dto/create-training.dto';
@@ -11,22 +11,26 @@ import { TrainingValidity } from './training.constant';
 import { TrainingEntity } from './training.entity';
 import { TrainingRepository } from './training.repository';
 import { UserService } from '../users/user.service';
+import { UserBalanceService } from '../user-balance/user-balance.service';
 
 @Injectable()
 export class TrainingService {
   constructor(
     private readonly userService: UserService,
+    private readonly balanceService: UserBalanceService,
     private readonly trainingRepository: TrainingRepository,
     private readonly configService: ConfigService,
     private readonly logger: Logger,
   ) { }
 
-  private async checkTrainingOwner(id: number, userId: number) {
-    const user = await this.userService.getUserById(userId);
+  private async checkTrainingOwner(id: number, coachId: number): Promise<Training> {
+    const user = await this.userService.getUserById(coachId);
     const training = await this.getTrainingById(id);
     if (user.id !== training.coachId) {
-      throw new TrainingNotOwnerIdException(this.logger, id, userId);
+      throw new TrainingNotOwnerIdException(this.logger, id, coachId);
     }
+
+    return training;
   }
 
   async getTrainingById(id: number): Promise<Training> {
@@ -69,8 +73,8 @@ export class TrainingService {
     return this.trainingRepository.update(id, dto);
   }
 
-  public async updateTrainingVideo(id: number, video: string): Promise<Training> {
-    const existTraining = await this.getTrainingById(id);
+  public async updateTrainingVideo(id: number, coachId: number, video: string): Promise<Training> {
+    const existTraining = await this.checkTrainingOwner(id, coachId);
 
     const currentVideo = existTraining?.video;
 
@@ -90,8 +94,12 @@ export class TrainingService {
   }
 
   public async getTrainingVideoPath(id: number, coachId: number): Promise<string> {
-    const existTraining = await this.getTrainingById(id);
+    const balance = await this.balanceService.getUserBalanceByService(OrderCategory.Training, id, coachId);
+    if (!balance.available) {
+      throw new UserBalanceZeroException(this.logger);
+    }
 
+    const existTraining = await this.getTrainingById(id);
     if (existTraining.coachId !== coachId) {
       throw new TrainingNotOwnerIdException(this.logger, id, coachId);
     }

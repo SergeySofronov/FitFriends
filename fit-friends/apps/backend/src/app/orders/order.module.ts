@@ -5,7 +5,7 @@ import { OrderService } from './order.service';
 import { UsersModule } from '../users/user.module';
 import { TrainingModule } from '../training/training.module';
 import { GymsModule } from '../gyms/gym.module';
-import { UserBalanceModule } from '../balance/balance.module';
+import { UserBalanceModule } from '../balance/user-balance.module';
 
 @Module({
   imports: [

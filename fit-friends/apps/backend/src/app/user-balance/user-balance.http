@@ -1,0 +1,37 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjFhNTQ4MmQxLTljYzQtNDhjYy1hYjQ4LWU4MTI4OTE5ZjE3NSIsImlhdCI6MTY4MTYzODcxMSwiZXhwIjoxNjgyMjQzNTExfQ.2VEO3FlmNKmN4lCO-iS04KBHjD-SrCJz5weptImJu-I
+###
+
+#======================= User-Balance ==================
+#  Получить баланс пользователя
+# ?limit=50&page=0&sortType=date&sortDirection=desc
+GET /fit-friends/user-balance?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
+###
+
+#  Изменить (только для уменьшения) баланс пользователя
+GET /fit-friends/gyms/user-balance HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+
+{
+  "category": "Training",
+  "serviceId": "1"
+}
+###

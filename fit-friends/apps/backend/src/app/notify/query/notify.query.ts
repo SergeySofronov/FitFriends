@@ -6,12 +6,12 @@ import { NotifyQuery as NQ, NotifySort } from '../notify.constant';
 
 export class NotifyQuery {
   @Transform(({ value }) => transformToMax(value, NQ.NOTIFY_QUERY_MIN, NQ.NOTIFY_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = NQ.NOTIFY_DEFAULT_PAGE;
 

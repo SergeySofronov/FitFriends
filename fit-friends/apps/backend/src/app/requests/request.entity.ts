@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Entity } from '@fit-friends/core';
-import { UserRequest, RequestStatus, RequestStatusType } from '@fit-friends/shared-types';
-import { RequestCategoryType } from 'libs/shared-types/src/lib/request-category.enum';
+import { UserRequest, RequestStatus, RequestStatusType, RequestCategoryType } from '@fit-friends/shared-types';
 
 @Injectable()
 export class RequestEntity implements Entity<RequestEntity, UserRequest>, UserRequest {

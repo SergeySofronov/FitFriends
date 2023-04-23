@@ -16,11 +16,11 @@ export class CreateOrderDto {
   public category: OrderCategoryType;
 
   @ApiProperty({
-    description: 'Order item unique',
+    description: 'Order item unique identifier',
     example: 1,
     required: true,
   })
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   public serviceId: number;
 
   @ApiProperty({

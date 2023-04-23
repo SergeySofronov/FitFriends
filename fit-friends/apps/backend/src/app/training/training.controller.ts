@@ -50,8 +50,8 @@ export class TrainingController {
   @ApiParam({ name: "id", required: true, description: 'Training unique identifier' })
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for uploading training video', type: TrainingRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Training not found' })
-  public async uploadVideo(@Param('id') id: number, @UploadedFile() file: Express.Multer.File) {
-    const updatedUser = this.trainingService.updateTrainingVideo(id, file.filename);
+  public async uploadVideo(@Param('id') id: number, @UploadedFile() file: Express.Multer.File, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const updatedUser = this.trainingService.updateTrainingVideo(id, user.sub, file.filename);
     return fillObject(TrainingRdo, updatedUser);
   }
 

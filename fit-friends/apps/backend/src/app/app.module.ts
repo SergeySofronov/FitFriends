@@ -7,6 +7,7 @@ import {
   fileUploadOptions,
   frontendUrlOptions,
   jwtOptions,
+  mailOptions,
 } from '@fit-friends/core';
 import { ENV_FILE_PATH } from './app.constant';
 import { envValidationSchema } from './env.validation.schema';
@@ -18,7 +19,9 @@ import { GymsModule } from './gyms/gym.module';
 import { OrderModule } from './orders/order.module';
 import { NotifyModule } from './notify/notify.module';
 import { RequestModule } from './requests/request.module';
-import { UserBalanceModule } from './balance/balance.module';
+import { UserDiaryModule } from './user-diaries/user-diary.module';
+import { UserBalanceModule } from './user-balance/user-balance.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -33,7 +36,7 @@ import { UserBalanceModule } from './balance/balance.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [jwtOptions, fileUploadOptions, frontendUrlOptions],
+      load: [jwtOptions, fileUploadOptions, frontendUrlOptions, mailOptions],
       validationSchema: envValidationSchema,
     }),
     PrismaModule,
@@ -46,6 +49,8 @@ import { UserBalanceModule } from './balance/balance.module';
     NotifyModule,
     RequestModule,
     UserBalanceModule,
+    UserDiaryModule,
+    MailModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

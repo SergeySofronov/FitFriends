@@ -7,12 +7,12 @@ import { GymQuery as GQ, GymSort, GymValidity as GV } from '../gym.constant';
 
 export class GymQuery {
   @Transform(({ value }) => transformToMax(value, GQ.GYM_QUERY_MIN, GQ.GYM_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = GQ.GYM_DEFAULT_PAGE;
 
@@ -24,12 +24,12 @@ export class GymQuery {
   @IsOptional()
   public sortDirection?: 'desc' | 'asc' = GQ.GYM_DEFAULT_SORT_DIRECTION;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMin(value, GV.PriceMinValue, GV.PriceMaxValue))
   @IsOptional()
   public priceMin?: number;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMax(value, GV.PriceMinValue, GV.PriceMaxValue))
   @IsOptional()
   public priceMax?: number;

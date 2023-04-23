@@ -1,8 +1,7 @@
 import { ApiQuery } from "@nestjs/swagger";
 import { applyDecorators } from '@nestjs/common';
 import { RequestSort } from "../request.constant";
-import { RequestStatus } from "@fit-friends/shared-types";
-import { RequestCategory } from "libs/shared-types/src/lib/request-category.enum";
+import { RequestCategory, RequestStatus } from "@fit-friends/shared-types";
 
 export function ApiIndexQuery() {
   return applyDecorators(

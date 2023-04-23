@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CRUDRepositoryInterface } from '@fit-friends/core';
-import { UserBalanceSort, UserBalanceQuery as BQ, UserBalanceSortField } from './balance.constant';
-import { UserBalanceEntity } from './balance.entity';
+import { UserBalanceSort, UserBalanceQuery as BQ, UserBalanceSortField } from './user-balance.constant';
+import { UserBalanceEntity } from './user-balance.entity';
 import { UserBalance } from '@fit-friends/shared-types';
-import { UserBalanceQuery } from './query/balance.query';
+import { UserBalanceQuery } from './query/user-balance.query';
 
 @Injectable()
 export class UserBalanceRepository implements CRUDRepositoryInterface<UserBalanceEntity, number, UserBalance> {
@@ -25,9 +25,9 @@ export class UserBalanceRepository implements CRUDRepositoryInterface<UserBalanc
     });
   }
 
-  public async findByServiceId(serviceId: Record<string, unknown>): Promise<UserBalance> {
+  public async findByServiceId(userId: number, serviceId: Record<string, unknown>): Promise<UserBalance> {
     return await this.prisma.userBalance.findFirst({
-      where: { ...serviceId || {} },
+      where: { ...serviceId || {}, userId },
     });
   }
 

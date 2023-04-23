@@ -35,6 +35,14 @@ services:
     networks:
       - postgres_network
 
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server
+    container_name: fit-friends-fakesmtp
+    hostname: fakesmtp
+    ports:
+      - "5025:5025"
+      - "8083:5080"
+
 networks:
   postgres_network:
     driver: bridge

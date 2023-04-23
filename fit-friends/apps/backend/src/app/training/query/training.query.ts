@@ -8,12 +8,12 @@ import { TrainingQuery as TQ, TrainingSort, TrainingValidity as TV } from '../tr
 
 export class TrainingQuery {
   @Transform(({ value }) => transformToMax(value, TQ.TRAINING_QUERY_MIN, TQ.TRAINING_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = TQ.TRAINING_DEFAULT_PAGE;
 
@@ -25,22 +25,22 @@ export class TrainingQuery {
   @IsOptional()
   public sortDirection?: 'desc' | 'asc' = TQ.TRAINING_DEFAULT_SORT_DIRECTION;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMin(value, TV.PriceMinValue, TV.PriceMaxValue))
   @IsOptional()
   public priceMin?: number;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMax(value, TV.PriceMinValue, TV.PriceMaxValue))
   @IsOptional()
   public priceMax?: number;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMin(value, TV.RatingMinValue, TV.RatingMaxValue))
   @IsOptional()
   public ratingMin?: number;
 
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @Transform(({ value }) => transformToMax(value, TV.RatingMinValue, TV.RatingMaxValue))
   @IsOptional()
   public ratingMax?: number;

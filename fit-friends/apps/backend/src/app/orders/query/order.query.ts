@@ -7,12 +7,12 @@ import { OrderQuery as OQ, OrderSort } from '../order.constant';
 
 export class OrderQuery {
   @Transform(({ value }) => transformToMax(value, OQ.ORDER_QUERY_MIN, OQ.ORDER_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = OQ.ORDER_DEFAULT_PAGE;
 

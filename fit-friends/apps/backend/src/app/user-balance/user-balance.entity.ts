@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Entity } from '@fit-friends/core';
 import { OrderCategoryType, UserBalance } from '@fit-friends/shared-types';
-import { UserBalanceValidity as BV } from './balance.constant';
+import { UserBalanceValidity as BV } from './user-balance.constant';
 
 @Injectable()
 export class UserBalanceEntity implements Entity<UserBalanceEntity, UserBalance>, UserBalance {

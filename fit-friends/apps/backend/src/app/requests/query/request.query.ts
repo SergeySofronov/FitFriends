@@ -2,18 +2,17 @@ import { Transform } from 'class-transformer';
 import { IsEnum, IsIn, IsNumber, IsOptional } from 'class-validator';
 import { transformToMax, ValidityMessage as VM } from '@fit-friends/core';
 import { RequestQuery as RQ, RequestSort } from '../request.constant';
-import { RequestCategory, RequestCategoryType } from 'libs/shared-types/src/lib/request-category.enum';
-import { RequestStatus, RequestStatusType } from '@fit-friends/shared-types';
+import { RequestCategory, RequestCategoryType, RequestStatus, RequestStatusType } from '@fit-friends/shared-types';
 
 
 export class RequestQuery {
   @Transform(({ value }) => transformToMax(value, RQ.REQUEST_QUERY_MIN, RQ.REQUEST_QUERY_MAX))
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public limit?: number;
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   public page?: number = RQ.REQUEST_DEFAULT_PAGE;
 
@@ -36,7 +35,7 @@ export class RequestQuery {
   public status?: RequestStatusType
 
   @Transform(({ value }) => +value)
-  @IsNumber()
+  @IsNumber({ allowInfinity: false, allowNaN: false })
   @IsOptional()
   requesterId?: number;
 }
