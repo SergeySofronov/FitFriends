@@ -55,10 +55,11 @@ export class OrderService {
     } else {
       gymId = dto.serviceId;
     }
-    delete dto.serviceId;
 
-    const newOrder = new OrderEntity({ ...dto, trainingId, gymId, price, total, userId });
     await this.balanceService.updateUserBalance(dto.category, dto.serviceId, userId, true);
+
+    delete dto.serviceId;
+    const newOrder = new OrderEntity({ ...dto, trainingId, gymId, price, total, userId });
 
     return this.orderRepository.create(newOrder);
   }

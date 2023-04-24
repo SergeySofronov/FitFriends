@@ -9,6 +9,7 @@ export enum TrainingValidity {
   DescriptionMaxLength = 140,
   RatingMinValue = 1,
   RatingMaxValue = 5,
+  ReviewsMinQuantity = 0,
 }
 
 export const TrainingQuery = {

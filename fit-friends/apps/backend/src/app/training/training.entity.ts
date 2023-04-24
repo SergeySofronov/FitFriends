@@ -1,7 +1,7 @@
 import { Entity } from '@fit-friends/core';
 import { Training, TrainingStyle, TrainingStyleType, TrainingTime, TrainingTimeType, UserGender, UserGenderType, UserLevel, UserLevelType } from '@fit-friends/shared-types';
 import { Injectable } from '@nestjs/common'
-import { TrainingValidity } from './training.constant';
+import { TrainingValidity as TV } from './training.constant';
 
 @Injectable()
 export class TrainingEntity implements Entity<TrainingEntity, Training>, Training {
@@ -19,6 +19,7 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
   public rating: number;
   public coachId: number;
   public isSpecial: boolean;
+  public reviewsCount: number;
   public createdAt: Date;
   public updatedAt: Date;
 
@@ -37,13 +38,14 @@ export class TrainingEntity implements Entity<TrainingEntity, Training>, Trainin
     this.level = training.level || UserLevel.Beginner;
     this.trainingStyle = training.trainingStyle || TrainingStyle.Aerobics;
     this.trainingTime = training.trainingTime || TrainingTime.Max30;
-    this.price = training.price || TrainingValidity.PriceMinValue;
-    this.caloriesLoss = training.caloriesLoss || TrainingValidity.CaloriesLossMinValue;
+    this.price = training.price || TV.PriceMinValue;
+    this.caloriesLoss = training.caloriesLoss || TV.CaloriesLossMinValue;
     this.description = training.description;
     this.gender = training.gender || UserGender.Indifferent;
     this.video = training.video;
-    this.rating = training.rating || TrainingValidity.RatingMinValue;
+    this.rating = training.rating || TV.RatingMinValue;
     this.coachId = training.coachId;
+    this.reviewsCount = TV.ReviewsMinQuantity;
     this.isSpecial = training.isSpecial;
     this.createdAt = training.createdAt || new Date();
     this.updatedAt = training.updatedAt || new Date();

@@ -1,0 +1,37 @@
+#======================= Authorization ==================
+# Авторизоваться (user)
+POST /fit-friends/users/login HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+
+{
+  "email": "user@user.ru",
+  "password": "123456"
+}
+###
+
+# Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
+POST /fit-friends/users/refresh HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjYzODZlZGJjLTEwYzMtNDkyMi1iODA5LTQ1N2YzZjQ5NjI0NiIsImlhdCI6MTY4MjM1NDU1NywiZXhwIjoxNjgyOTU5MzU3fQ.ROdkOI7S944Co1mHpdeSGw99rpkXvZ5PaBmLHBJiNM4
+###
+
+#======================= Review ==================
+#  Создать отзыв к тренировке
+POST /fit-friends/reviews/1 HTTP/1.1
+Host: localhost:3333
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTM2MzgsImV4cCI6MTY4MjM1NDUzOH0.UxNs_RiM5_JF8czAKcsXu9bZpIzTPmMtAo2uDCO7xcQ
+
+{
+  "rating": 1,
+  "content": "This is a review content"
+}
+###
+
+#  Получить отзывы о тренировке
+# ?limit=50&page=0&sortType=rating&sortDirection=desc
+GET /fit-friends/reviews/1?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTM2MzgsImV4cCI6MTY4MjM1NDUzOH0.UxNs_RiM5_JF8czAKcsXu9bZpIzTPmMtAo2uDCO7xcQ
+###

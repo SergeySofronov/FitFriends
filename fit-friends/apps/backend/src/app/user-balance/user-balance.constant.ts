@@ -17,7 +17,7 @@ export enum UserBalanceSort {
 }
 
 export const UserBalanceSortField = {
-  [UserBalanceSort.Date]: 'date',
+  [UserBalanceSort.Date]: 'updatedAt',
   [UserBalanceSort.Price]: 'price',
   [UserBalanceSort.Id]: 'id',
 };

@@ -32,7 +32,7 @@ export class UserBalanceController {
   @Patch('/')
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
-  @Roles(`${UserRole.Coach}`)
+  @Roles(`${UserRole.User}`)
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for decreasing user balance', type: UserBalanceRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'Balance not found' })
   public async decrease(@Req() { user }: RequestWithTokenPayload<TokenPayload>, @Body() dto: UpdateUserBalanceDto) {

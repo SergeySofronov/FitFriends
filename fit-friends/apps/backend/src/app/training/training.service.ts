@@ -56,7 +56,7 @@ export class TrainingService {
 
     try {
       const files = readdirSync(imagePath, { withFileTypes: true });
-      const random = getRandomInteger(0, files.length);
+      const random = getRandomInteger(0, files.length - 1);
       backgroundImage = files[random].name;
     }
     catch (error) {

@@ -58,7 +58,7 @@ export class UserBalanceService {
       return this.balanceRepository.update(existBalance.id, { updatedAt: new Date() }, { available: { increment: BV.IncreaseValue } });
     }
 
-    if (!isIncrease && existBalance[service] > 0) {
+    if (!isIncrease && existBalance.available > 0) {
       return this.balanceRepository.update(existBalance.id, { updatedAt: new Date() }, { available: { decrement: BV.IncreaseValue }, spent: { increment: BV.IncreaseValue } });
     }
 

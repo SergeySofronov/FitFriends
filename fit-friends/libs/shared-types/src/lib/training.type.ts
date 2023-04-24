@@ -18,6 +18,7 @@ export type Training = {
   rating: number;
   coachId: number;
   isSpecial: boolean;
+  reviewsCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

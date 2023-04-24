@@ -27,7 +27,7 @@ export function getMailConfig(): MailerAsyncOptions {
         from: configService.get<string>('mail.from'),
       },
       template: {
-        dir: path.resolve(__dirname, 'app/mail/templates'),
+        dir: path.resolve(__dirname, 'assets/templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true

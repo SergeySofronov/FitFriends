@@ -13,7 +13,7 @@ Content-Type: application/json
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiOTNkNDQ3MjMtMTg2Ni00MmQ2LTg1NjItZGY5N2Y1ZDA3MjVkIiwiaWF0IjoxNjgwMDI2ODA5LCJleHAiOjE2ODA2MzE2MDl9.mRNm3-Hr8PCMZBpeoeRS_m7PJXNGLPCWb3TQzQi1Ugc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiN2FhZmIyY2QtM2Y2YS00YzNlLWIxYjUtNWE0NjE1NDRlNTk2IiwiaWF0IjoxNjgyMzU1NDQ2LCJleHAiOjE2ODI5NjAyNDZ9.q7_oENwHAU9WTAAQTYOirWcao0HrgDi1WEClc2wF9-g
 ###
 
 #======================= Training ==================
@@ -21,7 +21,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 # Создать тренировку
 POST /fit-friends/training/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDAyNjgwOSwiZXhwIjoxNjgwMDI3NzA5fQ.0_GfhI6FQ2zB4KK6dRU4BTqZeWyaUqxKIc6KLiTy4mg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MjM1NTQ0NiwiZXhwIjoxNjgyMzU2MzQ2fQ.t9yZKb2qDfguQirZ10anSrn4bbYZc5TUrewwxaBLZDs
 Content-Type: application/json
 
 {
@@ -86,18 +86,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsI
 # ?limit=50&page=0&sortType=date&sortDirection=desc&trainingTime=Max30&trainingStyle=Yoga
 GET /fit-friends/training?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=0&ratingMax=5&trainingTime=Max30&trainingStyle=Yoga HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MjM1MzgyNiwiZXhwIjoxNjgyMzU0NzI2fQ.y8u3xuqLWDlcQQKYcXaOvoz1ruVE-tARrR802OKZgB4
 ###
 
 #  Получить каталог тренировок (users)
 # ?limit=50&page=0&sortType=date&sortDirection=desc&trainingTime=Max30&trainingStyle=Yoga
 GET /fit-friends/training/catalog?limit=50&page=0&sortType=date&sortDirection=desc&priceMin=1000&priceMax=5000&ratingMin=0&ratingMax=5&trainingTime=Max30&trainingStyle=Yoga HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTkzNDM4NSwiZXhwIjoxNjc5OTM1Mjg1fQ.s1Qu3mhfb0wBjWeuVzIIEgphhWUJl77_1oqxJeVg4CE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTM2MzgsImV4cCI6MTY4MjM1NDUzOH0.UxNs_RiM5_JF8czAKcsXu9bZpIzTPmMtAo2uDCO7xcQ
 ###
 
 #  Получить информацию о тренировке
 GET /fit-friends/training/1 HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY3OTg1NDA0OSwiZXhwIjoxNjc5ODU0OTQ5fQ.uZAmokUCWsfphof9m_yuy4jWn_u6dDXyIz3NBJ8frsc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTM2MzgsImV4cCI6MTY4MjM1NDUzOH0.UxNs_RiM5_JF8czAKcsXu9bZpIzTPmMtAo2uDCO7xcQ
 ###

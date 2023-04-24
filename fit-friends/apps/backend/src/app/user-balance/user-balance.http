@@ -21,17 +21,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # ?limit=50&page=0&sortType=date&sortDirection=desc
 GET /fit-friends/user-balance?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTQ1NTcsImV4cCI6MTY4MjM1NTQ1N30.1z1_tsXrADQO9byXLm7cDhIlrZUqsDq_8t1pVeQWaag
 ###
 
-#  Изменить (только для уменьшения) баланс пользователя
-GET /fit-friends/gyms/user-balance HTTP/1.1
+#  Обновить (только для уменьшения) баланс пользователя
+PATCH  /fit-friends/user-balance HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODIzNTQ1NTcsImV4cCI6MTY4MjM1NTQ1N30.1z1_tsXrADQO9byXLm7cDhIlrZUqsDq_8t1pVeQWaag
 
 {
   "category": "Training",
-  "serviceId": "1"
+  "serviceId": 3
 }
 ###

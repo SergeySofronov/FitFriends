@@ -15,3 +15,4 @@ export * from './lib/request-exceptions';
 export * from './lib/notify-exceptions';
 export * from './lib/user-balance-exceptions';
 export * from './lib/diary-exception';
+export * from './lib/reviews-exception';

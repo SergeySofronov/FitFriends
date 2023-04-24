@@ -159,7 +159,7 @@ model Training {
   description     String
   gender          UserGender
   video           String
-  rating          Int             @default(0)
+  rating          Float           @default(0)
   reviewsCount    Int             @default(0)
   coach           User            @relation(fields: [coachId], references: [id])
   coachId         Int

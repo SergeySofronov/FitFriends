@@ -86,8 +86,8 @@ export class TrainingRdo {
     example: TV.RatingMinValue,
   })
   @Expose()
+  @Transform(({ value }) => Math.round(value))
   public rating: number;
-
 
   @ApiProperty({
     description: 'Coach unique identifier',
