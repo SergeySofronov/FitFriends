@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, Matches, Max, MaxLength, Min, MinLength } from "class-validator";
+import { IsEnum, Max, MaxLength, Min, MinLength } from "class-validator";
 import { TrainingTime, TrainingTimeType } from "@fit-friends/shared-types";
 import { IsBooleanProp, ValidityMessage as VM } from '@fit-friends/core';
 import { UserValidity as UV } from '../user.constant';
@@ -49,18 +49,6 @@ export class UserFeaturesDto extends FeaturesDto {
 }
 
 export class CoachFeaturesDto extends FeaturesDto {
-  @ApiProperty({
-    description: "Trainer's certificate,  <name>.pdf file",
-    example: 'certificate.pdf',
-    minLength: UV.CertificateTitleMinLength,
-    maxLength: UV.CertificateTitleMaxLength,
-    required: true,
-  })
-  @Matches('.(pdf)$')
-  @MinLength(UV.CertificateTitleMinLength, { message: VM.MinValueMessage })
-  @MaxLength(UV.CertificateTitleMaxLength, { message: VM.MaxValueMessage })
-  certificate: string;
-
   @ApiProperty({
     description: 'Text describing the merits of the coach',
     example: 'Master of sports in boxing',

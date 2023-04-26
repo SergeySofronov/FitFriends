@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UserRoleException, UsersNotFoundException, getNotificationTextOnFriendRemove } from '@fit-friends/core';
-import { RefreshTokenPayload, Training, User, UserRole } from '@fit-friends/shared-types';
+import { CoachFeatures, RefreshTokenPayload, Training, User, UserRole } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserEntity } from './user.entity';
@@ -108,15 +108,13 @@ export class UserService {
 
   public async updateUserAvatar(id: number, avatar: string): Promise<User> {
     const existUser = await this.getUserById(id);
-
     const userAvatar = existUser?.avatar;
-
-    console.log(userAvatar)
 
     if (userAvatar && avatar) {
       const avatarPath = resolve(
         __dirname,
         this.configService.get<string>('file.dest'),
+        this.configService.get<string>('file.avatarUploadFolder'),
         existUser.id.toString(),
         userAvatar
       );
@@ -131,18 +129,64 @@ export class UserService {
     return this.userRepository.update(id, { ...existUser, avatar, updatedAt: new Date() });
   }
 
+  public async updateCoachCertificate(id: number, certificate: string): Promise<User> {
+    const existUser = await this.getUserById(id);
+    const coachFeature = existUser?.features as CoachFeatures;
+
+    if (coachFeature.certificate && certificate) {
+      const certificatePath = resolve(
+        __dirname,
+        this.configService.get<string>('file.dest'),
+        this.configService.get<string>('file.certificateUploadFolder'),
+        existUser.id.toString(),
+        coachFeature.certificate
+      );
+      if (existsSync(certificatePath)) {
+        unlinkSync(certificatePath);
+      }
+    }
+
+    (existUser.features as CoachFeatures).certificate = certificate;
+
+    delete existUser["coachFeatures"];
+    delete existUser["userFeatures"];
+
+    return this.userRepository.update(id, { ...existUser, updatedAt: new Date() });
+  }
+
   public async getUserAvatarPath(id: number): Promise<string> {
     const existUser = await this.getUserById(id);
     const defaultAvatar = this.configService.get<string>('file.defaultAvatar');
 
-    console.log(defaultAvatar)
-    console.log(existUser.avatar)
-
     if (existUser.avatar === defaultAvatar) {
-      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), this.configService.get<string>('file.defaultAvatarFolder'), existUser.avatar);
+      return resolve(
+        __dirname,
+        this.configService.get<string>('file.defaultResourceFolder'),
+        this.configService.get<string>('file.defaultAvatarFolder'),
+        existUser.avatar
+      );
     }
 
-    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existUser.id.toString()}/${existUser.avatar}`);
+    return resolve(
+      __dirname,
+      this.configService.get<string>('file.dest'),
+      this.configService.get<string>('file.avatarUploadFolder'),
+      existUser.id.toString(),
+      existUser.avatar
+    );
+  }
+
+  public async getCoachCertificatePath(id: number): Promise<string> {
+    const existUser = await this.getUserById(id);
+    const coachFeature = existUser?.features as CoachFeatures;
+
+    return resolve(
+      __dirname,
+      this.configService.get<string>('file.dest'),
+      this.configService.get<string>('file.avatarUploadFolder'),
+      existUser.id.toString(),
+      coachFeature.certificate
+    );
   }
 
   async getUsers(query: UserQuery): Promise<User[]> {
@@ -198,7 +242,7 @@ export class UserService {
 
   public async sendEmailToSubscribedUsers(coachId: number, training: Training) {
     const users = await this.userRepository.findSubscribed(coachId);
-    for(const user of users){
+    for (const user of users) {
       this.mail.sendMailNewTraining(user, training);
     }
   }

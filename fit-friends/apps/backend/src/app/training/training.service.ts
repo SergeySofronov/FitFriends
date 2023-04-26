@@ -84,6 +84,7 @@ export class TrainingService {
       const videoPath = resolve(
         __dirname,
         this.configService.get<string>('file.dest'),
+        this.configService.get<string>('file.trainingVideoUploadFolder'),
         existTraining.id.toString(),
         currentVideo
       );
@@ -108,10 +109,21 @@ export class TrainingService {
 
     const defaultVideo = `${this.configService.get<string>('file.defaultTrainingVideoFolder')}/${this.configService.get<string>('file.defaultTrainingVideo')}`;
     if (existTraining.backgroundImage === defaultVideo) {
-      return resolve(__dirname, this.configService.get<string>('file.defaultResourceFolder'), defaultVideo, existTraining.video);
+      return resolve(
+        __dirname,
+        this.configService.get<string>('file.defaultResourceFolder'),
+        defaultVideo,
+        existTraining.video
+      );
     }
 
-    return resolve(__dirname, `${this.configService.get<string>('file.dest')}/${existTraining.id.toString()}/${existTraining.video}`);
+    return resolve(
+      __dirname,
+      this.configService.get<string>('file.dest'),
+      this.configService.get<string>('file.trainingVideoUploadFolder'),
+      existTraining.id.toString(),
+      existTraining.video
+    );
   }
 
   async getCoachTrainings(query: TrainingQuery, coachId: number): Promise<Training[]> {

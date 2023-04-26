@@ -38,7 +38,6 @@ Content-Type: application/json
   "level" : "Beginner",
   "trainingStyle" : "Yoga",
   "features" : {
-    "certificate" : "certificate.pdf",
     "merits" : "Master of sports",
     "isPersonalCoach" : true
   }
@@ -60,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6ImVhMWI0NWZiLTQ4MzQtNGQxMC04OTBjLTBkZmY5NDY2ZThkOSIsImlhdCI6MTY4MjM1NTEzOSwiZXhwIjoxNjgyOTU5OTM5fQ.N1G6b8iC5is_R3CBEcOMH8RB9APBb3UaKrDuvITXFOY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiYWU2NDcxNDktYjQ2My00N2E2LWFkMDEtMmNjN2U4MWJlZmYzIiwiaWF0IjoxNjgyNTM3MzgyLCJleHAiOjE2ODMxNDIxODJ9.oNH1zDn4yOjuB0X9dLHBU-Vah1nXGwTK9QOhzrsVmCs
 ###
 
 # Выход из аккаунта
@@ -122,6 +121,26 @@ Content-Type: image/jpeg
 
 #  Получить аватарку пользователя
 GET /fit-friends/users/avatar/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNDAxNywiZXhwIjoxNjgwMTE0OTE3fQ.bEW2fqTIZIFy7q_Pf0geXBoceDwO5kuRbkMH1k203Ag
+###
+
+#  Загрузка сертификата тренера
+POST /fit-friends/users/certificate/ HTTP/1.1
+Host: localhost:3333
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MjUzNzM4MiwiZXhwIjoxNjgyNTM4MjgyfQ.DXersHA3WUfVgT5sjEvEjcK49HzmOK6A89pSHB6axB0
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="certificate"; filename="123.pdf"
+Content-Type: application/pdf
+
+< D:/загрузки/123.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+###
+
+#  Получить сертификат тренера
+GET /fit-friends/users/certificate/ HTTP/1.1
 Host: localhost:3333
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MDExNDAxNywiZXhwIjoxNjgwMTE0OTE3fQ.bEW2fqTIZIFy7q_Pf0geXBoceDwO5kuRbkMH1k203Ag
 ###

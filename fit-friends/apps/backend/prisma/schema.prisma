@@ -271,7 +271,7 @@ model FoodDiary {
   mealTime  MealTime
   createdAt DateTime @default(now())
 
-  @@map("foodDiaries")
+  @@map("food-diaries")
 }
 
 model TrainingDiary {
@@ -282,7 +282,7 @@ model TrainingDiary {
   trainingId Int
   date       DateTime @default(now())
 
-  @@map("trainingDiaries")
+  @@map("training-diaries")
 }
 
 model UserBalance {
@@ -298,5 +298,5 @@ model UserBalance {
   spent      Int           @default(0)
   updatedAt  DateTime      @default(now())
 
-  @@map("userBalances")
+  @@map("user-balances")
 }
