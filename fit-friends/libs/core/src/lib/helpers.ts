@@ -1,5 +1,8 @@
 import { plainToInstance, ClassConstructor, ClassTransformOptions } from 'class-transformer';
 import { RequestCategory, RequestCategoryType, RequestStatusType } from '@fit-friends/shared-types'
+import { extname } from 'path';
+import { existsSync, mkdirSync } from 'fs';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export function getRandomInteger(a = 0, b = 1) {
   const lower = Math.ceil(Math.min(a, b));
@@ -81,4 +84,19 @@ export function getNotificationTextOnFriendRemove(userName: string) {
   return `The user ${userName} has removed you from the friends list`;
 }
 
+export function getFileName(file: Express.Multer.File) {
+  const name = file.originalname.split('.')[0];
+  const fileExtName = extname(file.originalname);
+  const randomName = Array(4)
+    .fill(null)
+    .map(() => Math.round(Math.random() * 10).toString(10))
+    .join('');
+  return `${name}${randomName}${fileExtName}`;
+}
 
+export function isFolderExistsOrCreate(path: string) {
+  const isFolderExists = existsSync(path) || mkdirSync(path, { recursive: true });
+  if (!isFolderExists) {
+    new HttpException('Error while attempt to create file', HttpStatus.BAD_REQUEST);
+  }
+}

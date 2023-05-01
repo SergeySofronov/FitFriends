@@ -10,5 +10,5 @@
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+, "src/app/users/__mocks__/user.service.ts"  ]
 }

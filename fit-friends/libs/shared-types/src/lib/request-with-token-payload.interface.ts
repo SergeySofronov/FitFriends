@@ -1,3 +1,3 @@
-export interface RequestWithTokenPayload<T> extends Request {
+export interface RequestWithTokenPayload<T> extends Partial<Request> {
   user: T
 }

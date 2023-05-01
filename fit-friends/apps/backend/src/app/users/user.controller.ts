@@ -1,11 +1,11 @@
 import {
   Body, Controller, HttpCode, HttpStatus, Patch, Param, Query,
-  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors, Delete, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator,
+  Post, Get, Res, Req, UploadedFile, UseGuards, UseInterceptors, Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { fillObject, Roles, RolesGuard, BooleanParamDecorator, getAvatarUploadConfig, getCertificateUploadConfig } from '@fit-friends/core';
+import { fillObject, Roles, RolesGuard, BooleanParamDecorator } from '@fit-friends/core';
 import { RefreshTokenPayload, RequestWithTokenPayload, RequestWithUser, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { UserService } from './user.service';
 import { UserMessages } from './user.constant';
@@ -17,9 +17,8 @@ import { UserQuery } from './query/user.query';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { ConfigService } from '@nestjs/config';
 import { CertificateValidationPipe } from './pipes/certificate-upload-verify.pipe';
-import { resolve } from 'path';
+import { AvatarValidationPipe } from './pipes/avatar-upload-verify.pipe';
 
 @ApiTags('users')
 @Controller('users')
@@ -85,8 +84,8 @@ export class UserController {
   @UseInterceptors(FileInterceptor('avatar'))
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for setting user avatar', type: UserRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
-  public async uploadAvatar(@UploadedFile() file: Express.Multer.File, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
-    const updatedUser = this.userService.updateUserAvatar(user.sub, file.filename);
+  public async uploadAvatar(@UploadedFile(AvatarValidationPipe) file: Express.Multer.File, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
+    const updatedUser = this.userService.updateUserAvatar(user.sub, file);
     return fillObject(UserRdo, updatedUser);
   }
 
@@ -103,13 +102,12 @@ export class UserController {
   @UseGuards(RolesGuard)
   @UseGuards(JwtAuthGuard)
   @Roles(`${UserRole.Coach}`)
-  @UseInterceptors(FileInterceptor('certificate', {dest:resolve()}))
+  @UseInterceptors(FileInterceptor('certificate'))
   @ApiResponse({ status: HttpStatus.OK, description: 'Resource for setting user certificate', type: UserRdo })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: UserMessages.USER_NOT_FOUND })
   public async uploadCertificate(@UploadedFile(CertificateValidationPipe) file: Express.Multer.File, @Req() { user }: RequestWithTokenPayload<TokenPayload>) {
-    // const updatedCoach = this.userService.updateCoachCertificate(user.sub, file.filename);
-    // return fillObject(UserRdo, updatedCoach);
-    return 'uploadCertificate';
+    const updatedCoach = this.userService.updateCoachCertificate(user.sub, file);
+    return fillObject(UserRdo, updatedCoach);
   }
 
   @Get('/certificate')

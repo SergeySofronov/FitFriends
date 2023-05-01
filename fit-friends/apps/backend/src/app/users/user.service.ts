@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UserRoleException, UsersNotFoundException, getNotificationTextOnFriendRemove } from '@fit-friends/core';
-import { CoachFeatures, RefreshTokenPayload, Training, User, UserRole } from '@fit-friends/shared-types';
+import { UserExistsException, UserFriendIdException, UserNotFoundEmailException, UserNotFoundIdException, UserPasswordWrongException, UserRoleChangeException, UserRoleException, UsersNotFoundException, getFileName, getNotificationTextOnFriendRemove, isFolderExistsOrCreate } from '@fit-friends/core';
+import { RefreshTokenPayload, Training, User, UserRole } from '@fit-friends/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserEntity } from './user.entity';
@@ -11,7 +11,7 @@ import { RefreshTokenService } from '../refresh-token/refresh-token.service';
 import { randomUUID } from 'crypto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { resolve } from 'path'
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, unlinkSync, writeFileSync } from 'fs';
 import { UserQuery } from './query/user.query';
 import { NotifyService } from '../notify/notify.service';
 import { MailService } from '../mail/mail.service';
@@ -28,7 +28,7 @@ export class UserService {
     private readonly logger: Logger,
   ) { }
 
-  private async checkUserIdMatch(userFirstId: number, userSecondId: number) {
+  private async checkUserIdMatch(userFirstId: number, userSecondId: number): Promise<User[]> {
     const first = await this.getUserById(userFirstId);
     const second = await this.getUserById(userSecondId);
     if (first.id === second.id) {
@@ -38,7 +38,7 @@ export class UserService {
     return [first, second];
   }
 
-  public async getUserById(id: number) {
+  public async getUserById(id: number): Promise<User> {
     const existUser = await this.userRepository.findById(id);
     if (!existUser) {
       throw new UserNotFoundIdException(this.logger, id);
@@ -47,7 +47,7 @@ export class UserService {
     return existUser;
   }
 
-  public async register(dto: CreateUserDto) {
+  public async register(dto: CreateUserDto): Promise<User> {
     const { email, password } = dto;
     const existUser = await this.userRepository.findByEmail(email);
     if (existUser) {
@@ -58,7 +58,7 @@ export class UserService {
     return this.userRepository.create(userEntity);
   }
 
-  public async verifyUser(dto: LoginUserDto) {
+  public async verifyUser(dto: LoginUserDto): Promise<User> {
     const { email, password } = dto;
     const existUser = await this.userRepository.findByEmail(email);
     if (!existUser) {
@@ -106,52 +106,59 @@ export class UserService {
     return this.userRepository.update(id, { ...dto, updatedAt: new Date() });
   }
 
-  public async updateUserAvatar(id: number, avatar: string): Promise<User> {
+  public async updateUserAvatar(id: number, file: Express.Multer.File): Promise<User> {
     const existUser = await this.getUserById(id);
     const userAvatar = existUser?.avatar;
+    const avatarName = getFileName(file);
+    const avatarPath = resolve(
+      __dirname,
+      this.configService.get<string>('file.dest'),
+      this.configService.get<string>('file.avatarUploadFolder'),
+      existUser.id.toString(),
+    );
 
-    if (userAvatar && avatar) {
-      const avatarPath = resolve(
-        __dirname,
-        this.configService.get<string>('file.dest'),
-        this.configService.get<string>('file.avatarUploadFolder'),
-        existUser.id.toString(),
-        userAvatar
-      );
-      if (existsSync(avatarPath)) {
-        unlinkSync(avatarPath);
+    isFolderExistsOrCreate(avatarPath);
+    writeFileSync(resolve(avatarPath, avatarName), file.buffer);
+
+    if (userAvatar && avatarName) {
+      const oldAvatar = resolve(avatarPath, userAvatar);
+      if (existsSync(oldAvatar)) {
+        unlinkSync(oldAvatar);
       }
     }
 
     delete existUser["coachFeatures"];
     delete existUser["userFeatures"];
 
-    return this.userRepository.update(id, { ...existUser, avatar, updatedAt: new Date() });
+    return this.userRepository.update(id, { ...existUser, avatar: avatarName, updatedAt: new Date() });
   }
 
-  public async updateCoachCertificate(id: number, certificate: string): Promise<User> {
+  public async updateCoachCertificate(id: number, file: Express.Multer.File): Promise<User> {
     const existUser = await this.getUserById(id);
-    const coachFeature = existUser?.features as CoachFeatures;
+    const coachFeature = existUser['coachFeatures'];
+    const certificateName = getFileName(file);
+    const certificatePath = resolve(
+      __dirname,
+      this.configService.get<string>('file.dest'),
+      this.configService.get<string>('file.certificateUploadFolder'),
+      existUser.id.toString(),
+    );
 
-    if (coachFeature.certificate && certificate) {
-      const certificatePath = resolve(
-        __dirname,
-        this.configService.get<string>('file.dest'),
-        this.configService.get<string>('file.certificateUploadFolder'),
-        existUser.id.toString(),
-        coachFeature.certificate
-      );
-      if (existsSync(certificatePath)) {
-        unlinkSync(certificatePath);
+    isFolderExistsOrCreate(certificatePath);
+    writeFileSync(resolve(certificatePath, certificateName), file.buffer);
+
+    if (coachFeature.certificate && certificateName) {
+      const oldCertificate = resolve(certificatePath, coachFeature.certificate);
+      if (existsSync(oldCertificate)) {
+        unlinkSync(oldCertificate);
       }
     }
 
-    (existUser.features as CoachFeatures).certificate = certificate;
+    delete coachFeature.id;
+    coachFeature.certificate = certificateName;
 
-    delete existUser["coachFeatures"];
-    delete existUser["userFeatures"];
 
-    return this.userRepository.update(id, { ...existUser, updatedAt: new Date() });
+    return this.userRepository.update(id, { features: coachFeature, updatedAt: new Date() });
   }
 
   public async getUserAvatarPath(id: number): Promise<string> {
@@ -178,12 +185,12 @@ export class UserService {
 
   public async getCoachCertificatePath(id: number): Promise<string> {
     const existUser = await this.getUserById(id);
-    const coachFeature = existUser?.features as CoachFeatures;
+    const coachFeature = existUser['coachFeatures'];
 
     return resolve(
       __dirname,
       this.configService.get<string>('file.dest'),
-      this.configService.get<string>('file.avatarUploadFolder'),
+      this.configService.get<string>('file.certificateUploadFolder'),
       existUser.id.toString(),
       coachFeature.certificate
     );
@@ -227,11 +234,11 @@ export class UserService {
     return friends;
   }
 
-  public async deleteUser(userId: number) {
+  public async deleteUser(userId: number): Promise<void> {
     return this.userRepository.destroy(userId);
   }
 
-  public async updateSubscription(userId: number, coachId: number, isFollow: boolean) {
+  public async updateSubscription(userId: number, coachId: number, isFollow: boolean): Promise<User> {
     const [, coach] = await this.checkUserIdMatch(userId, coachId);
     if (coach.role !== UserRole.Coach) {
       throw new UserRoleException(this.logger, coachId);
@@ -240,7 +247,7 @@ export class UserService {
     return this.userRepository.changeSubscription(userId, coachId, isFollow);
   }
 
-  public async sendEmailToSubscribedUsers(coachId: number, training: Training) {
+  public async sendEmailToSubscribedUsers(coachId: number, training: Training): Promise<void> {
     const users = await this.userRepository.findSubscribed(coachId);
     for (const user of users) {
       this.mail.sendMailNewTraining(user, training);

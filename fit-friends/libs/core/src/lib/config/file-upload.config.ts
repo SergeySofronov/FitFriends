@@ -40,7 +40,6 @@ function getFileName() {
 function getFileDestination(configService: ConfigService) {
   return ((req: Request, _file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
     const folderName = `${req['user']['sub']}`;
-    console.log(folderName);
     console.log(configService.get<string>('file.dest'));
     const folderPath = resolve(__dirname, configService.get<string>('file.dest'), folderName);
     const isFolderExists = existsSync(folderPath) || mkdirSync(folderPath, { recursive: true });
@@ -67,36 +66,6 @@ function getFileFilter(filter: string) {
 
     return callback(null, true);
   })
-}
-
-export async function getAvatarUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
-  return {
-    dest: configService.get<string>('file.dest'),
-    limits: {
-      fileSize: configService.get<number>('file.avatarSize'),
-    },
-    storage:
-      diskStorage({
-        destination: getFileDestination(configService),
-        filename: getFileName(),
-      }),
-    fileFilter: getFileFilter(configService.get<string>('file.certificateFilterExp')),
-  }
-}
-
-export function getCertificateUploadConfig(configService: ConfigService): MulterModuleOptions {
-  return {
-    dest: configService.get<string>('file.dest'),
-    limits: {
-      fileSize: configService.get<number>('file.certificateSize'),
-    },
-    storage:
-      diskStorage({
-        destination: getFileDestination(configService),
-        filename: getFileName(),
-      }),
-    fileFilter: getFileFilter(configService.get<string>('file.imageFilterExp')),
-  }
 }
 
 export async function getTrainingVideoUploadConfig(configService: ConfigService): Promise<MulterModuleOptions> {
