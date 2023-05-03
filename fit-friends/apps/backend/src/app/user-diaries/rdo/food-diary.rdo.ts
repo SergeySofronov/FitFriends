@@ -31,5 +31,5 @@ export class FoodDiaryRdo {
   })
   @Transform(({ value }) => new Date(value).toISOString())
   @Expose()
-  public createdAt: string;
+  public date: string;
 }

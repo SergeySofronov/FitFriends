@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Roles, RolesGuard, fillObject } from '@fit-friends/core';
-import { ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestWithTokenPayload, TokenPayload, UserRole } from '@fit-friends/shared-types';
 import { JwtAuthGuard } from '../users/guards/jwt-auth.guard';
 import { ReviewRdo } from './rdo/review.rdo';
@@ -9,6 +9,7 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { ApiIndexQuery } from './query/review.api-query.decorator';
 import { ReviewQuery } from './query/review.query';
 
+@ApiTags('reviews')
 @Controller('reviews')
 export class ReviewsController {
   constructor(

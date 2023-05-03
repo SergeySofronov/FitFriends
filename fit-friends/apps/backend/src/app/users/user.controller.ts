@@ -60,7 +60,6 @@ export class UserController {
     return this.userService.loginUser(user);
   }
 
-
   @Get('login')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()

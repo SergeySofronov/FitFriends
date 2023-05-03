@@ -24,9 +24,9 @@ export class CreateFoodDiaryDto {
 
   @ApiProperty({
     description: "Date of meal",
-    example: new Date(),
+    example: new Date().toISOString(),
     required: true,
   })
   @IsDateString()
-  public date: string;
+  public date: Date;
 }

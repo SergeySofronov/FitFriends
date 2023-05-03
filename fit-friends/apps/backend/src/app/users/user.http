@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
   "name": "John Doe",
-  "email": "user@user.ru",
+  "email": "user@user1.ru",
   "password": "123456",
   "gender": "Male",
   "dateBirth" : "2011-10-05T14:48:00.000Z",
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
   "name": "John Doe",
-  "email": "user@coach.ru",
+  "email": "user@coach1.ru",
   "password": "123456",
   "gender": "Male",
   "dateBirth" : "2011-10-05T14:48:00.000Z",
@@ -59,7 +59,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsInJlZnJlc2hUb2tlbklkIjoiNTg4NGNlNmMtM2JjYy00Njk4LTg2OWYtZTg4ZjBlZTBiYzE1IiwiaWF0IjoxNjgyOTY1NDY2LCJleHAiOjE2ODM1NzAyNjZ9.NsJs9NQ53kFXgm6OyTmnLFWxkd19au-w-Onqf11tgkg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6ImJhZjJlNjUxLTlkMTAtNGIwMi04ODQ2LWY5NDliMDVkZDYwMCIsImlhdCI6MTY4MzEyMTg5OCwiZXhwIjoxNjgzNzI2Njk4fQ.rYfjXxvn5l90RMsS6p3p3FvgzDTHzB01IbclzDNJJDo
 ###
 
 # Выход из аккаунта
@@ -128,7 +128,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsI
 #  Загрузка сертификата тренера
 POST /fit-friends/users/certificate/ HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MjkzODI3OCwiZXhwIjoxNjgyOTM5MTc4fQ.oYXOJh97i_B4Hbrztv7_lcXG_WWUPMzzFCA7TCJnvd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidXNlckBjb2FjaC5ydSIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJDb2FjaCIsImlhdCI6MTY4MzEyMTQ2NiwiZXhwIjoxNjgzMTIyMzY2fQ.Flc2v3HoQg3048gefiFY0C_gbtprcUrn36ie1INgM9o
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

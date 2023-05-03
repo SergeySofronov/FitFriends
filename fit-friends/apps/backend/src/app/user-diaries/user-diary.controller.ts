@@ -74,11 +74,11 @@ export class UserDiaryController {
   @Roles(`${UserRole.User}`)
   @ApiIndexQuery()
   @HttpCode(HttpStatus.OK)
-  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a user training diary', type: [FoodDiaryRdo] })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Resource for getting a user training diary', type: [TrainingDiaryRdo] })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User diary not found', })
   async getTrainingDiary(@Query() query: UserDiaryQuery) {
     const diary = await this.diaryService.getDiary(query, UserDiaryType.Training);
-    return fillObject(FoodDiaryRdo, diary);
+    return fillObject(TrainingDiaryRdo, diary);
   }
 
   @Delete('/food/:id')

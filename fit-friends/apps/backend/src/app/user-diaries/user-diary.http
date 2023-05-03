@@ -13,28 +13,29 @@ Content-Type: application/json
 # Обновить авторизацию пользователя (ожидает refresh_token, выдает повую пару токенов)
 POST /fit-friends/users/refresh HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjFhNTQ4MmQxLTljYzQtNDhjYy1hYjQ4LWU4MTI4OTE5ZjE3NSIsImlhdCI6MTY4MTYzODcxMSwiZXhwIjoxNjgyMjQzNTExfQ.2VEO3FlmNKmN4lCO-iS04KBHjD-SrCJz5weptImJu-I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJyZWZyZXNoVG9rZW5JZCI6IjM1YzI5OTBlLTFlZGUtNDZhOS04OWMzLTkyZWNjZGEyMDRhYyIsImlhdCI6MTY4MzEyNDI2OSwiZXhwIjoxNjgzNzI5MDY5fQ.O2v6wzebjb4w_hejroJfvcy3p63u_SF0-saWwfzwkzA
 ###
 
 #======================= User-Diary ==================
 #  Создать запись в дневнике питания
 # mealTime: Breakfast | Dinner | Lunch | Snack
-GET /fit-friends/user-diaries/food HTTP/1.1
+POST /fit-friends/user-diaries/food HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 
 {
   "calories": 1000,
-  "mealTime": "Breakfast"
+  "mealTime": "Breakfast",
+  "date" : "2011-10-05T14:48:00.000Z"
 }
 ###
 
 #  Обновить запись в дневнике питания
-GET /fit-friends/user-diaries/food/1 HTTP/1.1
+PATCH  /fit-friends/user-diaries/food/7 HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 
 {
   "calories": 2000,
@@ -44,10 +45,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 ###
 
 #  Создать запись в дневнике тренировок
-GET /fit-friends/user-diaries/training HTTP/1.1
+POST /fit-friends/user-diaries/training HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 
 {
   "trainingId": 1
@@ -58,26 +59,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsI
 # ?limit=50&page=0&sortType=date&sortDirection=desc
 GET /fit-friends/user-diaries/food?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 ###
 
-#  Получить дневник питания тренировок
+#  Получить дневник тренировок
 # ?limit=50&page=0&sortType=date&sortDirection=desc
 GET /fit-friends/user-diaries/training?limit=50&page=0&sortType=date&sortDirection=desc HTTP/1.1
 Host: localhost:3333
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2MzczMDcsImV4cCI6MTY4MTYzODIwN30.Wh1ce2KpDYefKRBaYnHK8y-z941OjfbFvX5VbM8urNA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjQyNjksImV4cCI6MTY4MzEyNTE2OX0.S00Tk-RctG5_rwS7D9MvBycHbAaiePLrVbZ9FJXCOHE
 ###
 
 #  Удалить запись в дневнике питания
 DELETE /fit-friends/user-diaries/food/1 HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 ###
 
 #  Удалить запись в дневнике тренировок
 DELETE /fit-friends/user-diaries/training/1 HTTP/1.1
 Host: localhost:3333
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODE2Mzg3MTEsImV4cCI6MTY4MTYzOTYxMX0.ULqZdKM0gb1EXBNCa6o36xBJpUrD7IG0qdzhVfJZL2o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidXNlckB1c2VyLnJ1IiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlVzZXIiLCJpYXQiOjE2ODMxMjMzMzksImV4cCI6MTY4MzEyNDIzOX0.jEqT58gtIwOqd5Z7vq_YtLrooB6Xfw84ZsutewoL51g
 ###

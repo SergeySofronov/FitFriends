@@ -21,6 +21,7 @@ describe('UserController', () => {
         return {};
       }
       if ((typeof token === 'function')) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mockMetadata = moduleMocker.getMetadata(token) as MockFunctionMetadata<any, any>;
         const Mock = moduleMocker.generateFromMetadata(mockMetadata);
         return new Mock();
@@ -97,23 +98,4 @@ describe('UserController', () => {
       expect(await userController.create(createUserDto())).toEqual(userRdoStub);
     })
   })
-
-  // describe('create', () => {
-  //   describe('when "create" is called', () => {
-  //     const userRdoStub = getUserRdoStub();
-  //     let user: UserRdo;
-  //     beforeEach(async () => {
-  //       user = await userController.show(userRdoStub.id)
-  //     })
-
-  //     test('then it should call userService', () => {
-  //       expect(userService.register).toBeCalledWith(userRdoStub.id)
-  //     })
-
-  //     test('then it should return a userRdo', () => {
-  //       expect(user).toEqual(userRdoStub);
-  //     })
-  //   })
-  // })
-
 });

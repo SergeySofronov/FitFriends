@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { genSalt, hash, compare } from 'bcrypt';
-import { Features, LocationType, TrainingStyle, TrainingStyleType, User, UserGender, UserGenderType, UserLevel, UserLevelType, UserRole, UserRoleType } from '@fit-friends/shared-types'
+import { CoachFeatures, Features, LocationType, TrainingStyle, TrainingStyleType, User, UserGender, UserGenderType, UserLevel, UserLevelType, UserRole, UserRoleType } from '@fit-friends/shared-types'
 import { Entity } from '@fit-friends/core';
 import { SALT_ROUNDS } from './user.constant';
 
@@ -55,5 +55,9 @@ export class UserEntity implements Entity<UserEntity, User>, User {
     this.features = user.features;
     this.createdAt = user.createdAt || new Date();
     this.updatedAt = user.updatedAt || new Date();
+
+    if(this.role === UserRole.Coach){
+      (this.features as CoachFeatures).certificate = '';
+    }
   }
 }

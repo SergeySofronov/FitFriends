@@ -264,12 +264,12 @@ model Token {
 }
 
 model FoodDiary {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int
-  calories  Int
-  mealTime  MealTime
-  createdAt DateTime @default(now())
+  id       Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   Int
+  calories Int
+  mealTime MealTime
+  date     DateTime @default(now())
 
   @@map("food-diaries")
 }
