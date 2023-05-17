@@ -1,5 +1,5 @@
 export const AxiosDefaults = {
-  BASE_URL: 'https://localhost:3333/guitar-shop',
+  BASE_URL: 'https://localhost:3333/fit-friends',
   REQUEST_TIMEOUT: 5000,
 } as const
 
@@ -15,10 +15,11 @@ export enum APIRoute {
 
 export enum AppRoute {
   // Available to all customers
-  Root = '/',
+  Intro = '/intro',
 
   // Available to Users
   Main = 'main',
+
   // Available to Coach
   //...
 
@@ -36,15 +37,7 @@ export enum AuthorizationStatus {
   Unknown = 'Unknown',
 }
 
-export enum HttpErrorCode {
-  BadRequest = 400,
-  UnAuthorized = 401,
-  NotFound = 404,
-  Forbidden = 403,
-}
-
 export enum NameSpace {
   User = 'User',
-  Product = 'Product',
 }
 

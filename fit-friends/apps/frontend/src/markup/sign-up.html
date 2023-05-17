@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
   <head>
-    <title>FitFriends</title>
+    <title>Регистрация — FitFriends</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="FitFriends — это онлайн площадка для поиска тренировок и их заведения">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest" crossorigin="use-credentials">
-    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="description" content="ProjectName — описание">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="preload" href="assets/fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="preload" href="fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.min.css">
   </head>
 
   <body>
-    <div class="visually-hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="visually-hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <linearGradient id="paint0_linear_124_818" x1="46.5769" y1="4.1048" x2="66" y2="4.1048"
             gradientUnits="userSpaceOnUse">
@@ -644,12 +643,141 @@
               fill="#172B85" />
           </g>
         </symbol>
-      </svg>
-    </div>
-
+      </svg></div>
     <div class="wrapper">
-      <div id="root"></div>
+      <main>
+        <div class="background-logo">
+          <svg class="background-logo__logo" width="750" height="284" aria-hidden="true">
+            <use xlink:href="#logo-big"></use>
+          </svg>
+          <svg class="background-logo__icon" width="343" height="343" aria-hidden="true">
+            <use xlink:href="#icon-logotype"></use>
+          </svg>
+        </div>
+        <div class="popup-form popup-form--sign-up">
+          <div class="popup-form__wrapper">
+            <div class="popup-form__content">
+              <div class="popup-form__title-wrapper">
+                <h1 class="popup-form__title">Регистрация</h1>
+              </div>
+              <div class="popup-form__form">
+                <form method="get">
+                  <div class="sign-up">
+                    <div class="sign-up__load-photo">
+                      <div class="input-load-avatar">
+                        <label>
+                          <input class="visually-hidden" type="file" accept="image/png, image/jpeg"><span
+                            class="input-load-avatar__btn">
+                            <svg width="20" height="20" aria-hidden="true">
+                              <use xlink:href="#icon-import"></use>
+                            </svg></span>
+                        </label>
+                      </div>
+                      <div class="sign-up__description">
+                        <h2 class="sign-up__legend">Загрузите фото профиля</h2><span class="sign-up__text">JPG, PNG,
+                          оптимальный размер 100&times;100&nbsp;px</span>
+                      </div>
+                    </div>
+                    <div class="sign-up__data">
+                      <div class="custom-input">
+                        <label><span class="custom-input__label">Имя</span><span class="custom-input__wrapper">
+                            <input type="text" name="name"></span>
+                        </label>
+                      </div>
+                      <div class="custom-input">
+                        <label><span class="custom-input__label">E-mail</span><span class="custom-input__wrapper">
+                            <input type="email" name="email"></span>
+                        </label>
+                      </div>
+                      <div class="custom-input">
+                        <label><span class="custom-input__label">Дата рождения</span><span
+                            class="custom-input__wrapper">
+                            <input type="date" name="birthday" max="2099-12-31"></span>
+                        </label>
+                      </div>
+                      <div class="custom-select custom-select--not-selected"><span class="custom-select__label">Ваша
+                          локация</span>
+                        <button class="custom-select__button" type="button" aria-label="Выберите одну из опций"><span
+                            class="custom-select__text"></span><span class="custom-select__icon">
+                            <svg width="15" height="6" aria-hidden="true">
+                              <use xlink:href="#arrow-down"></use>
+                            </svg></span></button>
+                        <ul class="custom-select__list" role="listbox">
+                        </ul>
+                      </div>
+                      <div class="custom-input">
+                        <label><span class="custom-input__label">Пароль</span><span class="custom-input__wrapper">
+                            <input type="password" name="password" autocomplete="off"></span>
+                        </label>
+                      </div>
+                      <div class="sign-up__radio"><span class="sign-up__label">Пол</span>
+                        <div class="custom-toggle-radio custom-toggle-radio--big">
+                          <div class="custom-toggle-radio__block">
+                            <label>
+                              <input type="radio" name="sex"><span class="custom-toggle-radio__icon"></span><span
+                                class="custom-toggle-radio__label">Мужской</span>
+                            </label>
+                          </div>
+                          <div class="custom-toggle-radio__block">
+                            <label>
+                              <input type="radio" name="sex" checked><span
+                                class="custom-toggle-radio__icon"></span><span
+                                class="custom-toggle-radio__label">Женский</span>
+                            </label>
+                          </div>
+                          <div class="custom-toggle-radio__block">
+                            <label>
+                              <input type="radio" name="sex"><span class="custom-toggle-radio__icon"></span><span
+                                class="custom-toggle-radio__label">Неважно</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sign-up__role">
+                      <h2 class="sign-up__legend">Выберите роль</h2>
+                      <div class="role-selector sign-up__role-selector">
+                        <div class="role-btn">
+                          <label>
+                            <input class="visually-hidden" type="radio" name="role" value="coach"
+                              checked="checked"><span class="role-btn__icon">
+                              <svg width="12" height="13" aria-hidden="true">
+                                <use xlink:href="#icon-cup"></use>
+                              </svg></span><span class="role-btn__btn">Я хочу тренировать</span>
+                          </label>
+                        </div>
+                        <div class="role-btn">
+                          <label>
+                            <input class="visually-hidden" type="radio" name="role" value="sportsman"><span
+                              class="role-btn__icon">
+                              <svg width="12" height="13" aria-hidden="true">
+                                <use xlink:href="#icon-weight"></use>
+                              </svg></span><span class="role-btn__btn">Я хочу тренироваться</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="sign-up__checkbox">
+                      <label>
+                        <input type="checkbox" value="user-agreement" name="user-agreement" checked><span
+                          class="sign-up__checkbox-icon">
+                          <svg width="9" height="6" aria-hidden="true">
+                            <use xlink:href="#arrow-check"></use>
+                          </svg></span><span class="sign-up__checkbox-label">Я соглашаюсь с <span>политикой
+                            конфиденциальности</span> компании</span>
+                      </label>
+                    </div>
+                    <button class="btn sign-up__button" type="submit">Продолжить</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
 
 </html>

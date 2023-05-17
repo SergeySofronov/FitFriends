@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
   <head>
-    <title>FitFriends</title>
+    <title>Список друзей — FitFriends</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="FitFriends — это онлайн площадка для поиска тренировок и их заведения">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest" crossorigin="use-credentials">
-    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="description" content="ProjectName — описание">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="preload" href="assets/fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="preload" href="fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.min.css">
   </head>
 
   <body>
-    <div class="visually-hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="visually-hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <linearGradient id="paint0_linear_124_818" x1="46.5769" y1="4.1048" x2="66" y2="4.1048"
             gradientUnits="userSpaceOnUse">
@@ -644,12 +643,471 @@
               fill="#172B85" />
           </g>
         </symbol>
-      </svg>
-    </div>
-
+      </svg></div>
     <div class="wrapper">
-      <div id="root"></div>
+      <header class="header">
+        <div class="container"><a class="header__logo" href="index.html" aria-label="Переход на главную">
+            <svg width="187" height="70" aria-hidden="true">
+              <use xlink:href="#logo"></use>
+            </svg></a>
+          <nav class="main-nav">
+            <ul class="main-nav__list">
+              <li class="main-nav__item"><a class="main-nav__link is-active" href="#" aria-label="На главную">
+                  <svg width="18" height="18" aria-hidden="true">
+                    <use xlink:href="#icon-home"></use>
+                  </svg></a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="#" aria-label="Личный кабинет">
+                  <svg width="16" height="18" aria-hidden="true">
+                    <use xlink:href="#icon-user"></use>
+                  </svg></a></li>
+              <li class="main-nav__item"><a class="main-nav__link" href="#" aria-label="Друзья">
+                  <svg width="22" height="16" aria-hidden="true">
+                    <use xlink:href="#icon-friends"></use>
+                  </svg></a></li>
+              <li class="main-nav__item main-nav__item--notifications"><a class="main-nav__link" href="#"
+                  aria-label="Уведомления">
+                  <svg width="14" height="18" aria-hidden="true">
+                    <use xlink:href="#icon-notification"></use>
+                  </svg></a>
+                <div class="main-nav__dropdown">
+                  <p class="main-nav__label">Оповещения</p>
+                  <ul class="main-nav__sublist">
+                    <li class="main-nav__subitem"><a class="notification is-active" href="#">
+                        <p class="notification__text">Катерина пригласила вас на&nbsp;тренировку</p>
+                        <time class="notification__time" datetime="2023-12-23 12:35">23 декабря, 12:35</time>
+                      </a>
+                    </li>
+                    <li class="main-nav__subitem"><a class="notification is-active" href="#">
+                        <p class="notification__text">Никита отклонил приглашение на&nbsp;совместную тренировку</p>
+                        <time class="notification__time" datetime="2023-12-22 09:22">22 декабря, 09:22</time>
+                      </a>
+                    </li>
+                    <li class="main-nav__subitem"><a class="notification is-active" href="#">
+                        <p class="notification__text">Татьяна добавила вас в&nbsp;друзья</p>
+                        <time class="notification__time" datetime="2023-12-18 18:50">18 декабря, 18:50</time>
+                      </a>
+                    </li>
+                    <!--<li class="main-nav__subitem"><a class="notification" href="#">
+                        <p class="notification__text">Наталья приняла приглашение на&nbsp;совместную тренировку</p>
+                        <time class="notification__time" datetime="2023-12-14 08:15">14 декабря, 08:15</time></a>
+                    </li>-->
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <div class="search">
+            <form action="#" method="get">
+              <label><span class="search__label">Поиск</span>
+                <input type="search" name="search">
+                <svg class="search__icon" width="20" height="20" aria-hidden="true">
+                  <use xlink:href="#icon-search"></use>
+                </svg>
+              </label>
+              <ul class="search__list">
+                <li class="search__item"><a class="search__link" href="#">Бокс</a></li>
+                <li class="search__item"><a class="search__link is-active" href="#">Бег</a></li>
+                <li class="search__item"><a class="search__link" href="#">Аэробика</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+                <li class="search__item"><a class="search__link" href="#">Text</a></li>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </header>
+      <main>
+        <section class="friends-list">
+          <div class="container">
+            <div class="friends-list__wrapper">
+              <button class="btn-flat friends-list__back" type="button">
+                <svg width="14" height="10" aria-hidden="true">
+                  <use xlink:href="#arrow-left"></use>
+                </svg><span>Назад</span>
+              </button>
+              <div class="friends-list__title-wrapper">
+                <h1 class="friends-list__title">Мои друзья</h1>
+                <!--<div class="custom-toggle custom-toggle--switch custom-toggle--switch-right" data-validate-type="checkbox">
+                  <label>
+                    <input type="checkbox" value="user-agreement-1" name="user-agreement"><span class="custom-toggle__icon">
+                      <svg width="9" height="6" aria-hidden="true">
+                        <use xlink:href="#arrow-check"></use>
+                      </svg></span><span class="custom-toggle__label">Только онлайн</span>
+                  </label>
+                </div>-->
+              </div>
+              <ul class="friends-list__list">
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-14.webp, img/content/thumbnails/friend-14@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-14.jpg"
+                              srcset="img/content/thumbnails/friend-14@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Виктория</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Технологический институт II</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#аэробика</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">
+                      <p class="thumbnail-friend__request-text">Запрос на&nbsp;персональную тренировку</p>
+                      <div class="thumbnail-friend__button-wrapper">
+                        <button class="btn btn--medium btn--dark-bg thumbnail-friend__button"
+                          type="button">Принять</button>
+                        <button class="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button"
+                          type="button">Отклонить</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-15.webp, img/content/thumbnails/friend-15@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-15.jpg"
+                              srcset="img/content/thumbnails/friend-15@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Кристина</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Политехническая</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#бокс</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">
+                      <p class="thumbnail-friend__request-text">Запрос на&nbsp;персональную тренировку</p>
+                      <div class="thumbnail-friend__button-wrapper">
+                        <button class="btn btn--medium btn--dark-bg thumbnail-friend__button"
+                          type="button">Принять</button>
+                        <button class="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button"
+                          type="button">Отклонить</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-16.webp, img/content/thumbnails/friend-16@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-16.jpg"
+                              srcset="img/content/thumbnails/friend-16@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Алексей</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Обухово</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#кроссфит</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">
+                      <p class="thumbnail-friend__request-text">Запрос на&nbsp;персональную тренировку</p>
+                      <div class="thumbnail-friend__button-wrapper">
+                        <button class="btn btn--medium btn--dark-bg thumbnail-friend__button"
+                          type="button">Принять</button>
+                        <button class="btn btn--medium btn--outlined btn--dark-bg thumbnail-friend__button"
+                          type="button">Отклонить</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-17.webp, img/content/thumbnails/friend-17@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-17.jpg"
+                              srcset="img/content/thumbnails/friend-17@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Катерина</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Фрунзенская</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#аэробика</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-not-ready">
+                          <span>Не&nbsp;готов к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-18.webp, img/content/thumbnails/friend-18@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-18.jpg"
+                              srcset="img/content/thumbnails/friend-18@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Ксения</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Звенигородская</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#бокс</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-19.webp, img/content/thumbnails/friend-19@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-19.jpg"
+                              srcset="img/content/thumbnails/friend-19@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-offline"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Алиса</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Чёрная речка</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#стретчинг</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-not-ready">
+                          <span>Не&nbsp;готов к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-20.webp, img/content/thumbnails/friend-20@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-20.jpg"
+                              srcset="img/content/thumbnails/friend-20@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-offline"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Алёна</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Крестовский остров</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#кроссфит</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-21.webp, img/content/thumbnails/friend-21@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-21.jpg"
+                              srcset="img/content/thumbnails/friend-21@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">София</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Электросила</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#кроссфит</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-not-ready">
+                          <span>Не&nbsp;готов к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="friends-list__item">
+                  <div class="thumbnail-friend">
+                    <div class="thumbnail-friend__info thumbnail-friend__info--theme-light">
+                      <div class="thumbnail-friend__image-status">
+                        <div class="thumbnail-friend__image">
+                          <picture>
+                            <source type="image/webp"
+                              srcset="img/content/thumbnails/friend-09.webp, img/content/thumbnails/friend-09@2x.webp 2x">
+                            <img src="img/content/thumbnails/friend-09.jpg"
+                              srcset="img/content/thumbnails/friend-09@2x.jpg 2x" width="78" height="78" alt="">
+                          </picture>
+                          <!--<div class="thumbnail-friend__online-status thumbnail-friend__online-status--is-online"></div>-->
+                        </div>
+                      </div>
+                      <div class="thumbnail-friend__header">
+                        <h2 class="thumbnail-friend__name">Валерия</h2>
+                        <div class="thumbnail-friend__location">
+                          <svg width="14" height="16" aria-hidden="true">
+                            <use xlink:href="#icon-location"></use>
+                          </svg>
+                          <address class="thumbnail-friend__location-address">Московские ворота</address>
+                        </div>
+                      </div>
+                      <ul class="thumbnail-friend__training-types-list">
+                        <li>
+                          <div class="hashtag thumbnail-friend__hashtag"><span>#стретчинг</span></div>
+                        </li>
+                      </ul>
+                      <div class="thumbnail-friend__activity-bar">
+                        <div class="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов
+                            к&nbsp;тренировке</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="show-more friends-list__show-more">
+                <button class="btn show-more__button show-more__button--more" type="button">Показать еще</button>
+                <button class="btn show-more__button show-more__button--to-top" type="button">Вернуться в
+                  начало</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
 
 </html>

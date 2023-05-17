@@ -15,8 +15,8 @@
         "baseHref": "/",
         "main": "apps/frontend/src/main.tsx",
         "tsConfig": "apps/frontend/tsconfig.app.json",
-        "assets": ["apps/frontend/src/favicon.ico", "apps/frontend/src/assets"],
-        "styles": ["apps/frontend/src/styles.css"],
+        "assets": ["apps/frontend/src/assets"],
+        "styles": [],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "apps/frontend/webpack.config.js"

@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
   <head>
-    <title>FitFriends</title>
+    <title>Разводящая — FitFriends</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="FitFriends — это онлайн площадка для поиска тренировок и их заведения">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest" crossorigin="use-credentials">
-    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="description" content="ProjectName — описание">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="preload" href="assets/fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="preload" href="fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.min.css">
   </head>
 
   <body>
-    <div class="visually-hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="visually-hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <linearGradient id="paint0_linear_124_818" x1="46.5769" y1="4.1048" x2="66" y2="4.1048"
             gradientUnits="userSpaceOnUse">
@@ -644,12 +643,41 @@
               fill="#172B85" />
           </g>
         </symbol>
-      </svg>
-    </div>
-
+      </svg></div>
     <div class="wrapper">
-      <div id="root"></div>
+      <main>
+        <div class="intro">
+          <div class="intro__background">
+            <picture>
+              <source type="image/webp"
+                srcset="img/content/sitemap//background.webp, img/content/sitemap//background@2x.webp 2x"><img
+                src="img/content/sitemap//background.jpg" srcset="img/content/sitemap//background@2x.jpg 2x"
+                width="1440" height="1024" alt="Фон с бегущей девушкой">
+            </picture>
+          </div>
+          <div class="intro__wrapper">
+            <svg class="intro__icon" width="60" height="60" aria-hidden="true">
+              <use xlink:href="#icon-logotype"></use>
+            </svg>
+            <div class="intro__title-logo">
+              <picture>
+                <source type="image/webp"
+                  srcset="img/content/sitemap//title-logo.webp, img/content/sitemap//title-logo@2x.webp 2x"><img
+                  src="img/content/sitemap//title-logo.png" srcset="img/content/sitemap//title-logo@2x.png 2x"
+                  width="934" height="455" alt="Логотип Fit Friends">
+              </picture>
+            </div>
+            <div class="intro__buttons">
+              <button class="btn intro__button" type="button">Регистрация</button>
+              <p class="intro__text">Есть аккаунт? <a class="intro__link" href="#">Вход</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
 
 </html>

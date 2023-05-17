@@ -1,12 +1,16 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import { AppRoute } from '../const';
-import Root from '../pages/root/root';
-import Main from '../pages/main/main';
+import Intro from '../pages/intro/intro';
+import SingIn from '../pages/sing-in/sing-in';
+import SingUp from '../pages/sing-up/sing-up';
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path={AppRoute.Root} element={<Root />}>
-    <Route path={AppRoute.Main} element={<Main />} />
-  </Route>
+  <>
+    <Route path={AppRoute.Intro} element={<Intro />} />
+    <Route path={AppRoute.Login} element={<SingIn />} />
+    <Route path={AppRoute.Register} element={<SingUp />} />
+    <Route path="*" element={<Intro />} />
+  </>
 ))
 
 function App(): JSX.Element {

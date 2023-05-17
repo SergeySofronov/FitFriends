@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
   <head>
-    <title>FitFriends</title>
+    <title>Войти — FitFriends</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="FitFriends — это онлайн площадка для поиска тренировок и их заведения">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest" crossorigin="use-credentials">
-    <link rel="mask-icon" href="assets/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="description" content="ProjectName — описание">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest" crossorigin="use-credentials">
+    <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <link rel="preload" href="assets/fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="assets/fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.min.css">
+    <link rel="preload" href="fonts/roboto-regular.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-medium.woff2" as="font" crossorigin="anonymous">
+    <link rel="preload" href="fonts/roboto-bold.woff2" as="font" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.min.css">
   </head>
 
   <body>
-    <div class="visually-hidden">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="visually-hidden"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
           <linearGradient id="paint0_linear_124_818" x1="46.5769" y1="4.1048" x2="66" y2="4.1048"
             gradientUnits="userSpaceOnUse">
@@ -644,12 +643,47 @@
               fill="#172B85" />
           </g>
         </symbol>
-      </svg>
-    </div>
-
+      </svg></div>
     <div class="wrapper">
-      <div id="root"></div>
+      <main>
+        <div class="background-logo">
+          <svg class="background-logo__logo" width="750" height="284" aria-hidden="true">
+            <use xlink:href="#logo-big"></use>
+          </svg>
+          <svg class="background-logo__icon" width="343" height="343" aria-hidden="true">
+            <use xlink:href="#icon-logotype"></use>
+          </svg>
+        </div>
+        <div class="popup-form popup-form--sign-in">
+          <div class="popup-form__wrapper">
+            <div class="popup-form__content">
+              <div class="popup-form__title-wrapper">
+                <h1 class="popup-form__title">Вход</h1>
+              </div>
+              <div class="popup-form__form">
+                <form method="get">
+                  <div class="sign-in">
+                    <div class="custom-input sign-in__input">
+                      <label><span class="custom-input__label">E-mail</span><span class="custom-input__wrapper">
+                          <input type="email" name="email"></span>
+                      </label>
+                    </div>
+                    <div class="custom-input sign-in__input">
+                      <label><span class="custom-input__label">Пароль</span><span class="custom-input__wrapper">
+                          <input type="password" name="password"></span>
+                      </label>
+                    </div>
+                    <button class="btn sign-in__button" type="submit">Продолжить</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
+    <script src="js/vendor.min.js"></script>
+    <script src="js/main.min.js"></script>
   </body>
 
 </html>
