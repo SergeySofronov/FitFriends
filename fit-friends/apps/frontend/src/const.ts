@@ -14,20 +14,25 @@ export enum APIRoute {
 }
 
 export enum AppRoute {
-  // Available to all customers
   Intro = '/intro',
+  Register = '/register',
+  Login = '/login',
+  CreateTraining = '/create-training',
+  Main = '/main',
+  Account = '/account',
+  Friends = '/friends',
+  Notifications = '/notifications',
+  UsersCatalog = '/users-catalog',
+
+  // Available to all customers
 
   // Available to Users
-  Main = 'main',
 
   // Available to Coach
   //...
 
   TrainingCatalog = '/training-catalog',
-  UsersCatalog = '/users-catalog',
   GymsCatalog = '/gyms-catalog',
-  Register = '/register',
-  Login = '/login',
   NotFound = '*',
 }
 
@@ -40,4 +45,25 @@ export enum AuthorizationStatus {
 export enum NameSpace {
   User = 'User',
 }
+
+export enum MainNavigationItem {
+  Main = 'Main',
+  Account = 'Account',
+  Friends = 'Friends',
+  Notifications = 'Notifications',
+}
+
+export const MainNavigationItemIcon = {
+  [MainNavigationItem.Main]: '#icon-home',
+  [MainNavigationItem.Account]: '#icon-user',
+  [MainNavigationItem.Friends]: '#icon-friends',
+  [MainNavigationItem.Notifications]: '#icon-notification',
+} as const;
+
+export const MainNavigationItemAria = {
+  [MainNavigationItem.Main]: 'На главную',
+  [MainNavigationItem.Account]: 'Личный кабинет',
+  [MainNavigationItem.Friends]: 'Друзья',
+  [MainNavigationItem.Notifications]: 'Уведомления',
+} as const;
 

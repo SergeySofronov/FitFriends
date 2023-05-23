@@ -27,7 +27,8 @@ export function SingIn() {
                     </label>
                   </div>
                   <div className="custom-input sign-in__input">
-                    <label><span className="custom-input__label">Пароль</span>
+                    <label>
+                      <span className="custom-input__label">Пароль</span>
                       <span className="custom-input__wrapper">
                         <input type="password" name="password" />
                       </span>

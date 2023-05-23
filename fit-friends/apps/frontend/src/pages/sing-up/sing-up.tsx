@@ -60,13 +60,16 @@ export function SingUp() {
                         </span>
                       </label>
                     </div>
-                    <div className="custom-select custom-select--not-selected"><span className="custom-select__label">Ваша
-                      локация</span>
-                      <button className="custom-select__button" type="button" aria-label="Выберите одну из опций"><span
-                        className="custom-select__text"></span><span className="custom-select__icon">
+                    <div className="custom-select custom-select--not-selected">
+                      <span className="custom-select__label">Ваша локация</span>
+                      <button className="custom-select__button" type="button" aria-label="Выберите одну из опций">
+                        <span className="custom-select__text"></span>
+                        <span className="custom-select__icon">
                           <svg width="15" height="6" aria-hidden="true">
                             <use xlinkHref="#arrow-down"></use>
-                          </svg></span></button>
+                          </svg>
+                        </span>
+                      </button>
                       <ul className="custom-select__list" role="listbox">
                         {/* //todo */}
                         <li>Item1</li>

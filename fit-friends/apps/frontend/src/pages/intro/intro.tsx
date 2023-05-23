@@ -36,7 +36,9 @@ export function Intro() {
               onClick={() => navigate(`${AppRoute.Register}`)}>
               Регистрация
             </button>
-            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.Login}>Вход</Link>
+            <p className="intro__text">
+              Есть аккаунт?
+              <Link className="intro__link" to={AppRoute.Login}>Вход</Link>
             </p>
           </div>
         </div>
