@@ -29,6 +29,9 @@ CREATE TYPE "Payment" AS ENUM ('Visa', 'Mir', 'Umoney');
 CREATE TYPE "RequestStatus" AS ENUM ('Pending', 'Rejected', 'Accepted');
 
 -- CreateEnum
+CREATE TYPE "RequestCategory" AS ENUM ('Coworking', 'Personal', 'Friendship');
+
+-- CreateEnum
 CREATE TYPE "MealTime" AS ENUM ('Breakfast', 'Lunch', 'Dinner', 'Snack');
 
 -- CreateTable
@@ -84,7 +87,8 @@ CREATE TABLE "trainings" (
     "description" TEXT NOT NULL,
     "gender" "UserGender" NOT NULL,
     "video" TEXT NOT NULL,
-    "rating" INTEGER NOT NULL DEFAULT 0,
+    "rating" DOUBLE PRECISION NOT NULL DEFAULT 0,
+    "reviewsCount" INTEGER NOT NULL DEFAULT 0,
     "coachId" INTEGER NOT NULL,
     "isSpecial" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -99,7 +103,7 @@ CREATE TABLE "gyms" (
     "title" TEXT NOT NULL,
     "location" "Location" NOT NULL,
     "isVerified" BOOLEAN NOT NULL,
-    "gymType" "GymFeature"[],
+    "gymFeature" "GymFeature"[],
     "photo" TEXT[],
     "description" TEXT NOT NULL,
     "price" INTEGER NOT NULL DEFAULT 0,
@@ -141,6 +145,7 @@ CREATE TABLE "orders" (
 -- CreateTable
 CREATE TABLE "requests" (
     "id" SERIAL NOT NULL,
+    "category" "RequestCategory" NOT NULL,
     "requesterId" INTEGER NOT NULL,
     "requestedId" INTEGER NOT NULL,
     "status" "RequestStatus" NOT NULL,
@@ -153,9 +158,10 @@ CREATE TABLE "requests" (
 -- CreateTable
 CREATE TABLE "notification" (
     "id" SERIAL NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "notifiedUserId" INTEGER NOT NULL,
+    "notifyingUserId" INTEGER,
     "text" TEXT NOT NULL,
-    "isChecked" BOOLEAN NOT NULL,
+    "isChecked" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -174,40 +180,54 @@ CREATE TABLE "tokens" (
 );
 
 -- CreateTable
-CREATE TABLE "foodDiaries" (
+CREATE TABLE "food-diaries" (
     "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
     "calories" INTEGER NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
     "mealTime" "MealTime" NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "foodDiaries_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "food-diaries_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "trainingDiaries" (
+CREATE TABLE "training-diaries" (
     "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
     "trainingId" INTEGER NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "trainingDiaries_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "training-diaries_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "userBalances" (
+CREATE TABLE "user-balances" (
     "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "category" "OrderCategory" NOT NULL,
     "gymId" INTEGER,
-    "gymAvailable" INTEGER NOT NULL DEFAULT 0,
-    "gymSpent" INTEGER NOT NULL DEFAULT 0,
     "trainingId" INTEGER,
-    "trainingAvailable" INTEGER NOT NULL DEFAULT 0,
-    "trainingSpent" INTEGER NOT NULL DEFAULT 0,
-    "date" TIMESTAMP(3) NOT NULL,
+    "available" INTEGER NOT NULL DEFAULT 0,
+    "spent" INTEGER NOT NULL DEFAULT 0,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "userBalances_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "user-balances_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "_friends" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_subscriptions" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_GymToUser" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -223,6 +243,18 @@ CREATE UNIQUE INDEX "_friends_AB_unique" ON "_friends"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_friends_B_index" ON "_friends"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_subscriptions_AB_unique" ON "_subscriptions"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_subscriptions_B_index" ON "_subscriptions"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_GymToUser_AB_unique" ON "_GymToUser"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_GymToUser_B_index" ON "_GymToUser"("B");
 
 -- AddForeignKey
 ALTER TABLE "user-features" ADD CONSTRAINT "user-features_id_fkey" FOREIGN KEY ("id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -255,22 +287,46 @@ ALTER TABLE "requests" ADD CONSTRAINT "requests_requesterId_fkey" FOREIGN KEY ("
 ALTER TABLE "requests" ADD CONSTRAINT "requests_requestedId_fkey" FOREIGN KEY ("requestedId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "notification" ADD CONSTRAINT "notification_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "notification" ADD CONSTRAINT "notification_notifiedUserId_fkey" FOREIGN KEY ("notifiedUserId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "notification" ADD CONSTRAINT "notification_notifyingUserId_fkey" FOREIGN KEY ("notifyingUserId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "tokens" ADD CONSTRAINT "tokens_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "trainingDiaries" ADD CONSTRAINT "trainingDiaries_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE "food-diaries" ADD CONSTRAINT "food-diaries_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "userBalances" ADD CONSTRAINT "userBalances_gymId_fkey" FOREIGN KEY ("gymId") REFERENCES "gyms"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE "training-diaries" ADD CONSTRAINT "training-diaries_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "userBalances" ADD CONSTRAINT "userBalances_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE "training-diaries" ADD CONSTRAINT "training-diaries_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user-balances" ADD CONSTRAINT "user-balances_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user-balances" ADD CONSTRAINT "user-balances_gymId_fkey" FOREIGN KEY ("gymId") REFERENCES "gyms"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "user-balances" ADD CONSTRAINT "user-balances_trainingId_fkey" FOREIGN KEY ("trainingId") REFERENCES "trainings"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_friends" ADD CONSTRAINT "_friends_A_fkey" FOREIGN KEY ("A") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_friends" ADD CONSTRAINT "_friends_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_subscriptions" ADD CONSTRAINT "_subscriptions_A_fkey" FOREIGN KEY ("A") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_subscriptions" ADD CONSTRAINT "_subscriptions_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_GymToUser" ADD CONSTRAINT "_GymToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "gyms"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_GymToUser" ADD CONSTRAINT "_GymToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

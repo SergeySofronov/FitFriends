@@ -7154,7 +7154,7 @@ input:active + .custom-textarea__text {
 .food-diary__row {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(100px, 152px))[7];
+  /* -ms-grid-columns: (minmax(100px, 152px))[7]; */
   grid-template-columns: repeat(7, minmax(100px, 152px));
   -webkit-column-gap: 16px;
   -moz-column-gap: 16px;
@@ -7485,7 +7485,7 @@ input:active + .custom-textarea__text {
 .training-diary__row {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(96px, 152px))[7];
+  /* -ms-grid-columns: (minmax(96px, 152px))[7]; */
   grid-template-columns: repeat(7, minmax(96px, 152px));
   -webkit-column-gap: 16px;
   -moz-column-gap: 16px;
@@ -7849,7 +7849,7 @@ input:active + .custom-textarea__text {
   margin: 10px 0 30px;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (40px)[5];
+  /* -ms-grid-columns: (40px)[5]; */
   grid-template-columns: repeat(5, 40px);
   gap: 10px;
 }
@@ -8121,7 +8121,7 @@ input:active + .custom-textarea__text {
 .my-progress__row {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (114px)[7];
+  /* -ms-grid-columns: (114px)[7]; */
   grid-template-columns: repeat(7, 114px);
   -webkit-column-gap: 19px;
   -moz-column-gap: 19px;
@@ -8310,7 +8310,7 @@ input:active + .custom-textarea__text {
   margin: 0;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (144px)[3];
+  /* -ms-grid-columns: (144px)[3]; */
   grid-template-columns: repeat(3, 144px);
   gap: 10px;
 }
@@ -9359,7 +9359,7 @@ input:active + .custom-textarea__text {
 .personal-account-coach__navigation {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(200px, 334px))[3];
+  /* -ms-grid-columns: (minmax(200px, 334px))[3]; */
   grid-template-columns: repeat(3, minmax(200px, 334px));
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;
@@ -9738,7 +9738,7 @@ input:active + .custom-textarea__text {
 .my-orders__list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
+  /* -ms-grid-columns: (1fr)[4]; */
   grid-template-columns: repeat(4, 1fr);
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;
@@ -10300,7 +10300,7 @@ input:active + .custom-textarea__text {
 .my-gyms__list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
+  /* -ms-grid-columns: (1fr)[4]; */
   grid-template-columns: repeat(4, 1fr);
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;
@@ -10380,7 +10380,7 @@ input:active + .custom-textarea__text {
 .my-purchases__list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[4];
+  /* -ms-grid-columns: (1fr)[4]; */
   grid-template-columns: repeat(4, 1fr);
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;
@@ -10452,7 +10452,7 @@ input:active + .custom-textarea__text {
 .friends-list__list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[3];
+  /* -ms-grid-columns: (1fr)[3]; */
   grid-template-columns: repeat(3, 1fr);
   -webkit-column-gap: 20px;
   -moz-column-gap: 20px;

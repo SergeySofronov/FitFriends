@@ -1,4 +1,4 @@
-# Личный проект «Guitar Shop»
+# Личный проект «Fit Friends»
 
 * Разработчик: [Сергей Софронов](https://htmlacademy.ru/profile/id1876915).
 

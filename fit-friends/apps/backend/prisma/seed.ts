@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
-import { getRandomInteger } from '../../../libs/core/src/lib/helpers'// eslint-disable-line
 import { GymFeature } from '../../../libs/shared-types/src/lib/gym-feature.enum'// eslint-disable-line
 import { Location } from '../../../libs/shared-types/src/lib/user-location.enum'// eslint-disable-line
 import { GymValidity } from '../src/app/gyms/gym.constant'
@@ -14,6 +13,13 @@ const getRandomDate = (value: number) => new Date(+(new Date()) - (Math.random()
 const getRandomEnumValue = (enumEntity: unknown) => {
   const values = Object.values(enumEntity);
   return values[getRandomInteger(0, values.length - 1)];
+}
+
+export function getRandomInteger(a = 0, b = 1) {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+
+  return Math.floor(lower + Math.random() * (upper - lower + 1));
 }
 
 const getRandomEnumValues = (enumEntity: unknown) => {
